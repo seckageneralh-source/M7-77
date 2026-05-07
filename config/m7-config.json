@@ -1,0 +1,155 @@
+{
+  "system": {
+    "name": "M7-77",
+    "version": "1.0.0",
+    "description": "Event-Driven Intelligence & Revenue Machine",
+    "owner": "seckageneralh-source",
+    "launchDate": "2026-05-07"
+  },
+  "domains": {
+    "finance": {
+      "enabled": true,
+      "sources": 15,
+      "updateFrequency": "real-time",
+      "description": "Market data, trades, price signals, crypto, forex"
+    },
+    "tech": {
+      "enabled": true,
+      "sources": 12,
+      "updateFrequency": "real-time",
+      "description": "Product releases, funding rounds, M&A, breakthroughs"
+    },
+    "social": {
+      "enabled": true,
+      "sources": 10,
+      "updateFrequency": "real-time",
+      "description": "Trends, sentiment analysis, engagement metrics"
+    },
+    "ai": {
+      "enabled": true,
+      "sources": 14,
+      "updateFrequency": "real-time",
+      "description": "Model releases, AI breakthroughs, research papers"
+    },
+    "healthcare": {
+      "enabled": true,
+      "sources": 8,
+      "updateFrequency": "real-time",
+      "description": "Medical news, FDA approvals, clinical trials"
+    },
+    "energy": {
+      "enabled": true,
+      "sources": 9,
+      "updateFrequency": "real-time",
+      "description": "Market moves, policy changes, production data"
+    },
+    "government": {
+      "enabled": true,
+      "sources": 11,
+      "updateFrequency": "real-time",
+      "description": "Policy announcements, regulations, legislation"
+    }
+  },
+  "revenueStreams": {
+    "eventProcessingFee": {
+      "enabled": true,
+      "baseAmount": 0.50,
+      "currency": "USD",
+      "triggerOn": "event_detected_and_processed",
+      "description": "Revenue per event processed across all domains"
+    },
+    "intelligenceLicenseFee": {
+      "enabled": true,
+      "baseAmount": 2.50,
+      "currency": "USD",
+      "triggerOn": "intelligence_generated",
+      "requiresApproval": true,
+      "description": "Revenue per intelligence insight generated"
+    },
+    "dataProductFee": {
+      "enabled": true,
+      "baseAmount": 10.00,
+      "currency": "USD",
+      "triggerOn": "dataset_packaged",
+      "requiresApproval": true,
+      "description": "Revenue from packaged processed datasets"
+    }
+  },
+  "combinedRevenueMode": {
+    "enabled": true,
+    "strategy": "all_three_streams_simultaneously",
+    "aggregationMethod": "sum_all_triggers",
+    "description": "All 3 revenue streams execute for every event processed"
+  },
+  "processingRules": {
+    "eventDetectionThreshold": "any_significant_event",
+    "minimumConfidenceScore": 0.6,
+    "crossDomainCorrelation": true,
+    "qualityGating": true,
+    "approvalRequired": {
+      "intelligenceLicense": true,
+      "dataProduct": true,
+      "eventProcessing": false
+    }
+  },
+  "paymentRails": {
+    "primary": {
+      "provider": "stripe",
+      "enabled": true,
+      "accountId": "SET_YOUR_STRIPE_ACCOUNT"
+    },
+    "secondary": {
+      "provider": "paypal",
+      "enabled": true,
+      "accountId": "SET_YOUR_PAYPAL_ACCOUNT"
+    },
+    "tertiary": {
+      "provider": "crypto",
+      "enabled": true,
+      "wallets": {
+        "ethereum": "SET_YOUR_ETH_WALLET",
+        "bitcoin": "SET_YOUR_BTC_WALLET"
+      }
+    }
+  },
+  "ledger": {
+    "type": "immutable",
+    "cryptographic": true,
+    "auditTrail": true,
+    "storageLocation": "database",
+    "backupLocation": "encrypted_backup"
+  },
+  "dashboard": {
+    "enabled": true,
+    "port": 3000,
+    "refreshInterval": 1000,
+    "features": [
+      "real_time_events",
+      "revenue_tracking",
+      "domain_analytics",
+      "ledger_view",
+      "approval_queue",
+      "fund_status"
+    ]
+  },
+  "controlPanel": {
+    "enabled": true,
+    "port": 3000,
+    "requiresAuth": true,
+    "mfaEnabled": true,
+    "features": [
+      "pricing_rules",
+      "approval_management",
+      "revenue_streams_control",
+      "domain_settings",
+      "fund_routing"
+    ]
+  },
+  "security": {
+    "encryption": "AES-256",
+    "authentication": "OAuth2 + MFA",
+    "auditLogging": true,
+    "dataValidation": true,
+    "fraudDetection": true
+  }
+}
