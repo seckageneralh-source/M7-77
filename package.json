@@ -1,0 +1,28 @@
+{
+  "name": "m7-77",
+  "version": "1.0.0",
+  "description": "M7-77: Event-Driven Intelligence & Revenue Machine",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "stripe": "^12.0.0",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "intelligence",
+    "revenue",
+    "event-processing",
+    "ai",
+    "automation"
+  ],
+  "author": "seckageneralh-source",
+  "license": "MIT"
+}
