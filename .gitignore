@@ -1,0 +1,25 @@
+# Ignore node modules
+node_modules/
+npm-debug.log
+
+# Ignore environment files
+.env
+.env.local
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore data files
+data/
+ledger/
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore logs
+logs/
+*.log

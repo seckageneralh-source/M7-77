@@ -3,32 +3,24 @@ version: '3.8'
 services:
   m7-77:
     build: .
-    container_name: m7-77-system
+    container_name: m7-77-production
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - LOG_LEVEL=info
       - PORT=3000
+      - LOG_LEVEL=info
     volumes:
       - m7-data:/app/data
-      - m7-logs:/app/logs
-    restart: always
-    networks:
-      - m7-network
+      - m7-ledger:/app/ledger
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/api/system/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 5s
+      start_period: 40s
 
 volumes:
   m7-data:
-    driver: local
-  m7-logs:
-    driver: local
-
-networks:
-  m7-network:
-    driver: bridge
+  m7-ledger:

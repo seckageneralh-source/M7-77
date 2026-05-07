@@ -1,49 +1,81 @@
 #!/bin/bash
 
-# M7-77 Rapid Deployment Script
-# Deploys M7-77 and starts revenue generation immediately
-
-echo "🚀 M7-77 RAPID DEPLOYMENT"
-echo "================================="
-
-# Check prerequisites
-echo "✓ Checking prerequisites..."
-command -v node >/dev/null 2>&1 || { echo "Node.js required"; exit 1; }
-command -v npm >/dev/null 2>&1 || { echo "npm required"; exit 1; }
-
-echo "✓ Node.js: $(node -v)"
-echo "✓ npm: $(npm -v)"
-
-# Install dependencies
 echo ""
-echo "📦 Installing dependencies..."
-npm install --production
+echo "========================================="
+echo "  M7-77 DEPLOYMENT SCRIPT"
+echo "  Event-Driven Intelligence & Revenue Machine"
+echo "========================================="
+echo ""
 
-# Verify installation
+# Check if Docker is installed
+if ! command -v docker &> /dev/null; then
+    echo "❌ Docker is not installed. Please install Docker first."
+    exit 1
+fi
+
+echo "✅ Docker found"
+echo ""
+
+# Build Docker image
+echo "🔨 Building Docker image..."
+docker build -t m7-77:latest .
+
 if [ $? -ne 0 ]; then
-  echo "❌ Installation failed"
-  exit 1
+    echo "❌ Build failed"
+    exit 1
 fi
 
-echo "✓ Dependencies installed"
-
-# Create data directories
+echo "✅ Docker image built successfully"
 echo ""
-echo "📁 Creating data directories..."
-mkdir -p data logs config
-echo "✓ Directories created"
 
-# Verify config
+# Stop any existing container
+echo "🛑 Stopping any existing M7-77 containers..."
+docker stop m7-77-production 2>/dev/null
+docker rm m7-77-production 2>/dev/null
+
+echo "✅ Previous containers cleaned"
 echo ""
-echo "⚙️  Verifying configuration..."
-if [ ! -f "config/m7-config.json" ]; then
-  echo "✓ Config file ready"
+
+# Run the container
+echo "🚀 Starting M7-77 in production mode..."
+docker run -d \
+  --name m7-77-production \
+  -p 3000:3000 \
+  -e NODE_ENV=production \
+  -e PORT=3000 \
+  --restart unless-stopped \
+  m7-77:latest
+
+if [ $? -ne 0 ]; then
+    echo "❌ Failed to start container"
+    exit 1
 fi
 
-# Start system
-echo ""
-echo "🟢 STARTING M7-77 SYSTEM"
-echo "================================="
+echo "✅ M7-77 started successfully"
 echo ""
 
-node src/index.js
+# Wait for container to be ready
+echo "⏳ Waiting for M7-77 to initialize (30 seconds)..."
+sleep 30
+
+# Check health
+echo ""
+echo "🏥 Checking system health..."
+curl -s http://localhost:3000/api/system/health | head -20
+
+echo ""
+echo ""
+echo "========================================="
+echo "  ✅ M7-77 DEPLOYMENT COMPLETE"
+echo "========================================="
+echo ""
+echo "📊 Dashboard:    http://localhost:3000/dashboard"
+echo "🎛️  Control:      http://localhost:3000/control"
+echo "📡 API:          http://localhost:3000/api"
+echo ""
+echo "🔍 View logs:    docker logs -f m7-77-production"
+echo "⛔ Stop M7-77:    docker stop m7-77-production"
+echo "🗑️  Remove:       docker rm m7-77-production"
+echo ""
+echo "🎯 Status: LIVE AND GENERATING REVENUE"
+echo ""
