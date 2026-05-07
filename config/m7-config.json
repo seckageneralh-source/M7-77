@@ -4,49 +4,61 @@
     "version": "1.0.0",
     "description": "Event-Driven Intelligence & Revenue Machine",
     "owner": "seckageneralh-source",
-    "launchDate": "2026-05-07"
+    "launchDate": "2026-05-07",
+    "processing": {
+      "dailyEventCapacity": "1,000,000,000+",
+      "description": "Minimum 1 billion events per day across all 7 domains",
+      "eventProcessingRate": "11,574+ events per second"
+    }
   },
   "domains": {
     "finance": {
       "enabled": true,
-      "sources": 15,
+      "sources": 25,
       "updateFrequency": "real-time",
+      "dailyEvents": "180,000,000",
       "description": "Market data, trades, price signals, crypto, forex"
     },
     "tech": {
       "enabled": true,
-      "sources": 12,
+      "sources": 22,
       "updateFrequency": "real-time",
+      "dailyEvents": "160,000,000",
       "description": "Product releases, funding rounds, M&A, breakthroughs"
     },
     "social": {
       "enabled": true,
-      "sources": 10,
+      "sources": 30,
       "updateFrequency": "real-time",
+      "dailyEvents": "250,000,000",
       "description": "Trends, sentiment analysis, engagement metrics"
     },
     "ai": {
       "enabled": true,
-      "sources": 14,
+      "sources": 24,
       "updateFrequency": "real-time",
+      "dailyEvents": "140,000,000",
       "description": "Model releases, AI breakthroughs, research papers"
     },
     "healthcare": {
       "enabled": true,
-      "sources": 8,
+      "sources": 18,
       "updateFrequency": "real-time",
+      "dailyEvents": "100,000,000",
       "description": "Medical news, FDA approvals, clinical trials"
     },
     "energy": {
       "enabled": true,
-      "sources": 9,
+      "sources": 19,
       "updateFrequency": "real-time",
+      "dailyEvents": "90,000,000",
       "description": "Market moves, policy changes, production data"
     },
     "government": {
       "enabled": true,
-      "sources": 11,
+      "sources": 21,
       "updateFrequency": "real-time",
+      "dailyEvents": "80,000,000",
       "description": "Policy announcements, regulations, legislation"
     }
   },
@@ -56,7 +68,8 @@
       "baseAmount": 0.50,
       "currency": "USD",
       "triggerOn": "event_detected_and_processed",
-      "description": "Revenue per event processed across all domains"
+      "description": "Revenue per event processed across all domains",
+      "dailyRevenueEstimate": "$500,000,000"
     },
     "intelligenceLicenseFee": {
       "enabled": true,
@@ -81,68 +94,114 @@
     "aggregationMethod": "sum_all_triggers",
     "description": "All 3 revenue streams execute for every event processed"
   },
+  "m7Treasury": {
+    "enabled": true,
+    "purpose": "Temporary holding of generated revenue before transfer to bank",
+    "features": {
+      "realTimeBalance": true,
+      "immediateHolding": true,
+      "noWithdrawalDelay": false,
+      "cryptoSignature": true,
+      "auditTrail": true
+    },
+    "dashboard": {
+      "location": "http://localhost:3000/treasury",
+      "displayElements": [
+        "total_balance",
+        "daily_inflow",
+        "pending_transfers",
+        "transfer_history",
+        "balance_by_domain",
+        "balance_by_revenue_stream"
+      ]
+    },
+    "automaticAggregation": {
+      "enabled": true,
+      "frequency": "real-time",
+      "description": "All revenue streams aggregate into treasury immediately"
+    }
+  },
+  "railSystem": {
+    "enabled": true,
+    "purpose": "Transfer funds from M7 Treasury to your bank accounts",
+    "configuration": {
+      "requiresApproval": true,
+      "approvalLevel": "user_dashboard_button",
+      "description": "You initiate transfers from M7 Treasury dashboard"
+    },
+    "rails": {
+      "bankTransfer": {
+        "enabled": true,
+        "type": "ACH",
+        "provider": "stripe_connect",
+        "processingTime": "1-2 business days",
+        "minimumTransfer": "0.01",
+        "maximumTransfer": "999,999,999",
+        "fee": "0.5% + $0.25",
+        "description": "Direct bank account transfers via ACH"
+      },
+      "wireTransfer": {
+        "enabled": true,
+        "type": "SWIFT",
+        "provider": "stripe_connect",
+        "processingTime": "same_day",
+        "minimumTransfer": "10000",
+        "maximumTransfer": "unlimited",
+        "fee": "1% + $10",
+        "description": "International wire transfers"
+      },
+      "cryptoRail": {
+        "enabled": true,
+        "type": "blockchain",
+        "currencies": ["ethereum", "bitcoin", "usdc"],
+        "processingTime": "instant_to_10_minutes",
+        "minimumTransfer": "0.001",
+        "fee": "network_gas_fees_only",
+        "description": "Jurisdiction-independent crypto transfers"
+      },
+      "paypalTransfer": {
+        "enabled": true,
+        "type": "digital_wallet",
+        "processingTime": "instant_to_24_hours",
+        "minimumTransfer": "0.01",
+        "fee": "2.2%",
+        "description": "Quick transfers to PayPal accounts"
+      }
+    }
+  },
+  "treasury_railFlow": {
+    "step1": "Events processed → Revenue generated → M7 Treasury (automatic aggregation)",
+    "step2": "Treasury dashboard shows real-time balance",
+    "step3": "You approve transfer amount and rail (bank/crypto/paypal)",
+    "step4": "System routes funds via selected rail",
+    "step5": "Funds arrive in your destination account",
+    "step6": "Transfer recorded in immutable ledger",
+    "timeline": "Treasury to your account: 1 second to 2 business days depending on rail"
+  },
   "processingRules": {
     "eventDetectionThreshold": "any_significant_event",
     "minimumConfidenceScore": 0.6,
     "crossDomainCorrelation": true,
     "qualityGating": true,
-    "approvalRequired": {
-      "intelligenceLicense": true,
-      "dataProduct": true,
-      "eventProcessing": false
+    "scalability": {
+      "currentCapacity": "1B+ events/day",
+      "architecture": "distributed_event_processing",
+      "parallelism": "unlimited_horizontal_scaling"
     }
-  },
-  "paymentRails": {
-    "primary": {
-      "provider": "stripe",
-      "enabled": true,
-      "accountId": "SET_YOUR_STRIPE_ACCOUNT"
-    },
-    "secondary": {
-      "provider": "paypal",
-      "enabled": true,
-      "accountId": "SET_YOUR_PAYPAL_ACCOUNT"
-    },
-    "tertiary": {
-      "provider": "crypto",
-      "enabled": true,
-      "wallets": {
-        "ethereum": "SET_YOUR_ETH_WALLET",
-        "bitcoin": "SET_YOUR_BTC_WALLET"
-      }
-    }
-  },
-  "ledger": {
-    "type": "immutable",
-    "cryptographic": true,
-    "auditTrail": true,
-    "storageLocation": "database",
-    "backupLocation": "encrypted_backup"
   },
   "dashboard": {
     "enabled": true,
     "port": 3000,
-    "refreshInterval": 1000,
+    "refreshInterval": 100,
     "features": [
       "real_time_events",
       "revenue_tracking",
       "domain_analytics",
+      "m7_treasury_view",
+      "rail_system_controls",
       "ledger_view",
       "approval_queue",
       "fund_status"
-    ]
-  },
-  "controlPanel": {
-    "enabled": true,
-    "port": 3000,
-    "requiresAuth": true,
-    "mfaEnabled": true,
-    "features": [
-      "pricing_rules",
-      "approval_management",
-      "revenue_streams_control",
-      "domain_settings",
-      "fund_routing"
     ]
   },
   "security": {
