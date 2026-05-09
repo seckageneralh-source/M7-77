@@ -12,6 +12,8 @@ const WhitelabelAPI = require('./whitelabel-api');
 const ComplianceManager = require('./compliance-manager');
 const AnalyticsEngine = require('./analytics-engine');
 const InstantRevenueGenerator = require('./instant-revenue-generator');
+const RealEventIngestion = require('./real-event-ingestion');
+const EDABBillingEngine = require('./edab-billing-engine');
 const SystemVerification = require('./system-verification');
 const config = require('../config/m7-config.json');
 
