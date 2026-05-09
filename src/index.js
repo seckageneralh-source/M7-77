@@ -1,12 +1,4 @@
-// M7-77 Perfect Integration - Final Enhanced Index
-// Instant revenue generation + Perfect verification
-// Real Event Processing — EDAB
-this.realIngestion.start();
-this.realIngestion.on('event', (event) => {
-  const bill = this.edab.billEvent(event);
-  console.log(`⚡ REAL EVENT | ${event.domain.toUpperCase()} | $${bill.total.toFixed(2)}`);
-});
-
+// M7-77 Perfect Integration - Real Event Processing + EDAB Billing
 const EventProcessor = require('./event-processor');
 const M7Brain = require('./m7-brain');
 const M7Treasury = require('./m7-treasury');
@@ -37,7 +29,7 @@ class M7System {
     this.whitelabelAPI = new WhitelabelAPI(this.brain, this.revenueEngine);
     this.instantRevenue = new InstantRevenueGenerator(this.processor, this.treasury, this.revenueEngine);
     this.realIngestion = new RealEventIngestion();
-this.edab = new EDABBillingEngine(this.treasury);
+    this.edab = new EDABBillingEngine(this.treasury);
     this.verification = new SystemVerification();
   }
 
@@ -75,7 +67,7 @@ this.edab = new EDABBillingEngine(this.treasury);
     });
 
     this.processor.on('event_processed', (event) => {
-      const intelligence = this.brain.processEvent(event);
+      this.brain.processEvent(event);
     });
 
     // Phase 3: Activate Advanced Features
@@ -90,80 +82,49 @@ this.edab = new EDABBillingEngine(this.treasury);
     console.log('\n⏱️  PHASE 5: LAUNCHING APIs & DASHBOARDS\n');
     this.dashboardAPI.start(3000);
 
-    // Phase 6: Initialize Instant Revenue
-    console.log('\n⏱️  PHASE 6: INITIALIZING INSTANT REVENUE\n');
-    this.instantRevenue.startInstantRevenue();
+    // Phase 6: Real Event Ingestion + EDAB Billing
+    console.log('\n⏱️  PHASE 6: STARTING REAL EVENT PROCESSING\n');
+    this.realIngestion.start();
+    this.realIngestion.on('event', (event) => {
+      const bill = this.edab.billEvent(event);
+      console.log(`⚡ REAL EVENT | ${event.domain.toUpperCase()} | $${bill.total.toFixed(2)}`);
+    });
+    console.log('  ✅ Real Event Ingestion Online\n');
+    console.log('  ✅ EDAB Billing Engine Online\n');
 
-    // Phase 7: Display Status
+    // Phase 7: Monitoring
     console.log('\n⏱️  PHASE 7: ACTIVATING MONITORING\n');
-    this.displayComprehensiveStatus();
+    this.displayStatus();
   }
 
-  displayComprehensiveStatus() {
-    let statusCount = 0;
-
-    const statusInterval = setInterval(() => {
-      statusCount++;
-
-      const processorStats = this.processor.getStats();
+  displayStatus() {
+    setInterval(() => {
+      const edabSummary = this.edab.getSummary();
+      const ingestionStats = this.realIngestion.getStats();
       const treasuryStatus = this.treasury.getTreasuryStatus();
-      const complianceStatus = this.compliance.getComplianceReport();
-      const revenueSummary = this.instantRevenue.getRevenueSummary();
-      const brainStatus = this.brain.getManagerStatus();
 
       console.log('\n' + '═'.repeat(70));
-      console.log('📊 M7-77 LIVE COMMAND CENTER');
+      console.log('📊 M7-77 LIVE COMMAND CENTER — REAL EVENT PROCESSING');
       console.log('═'.repeat(70));
 
-      console.log('\n⚡ INSTANT REVENUE GENERATION:');
-      if (revenueSummary.timeToFirstRevenue) {
-        console.log(`   🎯 Time to First Revenue: ${revenueSummary.timeToFirstRevenue}ms`);
-      }
-      console.log(`   💰 Total Revenue: $${revenueSummary.totalRevenueGenerated}`);
-      console.log(`   📈 Revenue Rate: $${revenueSummary.revenuePerSecond}/sec`);
-      console.log(`   ⏱️  Running Time: ${revenueSummary.secondsRunning}s`);
-      console.log(`   📊 Events Processed: ${revenueSummary.eventsProcessed.toLocaleString()}`);
+      console.log('\n🌐 REAL EVENT INGESTION:');
+      console.log(`   Sources Active: ${ingestionStats.sources}`);
+      console.log(`   Domains Monitored: ${ingestionStats.domains}`);
+      console.log(`   Total Events: ${ingestionStats.totalEvents}`);
+      console.log(`   Status: ${ingestionStats.status}`);
 
-      console.log('\n💾 PROCESSING ENGINE:');
-      console.log(`   Events: ${processorStats.eventsProcessed.toLocaleString()}`);
-      console.log(`   Rate: ${processorStats.eventsPerSecond.toLocaleString()} events/sec`);
-      console.log(`   Status: ${processorStats.status}`);
-      console.log(`   Uptime: ${processorStats.uptime}`);
+      console.log('\n⚡ EDAB BILLING ENGINE:');
+      console.log(`   Total Billed: $${edabSummary.totalBilled.toFixed(2)}`);
+      console.log(`   Events Billed: ${edabSummary.totalEvents}`);
+      console.log(`   Stream 1 — Event Processing: $${edabSummary.streams.eventProcessing.toFixed(2)}`);
+      console.log(`   Stream 2 — Intelligence License: $${edabSummary.streams.intelligenceLicense.toFixed(2)}`);
+      console.log(`   Stream 3 — Data Products: $${edabSummary.streams.dataProduct.toFixed(2)}`);
 
-      console.log('\n🏦 TREASURY MANAGEMENT:');
+      console.log('\n🏦 TREASURY:');
       console.log(`   Balance: $${treasuryStatus.balance}`);
-      console.log(`   Configured Accounts: ${treasuryStatus.accountsConfigured}`);
-      console.log(`   Pending Transfers: ${treasuryStatus.pendingTransfers}`);
-      console.log(`   Completed Transfers: ${treasuryStatus.completedTransfers}`);
-
-      console.log('\n🤖 AI MANAGERS (Top 3):');
-      brainStatus.slice(0, 3).forEach(manager => {
-        console.log(`   ${manager.name}: ${manager.performance}`);
-      });
-
-      console.log('\n🛡️  COMPLIANCE & SECURITY:');
-      console.log(`   Status: ${complianceStatus.status}`);
-      console.log(`   Compliance Rate: ${complianceStatus.complianceRate}`);
-      console.log(`   Audited Transactions: ${complianceStatus.totalTransactionsAudited}`);
-
-      console.log('\n📡 SYSTEM HEALTH:');
-      console.log(`   CPU Usage: ${(Math.random() * 40 + 10).toFixed(1)}%`);
-      console.log(`   Memory Usage: ${(Math.random() * 30 + 15).toFixed(1)}%`);
-      console.log(`   Network Latency: ${(Math.random() * 5 + 1).toFixed(2)}ms`);
 
       console.log('\n' + '═'.repeat(70));
-
-      // Projections
-      if (statusCount === 2) {
-        console.log('\n📈 PROJECTED EARNINGS:');
-        const revenuePerSec = parseFloat(revenueSummary.revenuePerSecond);
-        console.log(`   Per Minute: $${(revenuePerSec * 60).toFixed(2)}`);
-        console.log(`   Per Hour: $${(revenuePerSec * 3600).toFixed(2)}`);
-        console.log(`   Per Day: $${(revenuePerSec * 86400).toFixed(2)}`);
-        console.log(`   Per Month: $${(revenuePerSec * 86400 * 30).toFixed(2)}`);
-        console.log(`   Per Year: $${(revenuePerSec * 86400 * 365).toFixed(2)}\n`);
-      }
-    }, 5000); // Update every 5 seconds
+    }, 10000);
   }
 }
 
