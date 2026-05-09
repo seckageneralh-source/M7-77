@@ -7,6 +7,7 @@ RUN npm install --production
 
 COPY config ./config
 COPY src ./src
+COPY public ./public
 
 EXPOSE 3000
 
