@@ -1,5 +1,11 @@
 // M7-77 Perfect Integration - Final Enhanced Index
 // Instant revenue generation + Perfect verification
+// Real Event Processing — EDAB
+this.realIngestion.start();
+this.realIngestion.on('event', (event) => {
+  const bill = this.edab.billEvent(event);
+  console.log(`⚡ REAL EVENT | ${event.domain.toUpperCase()} | $${bill.total.toFixed(2)}`);
+});
 
 const EventProcessor = require('./event-processor');
 const M7Brain = require('./m7-brain');
@@ -30,6 +36,8 @@ class M7System {
     this.dashboardAPI = new DashboardAPI(this.processor, this.brain, this.treasury, this.revenueEngine);
     this.whitelabelAPI = new WhitelabelAPI(this.brain, this.revenueEngine);
     this.instantRevenue = new InstantRevenueGenerator(this.processor, this.treasury, this.revenueEngine);
+    this.realIngestion = new RealEventIngestion();
+this.edab = new EDABBillingEngine(this.treasury);
     this.verification = new SystemVerification();
   }
 
