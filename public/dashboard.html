@@ -1,108 +1,1060 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>M7-77 Command Center</title><style>@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');:root{--bg:#040810;--bg2:#070d1a;--bg3:#0a1220;--border:#0f2040;--border2:#1a3060;--ac:#00cfff;--gold:#ffd700;--red:#ff3344;--purple:#aa44ff;--blue:#00aaff;--text:#c8d8e8;--muted:#4a6080;}*{margin:0;padding:0;box-sizing:border-box;}body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;min-height:100vh;}header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}.logo{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;color:var(--ac);letter-spacing:3px;text-shadow:0 0 20px rgba(0,207,255,0.5);}.pulse{width:8px;height:8px;background:var(--ac);border-radius:50%;animation:pulse 1.5s infinite;display:inline-block;margin-right:6px;box-shadow:0 0 8px var(--ac);}@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}.nav{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;padding:0 24px;}.tab{padding:12px 20px;font-size:0.72rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;color:var(--muted);letter-spacing:1px;transition:all 0.2s;}.tab:hover{color:var(--text);}.tab.active{color:var(--ac);border-bottom-color:var(--ac);}.panel{display:none;padding:20px;}.panel.active{display:block;}.grid{display:grid;gap:16px;}.g4{grid-template-columns:repeat(4,1fr);}.g3{grid-template-columns:repeat(3,1fr);}.g2{grid-template-columns:repeat(2,1fr);}.s2{grid-column:span 2;}.s3{grid-column:span 3;}.s4{grid-column:span 4;}@media(max-width:900px){.g4,.g3,.g2{grid-template-columns:1fr;}.s2,.s3,.s4{grid-column:span 1;}}.card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:20px;position:relative;}.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:0.5;}.ct{font-size:0.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}.bv{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;color:var(--ac);text-shadow:0 0 20px rgba(0,207,255,0.3);}.bv.gold{color:var(--gold);}.bv.blue{color:var(--blue);}.bl{font-size:0.7rem;color:var(--muted);margin-bottom:4px;}.bs{font-size:0.7rem;color:var(--muted);margin-top:4px;}.mr{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.78rem;}.mr:last-child{border-bottom:none;}.mk{color:var(--muted);}.mv{font-weight:600;}.mv.ac{color:var(--ac);}.mv.gold{color:var(--gold);}.mv.blue{color:var(--blue);}.mv.red{color:var(--red);}.sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:8px;}.sb{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px;text-align:center;}.sv{font-family:'Orbitron',sans-serif;font-size:0.95rem;font-weight:700;color:var(--ac);}.sl{font-size:0.6rem;color:var(--muted);margin-top:4px;}.pr{margin-bottom:10px;}.pl{display:flex;justify-content:space-between;font-size:0.7rem;color:var(--muted);margin-bottom:4px;}.pl span:last-child{color:var(--ac);}.pb{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.pf{height:100%;background:var(--ac);border-radius:2px;transition:width 1s;}.pf.blue{background:var(--blue);}.pf.gold{background:var(--gold);}.pf.purple{background:var(--purple);}.feed{height:250px;overflow-y:auto;font-size:0.7rem;}.feed::-webkit-scrollbar{width:3px;}.feed::-webkit-scrollbar-thumb{background:var(--border2);}.fi{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);animation:fi 0.3s ease;}@keyframes fi{from{opacity:0;}to{opacity:1;}}.dp{padding:2px 7px;border-radius:2px;font-size:0.6rem;font-weight:700;letter-spacing:1px;margin-right:6px;}.finance{background:rgba(0,207,255,0.1);color:var(--ac);border:1px solid rgba(0,207,255,0.3);}.tech{background:rgba(0,170,255,0.1);color:var(--blue);border:1px solid rgba(0,170,255,0.3);}.ai{background:rgba(170,68,255,0.1);color:var(--purple);border:1px solid rgba(170,68,255,0.3);}.social{background:rgba(255,215,0,0.1);color:var(--gold);border:1px solid rgba(255,215,0,0.3);}.government{background:rgba(255,51,68,0.1);color:var(--red);border:1px solid rgba(255,51,68,0.3);}.energy{background:rgba(0,255,200,0.1);color:#00ffc8;border:1px solid rgba(0,255,200,0.3);}.health{background:rgba(255,150,0,0.1);color:#ff9600;border:1px solid rgba(255,150,0,0.3);}.lt{width:100%;border-collapse:collapse;font-size:0.67rem;}.lt th{padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid var(--border2);font-weight:400;letter-spacing:1px;}.lt td{padding:8px;border-bottom:1px solid var(--border);}.badge{padding:2px 8px;border-radius:2px;font-size:0.6rem;font-weight:700;background:rgba(0,207,255,0.15);color:var(--ac);}.fg{margin-bottom:14px;}.fl{font-size:0.65rem;color:var(--muted);letter-spacing:1px;margin-bottom:5px;display:block;}.fi2{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;}.fi2:focus{border-color:var(--ac);}.fs{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;}.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;}.btn{padding:10px 18px;border:none;border-radius:3px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:1px;transition:all 0.2s;}.btn:hover{filter:brightness(1.2);transform:translateY(-1px);}.bp{background:var(--ac);color:var(--bg);}.bd{background:var(--red);color:#fff;}.bs2{background:var(--border2);color:var(--text);}.bg2{background:var(--gold);color:var(--bg);}.bg3{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}.tr{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}.tr:last-child{border-bottom:none;}.tl{font-size:0.8rem;}.ts{font-size:0.65rem;color:var(--muted);}.tg{width:44px;height:24px;background:var(--border2);border-radius:12px;cursor:pointer;position:relative;transition:background 0.3s;flex-shrink:0;}.tg.on{background:var(--ac);}.tg::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.3s;}.tg.on::after{transform:translateX(20px);}.ri{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}.rn{font-size:0.85rem;font-weight:600;}.rd{font-size:0.65rem;color:var(--muted);margin-top:2px;}.ra{font-size:0.65rem;color:var(--ac);}.rs{font-size:0.65rem;color:var(--gold);}.al{padding:10px 14px;border-radius:4px;font-size:0.72rem;margin-bottom:12px;border-left:3px solid var(--blue);background:rgba(0,170,255,0.05);color:var(--blue);}.st{font-size:0.7rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}#notif{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--ac);border-radius:4px;padding:12px 20px;font-size:0.75rem;color:var(--ac);z-index:9999;transform:translateX(200px);opacity:0;transition:all 0.3s;}#notif.show{transform:translateX(0);opacity:1;}</style></head>
-<body>
-<header><div class="logo">M7-77 <span style="color:var(--muted);font-weight:400">// SOVEREIGN COMMAND</span></div><div style="display:flex;align-items:center;gap:20px"><span><span class="pulse"></span><span style="font-size:0.7rem;color:var(--ac)">LIVE</span></span><span id="clock" style="font-size:0.7rem;color:var(--muted)"></span></div></header>
-<div class="nav">
-<button class="tab active" onclick="sw('overview',this)">OVERVIEW</button>
-<button class="tab" onclick="sw('revenue',this)">REVENUE</button>
-<button class="tab" onclick="sw('events',this)">EVENTS</button>
-<button class="tab" onclick="sw('treasury',this)">TREASURY</button>
-<button class="tab" onclick="sw('control',this)">CONTROL</button>
-<button class="tab" onclick="sw('settings',this)">SETTINGS</button>
-</div>
-<div id="p-overview" class="panel active"><div class="grid g4">
-<div class="card"><div class="ct">💰 Total Billed</div><div class="bl">ALL STREAMS</div><div class="bv" id="ov1">$0.00</div><div class="bs" id="ov1s">$0/sec</div></div>
-<div class="card"><div class="ct">📡 Real Events</div><div class="bl">LIVE INTERNET</div><div class="bv blue" id="ov2">0</div><div class="bs" id="ov2s">8 sources</div></div>
-<div class="card"><div class="ct">📈 Est. Daily</div><div class="bl">PROJECTED 24H</div><div class="bv gold" id="ov3">$0.00</div><div class="bs" id="ov3s">$0/hr</div></div>
-<div class="card"><div class="ct">🛡️ Compliance</div><div class="bl">SYSTEM STATUS</div><div class="bv" id="ov4">100%</div><div class="bs">FULLY COMPLIANT</div></div>
-<div class="card s2"><div class="ct">⚡ 3 Revenue Streams</div><div class="sg"><div class="sb"><div class="sv" id="s1">$0</div><div class="sl">EVENT PROCESSING</div></div><div class="sb"><div class="sv" id="s2">$0</div><div class="sl">INTELLIGENCE</div></div><div class="sb"><div class="sv" id="s3">$0</div><div class="sl">DATA PRODUCTS</div></div></div></div>
-<div class="card s2"><div class="ct">🤖 AI Managers</div><div class="pr"><div class="pl"><span>Finance</span><span>85%</span></div><div class="pb"><div class="pf" style="width:85%"></div></div></div><div class="pr"><div class="pl"><span>Tech</span><span>82%</span></div><div class="pb"><div class="pf blue" style="width:82%"></div></div></div><div class="pr"><div class="pl"><span>AI & Intelligence</span><span>88%</span></div><div class="pb"><div class="pf gold" style="width:88%"></div></div></div><div class="pr"><div class="pl"><span>Cross-Domain</span><span>86%</span></div><div class="pb"><div class="pf purple" style="width:86%"></div></div></div></div>
-<div class="card s4"><div class="ct">📡 Live Event Feed</div><div class="feed" id="feed1"><div class="fi"><span style="color:var(--muted)">Connecting to live internet feeds...</span></div></div></div>
-</div></div>
-<div id="p-revenue" class="panel"><div class="grid g3">
-<div class="card"><div class="ct">💰 Revenue Summary</div><div class="mr"><span class="mk">TOTAL BILLED</span><span class="mv ac" id="r1">$0</span></div><div class="mr"><span class="mk">PER SECOND</span><span class="mv gold" id="r2">$0</span></div><div class="mr"><span class="mk">PER MINUTE</span><span class="mv" id="r3">$0</span></div><div class="mr"><span class="mk">PER HOUR</span><span class="mv" id="r4">$0</span></div><div class="mr"><span class="mk">PER DAY</span><span class="mv gold" id="r5">$0</span></div><div class="mr"><span class="mk">PER MONTH</span><span class="mv" id="r6">$0</span></div><div class="mr"><span class="mk">PER YEAR</span><span class="mv ac" id="r7">$0</span></div></div>
-<div class="card"><div class="ct">⚡ Stream Breakdown</div><div class="mr"><span class="mk">STREAM 1 — EVENT</span><span class="mv ac" id="rs1">$0</span></div><div class="mr"><span class="mk">STREAM 2 — INTELLIGENCE</span><span class="mv blue" id="rs2">$0</span></div><div class="mr"><span class="mk">STREAM 3 — DATA</span><span class="mv gold" id="rs3">$0</span></div></div>
-<div class="card"><div class="ct">📊 Billing Engine</div><div class="mr"><span class="mk">EVENTS BILLED</span><span class="mv ac" id="rb">0</span></div><div class="mr"><span class="mk">ENGINE</span><span class="mv ac">ACTIVE</span></div><div class="mr"><span class="mk">MODE</span><span class="mv blue">EDAB AUTONOMOUS</span></div><div class="mr"><span class="mk">STRIPE</span><span class="mv red">NONE</span></div></div>
-<div class="card s3"><div class="ct">📋 Ledger</div><div style="overflow-x:auto"><table class="lt"><thead><tr><th>TIME</th><th>DOMAIN</th><th>TYPE</th><th>EVENT FEE</th><th>INTEL FEE</th><th>DATA FEE</th><th>TOTAL</th><th>STATUS</th></tr></thead><tbody id="lb"><tr><td colspan="8" style="text-align:center;color:var(--muted);padding:16px">Loading...</td></tr></tbody></table></div></div>
-</div></div>
-<div id="p-events" class="panel"><div class="grid g2">
-<div class="card"><div class="ct">🌐 Ingestion Status</div><div class="mr"><span class="mk">TOTAL EVENTS</span><span class="mv ac" id="et">0</span></div><div class="mr"><span class="mk">SOURCES ACTIVE</span><span class="mv blue">8</span></div><div class="mr"><span class="mk">DOMAINS</span><span class="mv gold">7</span></div><div class="mr"><span class="mk">STATUS</span><span class="mv ac">RUNNING</span></div></div>
-<div class="card"><div class="ct">📡 Domain Status</div><div class="pr"><div class="pl"><span>Finance</span><span>Active</span></div><div class="pb"><div class="pf" style="width:100%"></div></div></div><div class="pr"><div class="pl"><span>Tech</span><span>Active</span></div><div class="pb"><div class="pf blue" style="width:100%"></div></div></div><div class="pr"><div class="pl"><span>AI</span><span>Active</span></div><div class="pb"><div class="pf purple" style="width:100%"></div></div></div><div class="pr"><div class="pl"><span>Social</span><span>Active</span></div><div class="pb"><div class="pf gold" style="width:100%"></div></div></div><div class="pr"><div class="pl"><span>Government</span><span>Active</span></div><div class="pb"><div class="pf" style="width:100%;background:var(--red)"></div></div></div><div class="pr"><div class="pl"><span>Energy</span><span>Active</span></div><div class="pb"><div class="pf" style="width:100%;background:#00ffc8"></div></div></div></div>
-<div class="card s2"><div class="ct">📡 Full Live Feed</div><div class="feed" style="height:380px" id="feed2"><div class="fi"><span style="color:var(--muted)">Loading...</span></div></div></div>
-</div></div>
-<div id="p-treasury" class="panel"><div class="grid g2">
-<div class="card"><div class="ct">🏦 Treasury Balance</div><div class="bl">SOVEREIGN INTERNAL</div><div class="bv" id="tb">$0.00</div><div class="bs">CRYPTOGRAPHIC LEDGER</div><div style="margin-top:16px"><div class="mr"><span class="mk">PENDING TRANSFERS</span><span class="mv gold">0</span></div><div class="mr"><span class="mk">MODE</span><span class="mv blue">SOVEREIGN</span></div><div class="mr"><span class="mk">STRIPE</span><span class="mv red">NONE</span></div></div></div>
-<div class="card"><div class="ct">📤 Add Routing Account</div><div class="fg"><label class="fl">ACCOUNT TYPE</label><select class="fs" id="at"><option>Bank Account (ACH/SWIFT)</option><option>Crypto Wallet</option><option>Stablecoin (USDC)</option><option>Internal M7 Hold</option></select></div><div class="fr"><div class="fg"><label class="fl">ACCOUNT NAME</label><input class="fi2" placeholder="e.g. SECKA PRIMARY" id="an"></div><div class="fg"><label class="fl">ADDRESS</label><input class="fi2" placeholder="Account or wallet" id="aa"></div></div><div class="fg"><label class="fl">ALLOCATION %</label><input class="fi2" type="number" placeholder="100" id="ap"></div><div class="bg3"><button class="btn bp" onclick="addRoute()">ADD ROUTE</button><button class="btn bs2" onclick="notif('Saved')">SAVE</button></div></div>
-<div class="card s2"><div class="ct">🔀 Routing Rails</div><div id="rails"><div class="ri"><div><div class="rn">M7 INTERNAL SOVEREIGN HOLD</div><div class="rd">All revenue held in M7 treasury until routed</div></div><div class="ra">● PRIMARY ACTIVE</div></div><div class="ri"><div><div class="rn">CRYPTO WALLET RAIL</div><div class="rd">Configure wallet to activate</div></div><div class="rs">○ STANDBY</div></div><div class="ri"><div><div class="rn">ACH / SWIFT BANK RAIL</div><div class="rd">Configure bank account to activate</div></div><div class="rs">○ STANDBY</div></div></div><div style="margin-top:20px"><div class="st">Manual Transfer</div><div class="fr"><div class="fg"><label class="fl">AMOUNT ($)</label><input class="fi2" type="number" placeholder="Amount" id="ta"></div><div class="fg"><label class="fl">DESTINATION</label><select class="fs" id="td"><option>M7 Internal Hold</option><option>Crypto Wallet</option><option>Bank Account</option></select></div></div><div class="bg3"><button class="btn bg2" onclick="doTransfer()">AUTHORIZE TRANSFER</button><button class="btn bs2" onclick="notif('Cancelled')">CANCEL</button></div></div></div>
-</div></div>
-<div id="p-control" class="panel"><div class="grid g2">
-<div class="card"><div class="ct">⚙️ System Controls</div><div class="tr"><div><div class="tl">Real Event Ingestion</div><div class="ts">Live internet feeds</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="tr"><div><div class="tl">EDAB Billing Engine</div><div class="ts">Autonomous billing</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="tr"><div><div class="tl">AI Self-Evolution</div><div class="ts">Performance optimization</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="tr"><div><div class="tl">Cross-Domain Correlation</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="tr"><div><div class="tl">Compliance Monitoring</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="bg3" style="margin-top:16px"><button class="btn bd" onclick="notif('Emergency stop — confirm required')">EMERGENCY STOP</button><button class="btn bp" onclick="notif('Restart initiated')">RESTART</button></div></div>
-<div class="card"><div class="ct">💲 Pricing Rules</div><div class="fg"><label class="fl">EVENT PROCESSING FEE ($)</label><input class="fi2" type="number" step="0.01" value="0.50" id="pe"></div><div class="fg"><label class="fl">INTELLIGENCE MULTIPLIER</label><input class="fi2" type="number" step="0.1" value="5" id="pi"></div><div class="fg"><label class="fl">DATA PRODUCT MULTIPLIER</label><input class="fi2" type="number" step="0.1" value="20" id="pd"></div><div class="al" id="ps">$0.50 → $2.50 → $10.00 = $13.00/event</div><div class="bg3"><button class="btn bp" onclick="savePrice()">SAVE PRICING</button><button class="btn bs2" onclick="notif('Reset')">RESET</button></div></div>
-<div class="card"><div class="ct">✅ Approval Queue</div><div class="mr"><span class="mk">PENDING</span><span class="mv gold">0</span></div><div class="mr"><span class="mk">AUTO-APPROVE EVENTS</span><span class="mv ac">YES</span></div><div class="tr" style="margin-top:8px"><div><div class="tl">Auto-approve Intelligence</div></div><div class="tg" onclick="this.classList.toggle('on');notif('Updated')"></div></div><div class="tr"><div><div class="tl">Auto-approve Data Products</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Updated')"></div></div></div>
-<div class="card"><div class="ct">📊 Domain Controls</div><div class="tr"><div class="tl">Finance</div><div class="tg on" onclick="this.classList.toggle('on')"></div></div><div class="tr"><div class="tl">Tech</div><div class="tg on" onclick="this.classList.toggle('on')"></div></div><div class="tr"><div class="tl">AI & Intelligence</div><div class="tg on" onclick="this.classList.toggle('on')"></div></div><div class="tr"><div class="tl">Social</div><div class="tg on" onclick="this.classList.toggle('on')"></div></div><div class="tr"><div class="tl">Government</div><div class="tg on" onclick="this.classList.toggle('on')"></div></div><div class="tr"><div class="tl">Energy</div><div class="tg on" onclick="this.classList.toggle('on')"></div></div><div class="tr"><div class="tl">Healthcare</div><div class="tg on" onclick="this.classList.toggle('on')"></div></div></div>
-</div></div>
-<div id="p-settings" class="panel"><div class="grid g2">
-<div class="card"><div class="ct">🔐 System Identity</div><div class="fg"><label class="fl">SYSTEM NAME</label><input class="fi2" value="M7-77"></div><div class="fg"><label class="fl">OWNER</label><input class="fi2" value="SECKA"></div><div class="fg"><label class="fl">DPI FRAMEWORK ID</label><input class="fi2" value="DPI-M7-77-SOVEREIGN"></div><div class="bg3"><button class="btn bp" onclick="notif('Identity saved')">SAVE</button></div></div>
-<div class="card"><div class="ct">💾 System Info</div><div class="mr"><span class="mk">VERSION</span><span class="mv ac">M7-77 v1.0</span></div><div class="mr"><span class="mk">FRAMEWORK</span><span class="mv blue">DPI SOVEREIGN</span></div><div class="mr"><span class="mk">DEPLOYMENT</span><span class="mv">RAILWAY.APP — LIVE</span></div><div class="mr"><span class="mk">BILLING</span><span class="mv ac">EDAB AUTONOMOUS</span></div><div class="mr"><span class="mk">PAYMENT RAILS</span><span class="mv gold">SOVEREIGN — NO STRIPE</span></div><div class="mr"><span class="mk">OWNER</span><span class="mv ac">SECKA © 2026</span></div></div>
-</div></div>
-<div id="notif"></div>
-<script>
-let pr=0,pt=Date.now(),ae=[];
-function ck(){document.getElementById('clock').textContent=new Date().toUTCString().replace('GMT','UTC');}
-setInterval(ck,1000);ck();
-function sw(n,el){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('p-'+n).classList.add('active');el.classList.add('active');}
-function notif(m){const e=document.getElementById('notif');e.textContent='✓ '+m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3000);}
-function fmt(n){n=parseFloat(n)||0;if(n>=1e9)return'$'+(n/1e9).toFixed(2)+'B';if(n>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(n>=1e3)return'$'+(n/1e3).toFixed(2)+'K';return'$'+n.toFixed(2);}
-function fn(n){return(parseInt(n)||0).toLocaleString();}
-async function fd(){
-try{
-const d=await(await fetch('/api/status')).json();
-const rev=d.edab?(parseFloat(d.edab.totalBilled)||0):0;
-const now=Date.now(),el=Math.max((now-pt)/1000,1),rps=Math.max((rev-pr)/el,0);
-pr=rev;pt=now;
-const dy=rps*86400,hr=rps*3600;
-document.getElementById('ov1').textContent=fmt(rev);
-document.getElementById('ov1s').textContent=fmt(rps)+'/sec';
-document.getElementById('ov2').textContent=fn(d.ingestion?d.ingestion.totalEvents:0);
-document.getElementById('ov2s').textContent=(d.ingestion?d.ingestion.sources:8)+' sources active';
-document.getElementById('ov3').textContent=fmt(dy);
-document.getElementById('ov3s').textContent=fmt(hr)+'/hr';
-if(d.edab&&d.edab.streams){
-const st=d.edab.streams;
-['s1','rs1'].forEach(i=>document.getElementById(i).textContent=fmt(st.eventProcessing));
-['s2','rs2'].forEach(i=>document.getElementById(i).textContent=fmt(st.intelligenceLicense));
-['s3','rs3'].forEach(i=>document.getElementById(i).textContent=fmt(st.dataProduct));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M7-77 Sovereign Command Center</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+
+:root {
+  --bg: #040810;
+  --bg2: #070d1a;
+  --bg3: #0a1220;
+  --border: #0f2040;
+  --border2: #1a3060;
+  --green: #00cfff;
+  --green2: #00aaee;
+  --blue: #00aaff;
+  --gold: #ffd700;
+  --red: #ff3344;
+  --purple: #aa44ff;
+  --text: #c8d8e8;
+  --muted: #4a6080;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
 }
-document.getElementById('r1').textContent=fmt(rev);
-document.getElementById('r2').textContent=fmt(rps);
-document.getElementById('r3').textContent=fmt(rps*60);
-document.getElementById('r4').textContent=fmt(hr);
-document.getElementById('r5').textContent=fmt(dy);
-document.getElementById('r6').textContent=fmt(dy*30);
-document.getElementById('r7').textContent=fmt(dy*365);
-document.getElementById('rb').textContent=fn(d.edab?d.edab.totalEvents:0);
-document.getElementById('tb').textContent=fmt(rev);
-document.getElementById('et').textContent=fn(d.ingestion?d.ingestion.totalEvents:0);
-if(d.recentEvents&&d.recentEvents.length>0){ae=d.recentEvents;uf();ul(ae);}
-}catch(e){}}
-function uf(){
-['feed1','feed2'].forEach(id=>{
-const f=document.getElementById(id);if(!f)return;
-f.innerHTML='';
-const ev=id==='feed2'?ae.slice().reverse():ae.slice(-15).reverse();
-ev.forEach(e=>{
-const d=document.createElement('div');d.className='fi';
-const t=e.total?parseFloat(e.total).toFixed(2):'0.00';
-d.innerHTML=`<span><span class="dp ${e.domain||'tech'}">${(e.domain||'UNK').toUpperCase()}</span>${e.type||'EVENT'}</span><span style="color:var(--ac)">\$${t}</span>`;
-f.appendChild(d);});});}
-function ul(ev){
-const b=document.getElementById('lb');if(!b)return;b.innerHTML='';
-ev.slice().reverse().slice(0,20).forEach(e=>{
-const f=parseFloat(e.value)||0.50;const r=document.createElement('tr');
-r.innerHTML=`<td style="color:var(--muted)">${new Date(e.timestamp||Date.now()).toISOString().substr(11,8)}</td><td><span class="dp ${e.domain||'tech'}">${(e.domain||'UNK').toUpperCase()}</span></td><td>${e.type||'EVENT'}</td><td style="color:var(--ac)">\$${f.toFixed(2)}</td><td style="color:var(--blue)">\$${(f*5).toFixed(2)}</td><td style="color:var(--gold)">\$${(f*20).toFixed(2)}</td><td style="color:var(--ac);font-weight:bold">\$${(f*26).toFixed(2)}</td><td><span class="badge">SETTLED</span></td>`;
-b.appendChild(r);});}
-function addRoute(){const n=document.getElementById('an').value;if(!n){notif('Enter name');return;}const r=document.getElementById('rails');const i=document.createElement('div');i.className='ri';i.innerHTML=`<div><div class="rn">${n.toUpperCase()}</div><div class="rd">${document.getElementById('aa').value||'Pending'}</div></div><div class="ra">● CONFIGURED</div>`;r.appendChild(i);notif('Route added');}
-function doTransfer(){const a=document.getElementById('ta').value;if(!a){notif('Enter amount');return;}notif('Transfer $'+parseFloat(a).toFixed(2)+' authorized');}
-function savePrice(){const e=parseFloat(document.getElementById('pe').value);const i=parseFloat(document.getElementById('pi').value);const d=parseFloat(document.getElementById('pd').value);const t=(e+e*i+e*d).toFixed(2);document.getElementById('ps').textContent=`\$${e} → \$${(e*i).toFixed(2)} → \$${(e*d).toFixed(2)} = \$${t}/event`;notif('Pricing saved — \$'+t+'/event');}
-fd();setInterval(fd,5000);
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scanline effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,207,255,0.01) 2px, rgba(0,207,255,0.01) 4px);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* HEADER */
+header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--green);
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px rgba(0,207,255,0.5);
+}
+
+.logo span { color: var(--muted); font-weight: 400; }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--green);
+}
+
+.pulse {
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+  box-shadow: 0 0 8px var(--green);
+}
+
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.8);} }
+
+#clock {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+/* NAV TABS */
+.nav-tabs {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  padding: 0 24px;
+  gap: 4px;
+}
+
+.tab {
+  padding: 10px 20px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--green); border-bottom-color: var(--green); }
+
+/* PANELS */
+.panel { display: none; padding: 20px; }
+.panel.active { display: block; }
+
+/* GRID */
+.grid { display: grid; gap: 16px; }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.span2 { grid-column: span 2; }
+.span3 { grid-column: span 3; }
+.span4 { grid-column: span 4; }
+
+@media(max-width:1200px) { .grid-4{grid-template-columns:repeat(2,1fr);} .span4{grid-column:span 2;} }
+@media(max-width:768px) { .grid-4,.grid-3,.grid-2{grid-template-columns:1fr;} .span2,.span3,.span4{grid-column:span 1;} }
+
+/* CARDS */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  opacity: 0.4;
+}
+
+.card-title {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* METRICS */
+.big-metric { margin-bottom: 8px; }
+.big-metric .label { font-size: 0.7rem; color: var(--muted); font-family: var(--font-mono); margin-bottom: 4px; }
+.big-metric .value { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--green); text-shadow: 0 0 20px rgba(0,207,255,0.3); }
+.big-metric .value.gold { color: var(--gold); text-shadow: 0 0 20px rgba(255,215,0,0.3); }
+.big-metric .value.blue { color: var(--blue); text-shadow: 0 0 20px rgba(0,170,255,0.3); }
+.big-metric .value.red { color: var(--red); }
+.big-metric .sub { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+
+.metric-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.metric-row:last-child { border-bottom: none; }
+.metric-row .k { font-size: 0.75rem; color: var(--muted); font-family: var(--font-mono); }
+.metric-row .v { font-size: 0.85rem; color: var(--text); font-family: var(--font-mono); font-weight: 600; }
+.metric-row .v.green { color: var(--green); }
+.metric-row .v.gold { color: var(--gold); }
+.metric-row .v.blue { color: var(--blue); }
+.metric-row .v.red { color: var(--red); }
+
+/* STREAMS */
+.stream-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px; }
+.stream-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px;
+  text-align: center;
+}
+.stream-box .sv { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--green); }
+.stream-box .sl { font-size: 0.6rem; color: var(--muted); font-family: var(--font-mono); margin-top: 4px; letter-spacing: 1px; }
+
+/* PROGRESS BAR */
+.prog-row { margin-bottom: 12px; }
+.prog-label { display: flex; justify-content: space-between; font-size: 0.72rem; font-family: var(--font-mono); color: var(--muted); margin-bottom: 5px; }
+.prog-label span:last-child { color: var(--green); }
+.prog-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 2px; background: var(--green); transition: width 1.5s ease; }
+.prog-fill.blue { background: var(--blue); }
+.prog-fill.gold { background: var(--gold); }
+.prog-fill.purple { background: var(--purple); }
+
+/* EVENT FEED */
+.feed {
+  height: 260px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.feed::-webkit-scrollbar { width: 4px; }
+.feed::-webkit-scrollbar-track { background: var(--bg3); }
+.feed::-webkit-scrollbar-thumb { background: var(--border2); }
+
+.feed-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn { from{opacity:0;transform:translateY(-4px);} to{opacity:1;transform:translateY(0);} }
+
+.domain-pill {
+  padding: 2px 7px;
+  border-radius: 2px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-right: 8px;
+}
+
+.pill-finance { background: rgba(0,207,255,0.1); color: var(--green); border: 1px solid rgba(0,207,255,0.3); }
+.pill-tech { background: rgba(0,170,255,0.1); color: var(--blue); border: 1px solid rgba(0,170,255,0.3); }
+.pill-ai { background: rgba(170,68,255,0.1); color: var(--purple); border: 1px solid rgba(170,68,255,0.3); }
+.pill-social { background: rgba(255,215,0,0.1); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+.pill-government { background: rgba(255,51,68,0.1); color: var(--red); border: 1px solid rgba(255,51,68,0.3); }
+.pill-energy { background: rgba(0,255,200,0.1); color: #00ffc8; border: 1px solid rgba(0,255,200,0.3); }
+.pill-health { background: rgba(255,150,0,0.1); color: #ff9600; border: 1px solid rgba(255,150,0,0.3); }
+
+/* LEDGER TABLE */
+.ledger-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.68rem; }
+.ledger-table th { padding: 8px 10px; text-align: left; color: var(--muted); border-bottom: 1px solid var(--border2); font-weight: 400; letter-spacing: 1px; }
+.ledger-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.ledger-table tr:hover td { background: rgba(0,207,255,0.03); }
+.badge { padding: 2px 8px; border-radius: 2px; font-size: 0.6rem; font-weight: 700; }
+.badge-settled { background: rgba(0,207,255,0.15); color: var(--green); }
+.badge-pending { background: rgba(255,215,0,0.15); color: var(--gold); }
+
+/* FORMS */
+.form-group { margin-bottom: 16px; }
+.form-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 1px; margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--green); }
+.form-select {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* BUTTONS */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.btn:hover { transform: translateY(-1px); filter: brightness(1.2); }
+.btn:active { transform: translateY(0); }
+.btn-primary { background: var(--green); color: var(--bg); }
+.btn-danger { background: var(--red); color: white; }
+.btn-secondary { background: var(--border2); color: var(--text); }
+.btn-gold { background: var(--gold); color: var(--bg); }
+.btn-blue { background: var(--blue); color: var(--bg); }
+.btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+/* TOGGLE */
+.toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.toggle-row:last-child { border-bottom: none; }
+.toggle-label { font-size: 0.8rem; color: var(--text); }
+.toggle-sub { font-size: 0.65rem; color: var(--muted); font-family: var(--font-mono); }
+.toggle {
+  width: 44px; height: 24px;
+  background: var(--border2);
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s;
+  flex-shrink: 0;
+}
+.toggle.on { background: var(--green); }
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+.toggle.on::after { transform: translateX(20px); }
+
+/* TREASURY ROUTING */
+.route-item {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.route-info .name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+.route-info .detail { font-size: 0.65rem; color: var(--muted); font-family: var(--font-mono); margin-top: 2px; }
+.route-status { font-size: 0.65rem; font-family: var(--font-mono); }
+.route-status.active { color: var(--green); }
+.route-status.standby { color: var(--gold); }
+
+/* ALERT */
+.alert {
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  margin-bottom: 12px;
+  border-left: 3px solid;
+}
+.alert-success { background: rgba(0,207,255,0.05); border-color: var(--green); color: var(--green); }
+.alert-warning { background: rgba(255,215,0,0.05); border-color: var(--gold); color: var(--gold); }
+.alert-info { background: rgba(0,170,255,0.05); border-color: var(--blue); color: var(--blue); }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* NOTIFICATION */
+#notification {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: var(--bg2);
+  border: 1px solid var(--green);
+  border-radius: 4px;
+  padding: 12px 20px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--green);
+  z-index: 9998;
+  transform: translateX(200px);
+  opacity: 0;
+  transition: all 0.3s;
+  max-width: 300px;
+}
+#notification.show { transform: translateX(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">M7-77 <span>// SOVEREIGN COMMAND</span></div>
+  <div class="header-right">
+    <div class="live-badge"><div class="pulse"></div> LIVE SYSTEM</div>
+    <div id="clock">--:--:-- UTC</div>
+  </div>
+</header>
+
+<div class="nav-tabs">
+  <button class="tab active" onclick="switchTab('overview')">OVERVIEW</button>
+  <button class="tab" onclick="switchTab('revenue')">REVENUE</button>
+  <button class="tab" onclick="switchTab('events')">EVENTS</button>
+  <button class="tab" onclick="switchTab('treasury')">TREASURY</button>
+  <button class="tab" onclick="switchTab('control')">CONTROL</button>
+  <button class="tab" onclick="switchTab('settings')">SETTINGS</button>
+</div>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<div id="panel-overview" class="panel active">
+  <div class="grid grid-4">
+
+    <div class="card">
+      <div class="card-title">💰 TOTAL BILLED</div>
+      <div class="big-metric">
+        <div class="label">ALL STREAMS COMBINED</div>
+        <div class="value" id="ov-total">$0.00</div>
+        <div class="sub" id="ov-rps">$0.00 / sec</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📡 REAL EVENTS</div>
+      <div class="big-metric">
+        <div class="label">FROM LIVE INTERNET</div>
+        <div class="value blue" id="ov-events">0</div>
+        <div class="sub" id="ov-sources">8 sources active</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📈 EST. DAILY</div>
+      <div class="big-metric">
+        <div class="label">PROJECTED 24H REVENUE</div>
+        <div class="value gold" id="ov-daily">$0.00</div>
+        <div class="sub" id="ov-hourly">$0/hr</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🛡️ COMPLIANCE</div>
+      <div class="big-metric">
+        <div class="label">SYSTEM STATUS</div>
+        <div class="value" id="ov-compliance">100%</div>
+        <div class="sub">FULLY COMPLIANT</div>
+      </div>
+    </div>
+
+    <!-- 3 Streams -->
+    <div class="card span2">
+      <div class="card-title">⚡ 3 REVENUE STREAMS — LIVE</div>
+      <div class="stream-grid">
+        <div class="stream-box">
+          <div class="sv" id="s1">$0</div>
+          <div class="sl">EVENT PROCESSING</div>
+        </div>
+        <div class="stream-box">
+          <div class="sv" id="s2">$0</div>
+          <div class="sl">INTELLIGENCE LICENSE</div>
+        </div>
+        <div class="stream-box">
+          <div class="sv" id="s3">$0</div>
+          <div class="sl">DATA PRODUCTS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Managers -->
+    <div class="card span2">
+      <div class="card-title">🤖 AI MANAGERS — PERFORMANCE</div>
+      <div id="ai-bars">
+        <div class="prog-row"><div class="prog-label"><span>Finance Domain</span><span id="p1">85%</span></div><div class="prog-bar"><div class="prog-fill" id="pb1" style="width:85%"></div></div></div>
+        <div class="prog-row"><div class="prog-label"><span>Tech Domain</span><span id="p2">82%</span></div><div class="prog-bar"><div class="prog-fill blue" id="pb2" style="width:82%"></div></div></div>
+        <div class="prog-row"><div class="prog-label"><span>AI & Intelligence</span><span id="p3">88%</span></div><div class="prog-bar"><div class="prog-fill gold" id="pb3" style="width:88%"></div></div></div>
+        <div class="prog-row"><div class="prog-label"><span>Cross-Domain</span><span id="p4">86%</span></div><div class="prog-bar"><div class="prog-fill purple" id="pb4" style="width:86%"></div></div></div>
+      </div>
+    </div>
+
+    <!-- Live Feed -->
+    <div class="card span4">
+      <div class="card-title">📡 LIVE EVENT FEED — REAL INTERNET DATA</div>
+      <div class="feed" id="live-feed">
+        <div class="feed-item"><span style="color:var(--muted)">Connecting to real event streams...</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════ REVENUE ═══════════════ -->
+<div id="panel-revenue" class="panel">
+  <div class="grid grid-3">
+
+    <div class="card">
+      <div class="card-title">💰 REVENUE SUMMARY</div>
+      <div class="metric-row"><span class="k">TOTAL BILLED</span><span class="v green" id="rev-total">$0.00</span></div>
+      <div class="metric-row"><span class="k">PER SECOND</span><span class="v gold" id="rev-rps">$0.00</span></div>
+      <div class="metric-row"><span class="k">PER MINUTE</span><span class="v" id="rev-rpm">$0.00</span></div>
+      <div class="metric-row"><span class="k">PER HOUR</span><span class="v" id="rev-rph">$0.00</span></div>
+      <div class="metric-row"><span class="k">PER DAY</span><span class="v gold" id="rev-rpd">$0.00</span></div>
+      <div class="metric-row"><span class="k">PER MONTH</span><span class="v" id="rev-rpm2">$0.00</span></div>
+      <div class="metric-row"><span class="k">PER YEAR</span><span class="v green" id="rev-rpy">$0.00</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚡ STREAM BREAKDOWN</div>
+      <div class="metric-row"><span class="k">STREAM 1 — EVENT PROCESSING</span><span class="v green" id="rs1">$0</span></div>
+      <div class="metric-row"><span class="k">STREAM 2 — INTELLIGENCE</span><span class="v blue" id="rs2">$0</span></div>
+      <div class="metric-row"><span class="k">STREAM 3 — DATA PRODUCTS</span><span class="v gold" id="rs3">$0</span></div>
+      <div style="margin-top:16px;">
+        <div class="prog-row"><div class="prog-label"><span>Stream 1 Share</span><span>~3.8%</span></div><div class="prog-bar"><div class="prog-fill" style="width:3.8%"></div></div></div>
+        <div class="prog-row"><div class="prog-label"><span>Stream 2 Share</span><span>~19.2%</span></div><div class="prog-bar"><div class="prog-fill blue" style="width:19.2%"></div></div></div>
+        <div class="prog-row"><div class="prog-label"><span>Stream 3 Share</span><span>~76.9%</span></div><div class="prog-bar"><div class="prog-fill gold" style="width:76.9%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 BILLING ENGINE STATUS</div>
+      <div class="metric-row"><span class="k">TOTAL EVENTS BILLED</span><span class="v green" id="rev-billed">0</span></div>
+      <div class="metric-row"><span class="k">ENGINE STATUS</span><span class="v green">ACTIVE</span></div>
+      <div class="metric-row"><span class="k">BILLING MODE</span><span class="v blue">EDAB — AUTONOMOUS</span></div>
+      <div class="metric-row"><span class="k">PAYMENT RAIL</span><span class="v gold">SOVEREIGN TREASURY</span></div>
+      <div class="metric-row"><span class="k">STRIPE DEPENDENCY</span><span class="v red">NONE</span></div>
+      <div class="metric-row"><span class="k">LEDGER TYPE</span><span class="v green">CRYPTOGRAPHIC CHAIN</span></div>
+    </div>
+
+    <!-- Ledger -->
+    <div class="card span3">
+      <div class="card-title">📋 RECENT LEDGER ENTRIES</div>
+      <div style="overflow-x:auto;">
+        <table class="ledger-table">
+          <thead>
+            <tr>
+              <th>TIMESTAMP</th>
+              <th>DOMAIN</th>
+              <th>TYPE</th>
+              <th>EVENT FEE</th>
+              <th>INTEL FEE</th>
+              <th>DATA FEE</th>
+              <th>TOTAL</th>
+              <th>STATUS</th>
+            </tr>
+          </thead>
+          <tbody id="ledger-body">
+            <tr><td colspan="8" style="color:var(--muted);text-align:center;padding:20px;">Loading ledger...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════ EVENTS ═══════════════ -->
+<div id="panel-events" class="panel">
+  <div class="grid grid-2">
+
+    <div class="card">
+      <div class="card-title">🌐 INGESTION STATUS</div>
+      <div class="metric-row"><span class="k">TOTAL EVENTS DETECTED</span><span class="v green" id="ev-total">0</span></div>
+      <div class="metric-row"><span class="k">SOURCES ACTIVE</span><span class="v blue" id="ev-sources">8</span></div>
+      <div class="metric-row"><span class="k">DOMAINS MONITORED</span><span class="v gold">7</span></div>
+      <div class="metric-row"><span class="k">REFRESH INTERVAL</span><span class="v">30 SECONDS</span></div>
+      <div class="metric-row"><span class="k">STATUS</span><span class="v green" id="ev-status">RUNNING</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📡 DOMAIN BREAKDOWN</div>
+      <div class="prog-row"><div class="prog-label"><span>Finance</span><span id="d1">Active</span></div><div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div></div>
+      <div class="prog-row"><div class="prog-label"><span>Tech</span><span>Active</span></div><div class="prog-bar"><div class="prog-fill blue" style="width:100%"></div></div></div>
+      <div class="prog-row"><div class="prog-label"><span>AI</span><span>Active</span></div><div class="prog-bar"><div class="prog-fill purple" style="width:100%"></div></div></div>
+      <div class="prog-row"><div class="prog-label"><span>Social</span><span>Active</span></div><div class="prog-bar"><div class="prog-fill gold" style="width:100%"></div></div></div>
+      <div class="prog-row"><div class="prog-label"><span>Government</span><span>Active</span></div><div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--red)"></div></div></div>
+      <div class="prog-row"><div class="prog-label"><span>Energy</span><span>Active</span></div><div class="prog-bar"><div class="prog-fill" style="width:100%;background:#00ffc8"></div></div></div>
+    </div>
+
+    <div class="card span2">
+      <div class="card-title">📡 FULL LIVE EVENT FEED</div>
+      <div class="feed" style="height:400px;" id="full-feed">
+        <div class="feed-item"><span style="color:var(--muted)">Loading live events...</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════ TREASURY ═══════════════ -->
+<div id="panel-treasury" class="panel">
+  <div class="grid grid-2">
+
+    <div class="card">
+      <div class="card-title">🏦 TREASURY BALANCE</div>
+      <div class="big-metric">
+        <div class="label">SOVEREIGN INTERNAL BALANCE</div>
+        <div class="value" id="tr-balance">$0.00</div>
+        <div class="sub">LEDGER-VERIFIED — CRYPTOGRAPHIC</div>
+      </div>
+      <div style="margin-top:16px;">
+        <div class="metric-row"><span class="k">PENDING TRANSFERS</span><span class="v gold" id="tr-pending">0</span></div>
+        <div class="metric-row"><span class="k">COMPLETED TRANSFERS</span><span class="v green" id="tr-completed">0</span></div>
+        <div class="metric-row"><span class="k">TREASURY MODE</span><span class="v blue">SOVEREIGN</span></div>
+        <div class="metric-row"><span class="k">STRIPE DEPENDENCY</span><span class="v red">NONE</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📤 FUND ROUTING — ADD ACCOUNT</div>
+      <div class="form-group">
+        <label class="form-label">ACCOUNT TYPE</label>
+        <select class="form-select" id="account-type">
+          <option value="bank">Bank Account (ACH/SWIFT)</option>
+          <option value="crypto">Crypto Wallet</option>
+          <option value="stablecoin">Stablecoin (USDC)</option>
+          <option value="internal">Internal M7 Hold</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">ACCOUNT NAME</label>
+          <input class="form-input" placeholder="e.g. SECKA PRIMARY" id="acc-name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ROUTING / ADDRESS</label>
+          <input class="form-input" placeholder="Account number or wallet" id="acc-address">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ALLOCATION %</label>
+        <input class="form-input" type="number" placeholder="e.g. 100" id="acc-allocation" min="0" max="100">
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="addAccount()">ADD ROUTE</button>
+        <button class="btn btn-secondary" onclick="notify('Route saved to treasury config')">SAVE CONFIG</button>
+      </div>
+    </div>
+
+    <!-- Active Routes -->
+    <div class="card span2">
+      <div class="card-title">🔀 ACTIVE ROUTING RAILS</div>
+      <div id="routing-rails">
+        <div class="route-item">
+          <div class="route-info">
+            <div class="name">M7 INTERNAL SOVEREIGN HOLD</div>
+            <div class="detail">All revenue held in M7 treasury ledger until routed</div>
+          </div>
+          <div class="route-status active">● PRIMARY ACTIVE</div>
+        </div>
+        <div class="route-item">
+          <div class="route-info">
+            <div class="name">CRYPTO WALLET RAIL</div>
+            <div class="detail">Configure wallet address above to activate</div>
+          </div>
+          <div class="route-status standby">○ STANDBY</div>
+        </div>
+        <div class="route-item">
+          <div class="route-info">
+            <div class="name">ACH / SWIFT BANK RAIL</div>
+            <div class="detail">Configure bank account above to activate</div>
+          </div>
+          <div class="route-status standby">○ STANDBY</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div class="section-title">MANUAL TRANSFER</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">AMOUNT ($)</label>
+            <input class="form-input" type="number" placeholder="Amount to transfer" id="transfer-amount">
+          </div>
+          <div class="form-group">
+            <label class="form-label">DESTINATION</label>
+            <select class="form-select" id="transfer-dest">
+              <option>M7 Internal Hold</option>
+              <option>Crypto Wallet</option>
+              <option>Bank Account</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-gold" onclick="authorizeTransfer()">AUTHORIZE TRANSFER</button>
+          <button class="btn btn-secondary" onclick="notify('Transfer cancelled')">CANCEL</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════ CONTROL ═══════════════ -->
+<div id="panel-control" class="panel">
+  <div class="grid grid-2">
+
+    <div class="card">
+      <div class="card-title">⚙️ SYSTEM CONTROLS</div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Real Event Ingestion</div><div class="toggle-sub">Live internet data feeds</div></div>
+        <div class="toggle on" onclick="this.classList.toggle('on'); notify('Event ingestion toggled')"></div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">EDAB Billing Engine</div><div class="toggle-sub">Autonomous billing per event</div></div>
+        <div class="toggle on" onclick="this.classList.toggle('on'); notify('Billing engine toggled')"></div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">AI Self-Evolution</div><div class="toggle-sub">Manager performance optimization</div></div>
+        <div class="toggle on" onclick="this.classList.toggle('on'); notify('Self-evolution toggled')"></div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Cross-Domain Correlation</div><div class="toggle-sub">Multi-domain intelligence synthesis</div></div>
+        <div class="toggle on" onclick="this.classList.toggle('on'); notify('Correlation toggled')"></div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Compliance Monitoring</div><div class="toggle-sub">Real-time audit and compliance</div></div>
+        <div class="toggle on" onclick="this.classList.toggle('on'); notify('Compliance toggled')"></div>
+      </div>
+      <div class="btn-group" style="margin-top:16px;">
+        <button class="btn btn-danger" onclick="notify('Emergency stop initiated — confirm required')">EMERGENCY STOP</button>
+        <button class="btn btn-primary" onclick="notify('System restart initiated')">RESTART</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💲 PRICING RULES</div>
+      <div class="form-group">
+        <label class="form-label">EVENT PROCESSING FEE ($)</label>
+        <input class="form-input" type="number" step="0.01" value="0.50" id="price-event">
+      </div>
+      <div class="form-group">
+        <label class="form-label">INTELLIGENCE LICENSE FEE (MULTIPLIER)</label>
+        <input class="form-input" type="number" step="0.1" value="5" id="price-intel">
+      </div>
+      <div class="form-group">
+        <label class="form-label">DATA PRODUCT FEE (MULTIPLIER)</label>
+        <input class="form-input" type="number" step="0.1" value="20" id="price-data">
+      </div>
+      <div class="alert alert-info">Current: $0.50 event → $2.50 intel → $10.00 data = $13.00 total per event</div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="savePricing()">SAVE PRICING</button>
+        <button class="btn btn-secondary" onclick="notify('Pricing reset to defaults')">RESET DEFAULTS</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">✅ APPROVAL QUEUE</div>
+      <div class="alert alert-warning">Intelligence License: Requires manual approval</div>
+      <div class="metric-row"><span class="k">PENDING APPROVALS</span><span class="v gold">0</span></div>
+      <div class="metric-row"><span class="k">AUTO-APPROVE EVENT FEE</span><span class="v green">YES</span></div>
+      <div class="metric-row"><span class="k">AUTO-APPROVE DATA PRODUCTS</span><span class="v gold">OPTIONAL</span></div>
+      <div class="toggle-row" style="margin-top:8px;">
+        <div><div class="toggle-label">Auto-approve Intelligence Licenses</div></div>
+        <div class="toggle" onclick="this.classList.toggle('on'); notify('Auto-approve updated')"></div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Auto-approve Data Products</div></div>
+        <div class="toggle on" onclick="this.classList.toggle('on'); notify('Auto-approve updated')"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 DOMAIN CONTROLS</div>
+      <div class="toggle-row"><div><div class="toggle-label">Finance Domain</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-label">Tech Domain</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-label">AI & Intelligence Domain</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-label">Social & Sentiment Domain</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-label">Government & Policy Domain</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-label">Energy Domain</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-label">Healthcare Domain</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════ SETTINGS ═══════════════ -->
+<div id="panel-settings" class="panel">
+  <div class="grid grid-2">
+
+    <div class="card">
+      <div class="card-title">🔐 SYSTEM IDENTITY</div>
+      <div class="form-group">
+        <label class="form-label">SYSTEM NAME</label>
+        <input class="form-input" value="M7-77" id="sys-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">OWNER IDENTITY</label>
+        <input class="form-input" value="SECKA" id="sys-owner">
+      </div>
+      <div class="form-group">
+        <label class="form-label">DPI FRAMEWORK ID</label>
+        <input class="form-input" value="DPI-M7-77-SOVEREIGN" id="sys-dpi">
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="notify('Identity saved')">SAVE IDENTITY</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌐 DATA SOURCE SETTINGS</div>
+      <div class="form-group">
+        <label class="form-label">FETCH INTERVAL (SECONDS)</label>
+        <input class="form-input" type="number" value="30" id="fetch-interval">
+      </div>
+      <div class="form-group">
+        <label class="form-label">MAX EVENTS PER FETCH</label>
+        <input class="form-input" type="number" value="10" id="max-events">
+      </div>
+      <div class="form-group">
+        <label class="form-label">LEDGER MAX ENTRIES (MEMORY)</label>
+        <input class="form-input" type="number" value="1000" id="ledger-max">
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="notify('Source settings saved')">SAVE SETTINGS</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔔 ALERT THRESHOLDS</div>
+      <div class="form-group">
+        <label class="form-label">REVENUE ALERT THRESHOLD ($)</label>
+        <input class="form-input" type="number" value="10000" id="alert-rev">
+      </div>
+      <div class="form-group">
+        <label class="form-label">EVENT RATE ALERT (EVENTS/MIN)</label>
+        <input class="form-input" type="number" value="100" id="alert-rate">
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Email Alerts</div></div>
+        <div class="toggle" onclick="this.classList.toggle('on'); notify('Email alerts toggled')"></div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="toggle-label">Dashboard Notifications</div></div>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="notify('Alert settings saved')">SAVE ALERTS</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💾 SYSTEM INFO</div>
+      <div class="metric-row"><span class="k">VERSION</span><span class="v green">M7-77 v1.0</span></div>
+      <div class="metric-row"><span class="k">FRAMEWORK</span><span class="v blue">DPI SOVEREIGN</span></div>
+      <div class="metric-row"><span class="k">DEPLOYMENT</span><span class="v">RAILWAY.APP — LIVE</span></div>
+      <div class="metric-row"><span class="k">BILLING ENGINE</span><span class="v green">EDAB — AUTONOMOUS</span></div>
+      <div class="metric-row"><span class="k">PAYMENT RAILS</span><span class="v gold">SOVEREIGN — NO STRIPE</span></div>
+      <div class="metric-row"><span class="k">OWNER</span><span class="v green">SECKA © 2026</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Notification -->
+<div id="notification"></div>
+
+<script>
+// ═══ STATE ═══
+let prevRevenue = 0;
+let prevTime = Date.now();
+let allEvents = [];
+
+// ═══ CLOCK ═══
+function updateClock() {
+  document.getElementById('clock').textContent = new Date().toUTCString().replace('GMT', 'UTC');
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ═══ TABS ═══
+function switchTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ═══ NOTIFICATION ═══
+function notify(msg) {
+  const el = document.getElementById('notification');
+  el.textContent = '✓ ' + msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ═══ FORMAT ═══
+function fmt(n) {
+  n = parseFloat(n) || 0;
+  if (n >= 1000000000) return '$' + (n/1000000000).toFixed(2) + 'B';
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+  if (n >= 1000) return '$' + (n/1000).toFixed(2) + 'K';
+  return '$' + n.toFixed(2);
+}
+
+function fmtNum(n) {
+  return (parseInt(n) || 0).toLocaleString();
+}
+
+// ═══ FETCH DATA ═══
+async function fetchData() {
+  try {
+    const res = await fetch('/api/status');
+    const data = await res.json();
+
+    const rev = data.edab ? (parseFloat(data.edab.totalBilled) || 0) : 0;
+    const now = Date.now();
+    const elapsed = Math.max((now - prevTime) / 1000, 1);
+    const rps = Math.max((rev - prevRevenue) / elapsed, 0);
+    prevRevenue = rev;
+    prevTime = now;
+
+    const daily = rps * 86400;
+    const hourly = rps * 3600;
+
+    // Overview
+    document.getElementById('ov-total').textContent = fmt(rev);
+    document.getElementById('ov-rps').textContent = fmt(rps) + ' / sec';
+    document.getElementById('ov-events').textContent = fmtNum(data.ingestion ? data.ingestion.totalEvents : 0);
+    document.getElementById('ov-sources').textContent = (data.ingestion ? data.ingestion.sources : 8) + ' sources active';
+    document.getElementById('ov-daily').textContent = fmt(daily);
+    document.getElementById('ov-hourly').textContent = fmt(hourly) + '/hr';
+
+    if (data.edab && data.edab.streams) {
+      document.getElementById('s1').textContent = fmt(data.edab.streams.eventProcessing);
+      document.getElementById('s2').textContent = fmt(data.edab.streams.intelligenceLicense);
+      document.getElementById('s3').textContent = fmt(data.edab.streams.dataProduct);
+      document.getElementById('rs1').textContent = fmt(data.edab.streams.eventProcessing);
+      document.getElementById('rs2').textContent = fmt(data.edab.streams.intelligenceLicense);
+      document.getElementById('rs3').textContent = fmt(data.edab.streams.dataProduct);
+    }
+
+    // Revenue panel
+    document.getElementById('rev-total').textContent = fmt(rev);
+    document.getElementById('rev-rps').textContent = fmt(rps);
+    document.getElementById('rev-rpm').textContent = fmt(rps * 60);
+    document.getElementById('rev-rph').textContent = fmt(hourly);
+    document.getElementById('rev-rpd').textContent = fmt(daily);
+    document.getElementById('rev-rpm2').textContent = fmt(daily * 30);
+    document.getElementById('rev-rpy').textContent = fmt(daily * 365);
+    document.getElementById('rev-billed').textContent = fmtNum(data.edab ? data.edab.totalEvents : 0);
+
+    // Treasury
+    document.getElementById('tr-balance').textContent = fmt(rev);
+
+    // Events panel
+    document.getElementById('ev-total').textContent = fmtNum(data.ingestion ? data.ingestion.totalEvents : 0);
+
+    // Live feed
+    if (data.recentEvents && data.recentEvents.length > 0) {
+      allEvents = data.recentEvents;
+      updateFeeds();
+      updateLedger(data.recentEvents);
+    }
+
+  } catch(e) {
+    // Reconnecting
+  }
+}
+
+function updateFeeds() {
+  const feeds = ['live-feed', 'full-feed'];
+  feeds.forEach(id => {
+    const feed = document.getElementById(id);
+    if (!feed) return;
+    feed.innerHTML = '';
+    const events = id === 'full-feed' ? allEvents.slice().reverse() : allEvents.slice(-12).reverse();
+    events.forEach(e => {
+      const div = document.createElement('div');
+      div.className = 'feed-item';
+      const total = e.total ? parseFloat(e.total).toFixed(2) : '0.00';
+      div.innerHTML = `
+        <span>
+          <span class="domain-pill pill-${e.domain || 'tech'}">${(e.domain || 'UNKNOWN').toUpperCase()}</span>
+          <span style="color:var(--text)">${e.type || 'EVENT'}</span>
+        </span>
+        <span style="color:var(--green);font-family:var(--font-mono)">$${total}</span>
+      `;
+      feed.appendChild(div);
+    });
+  });
+}
+
+function updateLedger(events) {
+  const tbody = document.getElementById('ledger-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  events.slice().reverse().slice(0, 20).forEach(e => {
+    const fee = parseFloat(e.value) || 0.50;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:var(--muted)">${new Date(e.timestamp || Date.now()).toISOString().substr(11,8)}</td>
+      <td><span class="domain-pill pill-${e.domain || 'tech'}">${(e.domain||'UNKNOWN').toUpperCase()}</span></td>
+      <td style="color:var(--text)">${e.type || 'EVENT'}</td>
+      <td style="color:var(--green)">$${fee.toFixed(2)}</td>
+      <td style="color:var(--blue)">$${(fee*5).toFixed(2)}</td>
+      <td style="color:var(--gold)">$${(fee*20).toFixed(2)}</td>
+      <td style="color:var(--green);font-weight:bold">$${(fee*26).toFixed(2)}</td>
+      <td><span class="badge badge-settled">SETTLED</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ═══ TREASURY ═══
+function addAccount() {
+  const name = document.getElementById('acc-name').value;
+  const type = document.getElementById('account-type').value;
+  if (!name) { notify('Please enter account name'); return; }
+  const rails = document.getElementById('routing-rails');
+  const item = document.createElement('div');
+  item.className = 'route-item';
+  item.innerHTML = `
+    <div class="route-info">
+      <div class="name">${name.toUpperCase()} — ${type.toUpperCase()}</div>
+      <div class="detail">${document.getElementById('acc-address').value || 'Address pending'} | ${document.getElementById('acc-allocation').value || 100}% allocation</div>
+    </div>
+    <div class="route-status active">● CONFIGURED</div>
+  `;
+  rails.appendChild(item);
+  notify('Account route added: ' + name);
+}
+
+function authorizeTransfer() {
+  const amount = document.getElementById('transfer-amount').value;
+  const dest = document.getElementById('transfer-dest').value;
+  if (!amount) { notify('Enter transfer amount'); return; }
+  notify('Transfer of $' + parseFloat(amount).toFixed(2) + ' authorized to ' + dest);
+}
+
+// ═══ PRICING ═══
+function savePricing() {
+  const ev = document.getElementById('price-event').value;
+  const intel = document.getElementById('price-intel').value;
+  const data = document.getElementById('price-data').value;
+  const total = (parseFloat(ev) + parseFloat(ev)*parseFloat(intel) + parseFloat(ev)*parseFloat(data)).toFixed(2);
+  document.querySelector('.alert-info').textContent = `Current: $${ev} event → $${(ev*intel).toFixed(2)} intel → $${(ev*data).toFixed(2)} data = $${total} total per event`;
+  notify('Pricing rules saved — $' + total + ' per event');
+}
+
+// ═══ START ═══
+fetchData();
+setInterval(fetchData, 5000);
 </script>
-</body></html>
+</body>
+</html>
