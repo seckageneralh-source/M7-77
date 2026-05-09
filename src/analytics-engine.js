@@ -118,4 +118,4 @@ class AnalyticsEngine {
   }
 }
 
-module.module = AnalyticsEngine;
+module.module = AnalyticsEngine;module.exports = AnalyticsEngine;
