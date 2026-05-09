@@ -16,9 +16,11 @@ class DashboardAPI {
   setupRoutes() {
     const path = require('path');
     app.use(require('express').static(path.join(__dirname, '../public')));
+    app.get('/', (req, res) => { res.sendFile(require('path').join(__dirname, '../public/dashboard.html')); });
     app.get('/api/status', (req, res) => { res.json({ edab: global.m7edab ? global.m7edab.getSummary() : {totalBilled:0,totalEvents:0,streams:{eventProcessing:0,intelligenceLicense:0,dataProduct:0}}, ingestion: global.m7ingestion ? global.m7ingestion.getStats() : {totalEvents:0,sources:8}, recentEvents: global.m7recentEvents || [] }); });
     const path = require('path');
     app.use(require('express').static(path.join(__dirname, '../public')));
+    app.get('/', (req, res) => { res.sendFile(require('path').join(__dirname, '../public/dashboard.html')); });
     app.get('/api/status', (req, res) => { res.json({ edab: global.m7edab ? global.m7edab.getSummary() : {totalBilled:0,totalEvents:0,streams:{eventProcessing:0,intelligenceLicense:0,dataProduct:0}}, ingestion: global.m7ingestion ? global.m7ingestion.getStats() : {totalEvents:0,sources:8}, recentEvents: global.m7recentEvents || [] }); });
     app.use(express.json());
 
