@@ -6,136 +6,191 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
 // ── Load all M7 modules ────────────────────────────────────────────────────
-const M7Treasury             = require('./m7-treasury');
-const { RevenueEngine }      = require('./revenue-engine');
-const RealEventIngestion     = require('./real-event-ingestion');
-const AWSExchange            = require('./aws-exchange');
-const rapidApiRouter         = require('./rapidapi-gateway');
+const M7Treasury         = require('./m7-treasury');
+const { RevenueEngine }  = require('./revenue-engine');
+const RealEventIngestion = require('./real-event-ingestion');
+const AWSExchange        = require('./aws-exchange');
+const AutonomousRevenue  = require('./autonomous-revenue');
+const M7AIBrain          = require('./m7-ai-brain');
+const rapidApiRouter     = require('./rapidapi-gateway');
 
 // ── Boot sequence ──────────────────────────────────────────────────────────
 console.log('');
-console.log('🚀 M7-77 SOVEREIGN SYSTEM BOOTING...');
+console.log('🚀 M7-77 SOVEREIGN SYSTEM v3.0 BOOTING...');
 console.log('');
 
-// 1. Treasury first — everything flows through it
+// 1. Treasury
 const treasury = new M7Treasury();
 
-// 2. Revenue engine — wired to treasury
+// 2. Revenue engine — 12 domains, momentum pricing
 const revenueEngine = new RevenueEngine(treasury);
 
-// 3. AWS Exchange — wired to treasury
+// 3. AWS Exchange
 const awsExchange = new AWSExchange(treasury);
+awsExchange.addSubscriber({ name: 'HEDGE_FUND_ALPHA',    domains: ['finance','government','defense'],       tier: 'enterprise' });
+awsExchange.addSubscriber({ name: 'GOV_INTEL_CLIENT',    domains: ['government','defense','legal'],         tier: 'enterprise' });
+awsExchange.addSubscriber({ name: 'CYBER_SECURITY_FIRM', domains: ['cybersecurity','defense'],              tier: 'enterprise' });
+awsExchange.addSubscriber({ name: 'HEALTH_ANALYTICS_CO', domains: ['healthcare','legal'],                   tier: 'standard'   });
+awsExchange.addSubscriber({ name: 'SUPPLY_CHAIN_INTEL',  domains: ['supplychain','energy','finance'],       tier: 'standard'   });
 
-// Add demo enterprise subscribers (replace with real ones when live on AWS)
-awsExchange.addSubscriber({ name: 'HEDGE_FUND_ALPHA',   domains: ['finance', 'government'], tier: 'enterprise' });
-awsExchange.addSubscriber({ name: 'GOV_INTEL_CLIENT',   domains: ['government', 'ai'],      tier: 'enterprise' });
-awsExchange.addSubscriber({ name: 'HEALTH_ANALYTICS_CO',domains: ['healthcare', 'ai'],      tier: 'standard'   });
+// 4. Autonomous revenue engine
+const autonomousRevenue = new AutonomousRevenue(treasury, revenueEngine);
+autonomousRevenue.startGrowthLoop();
 
-// 4. Event ingestion — the heartbeat of M7
+// 5. M7 AI Brain — full intelligence + speed
+const brain = new M7AIBrain();
+
+// 6. Event ingestion — 80+ sources, 12 domains
 const ingestion = new RealEventIngestion();
 
-// Global state — dashboard and API read from here
+// ── Global state ───────────────────────────────────────────────────────────
 global.m7recentEvents = [];
 global.m7state = {
-  startTime: Date.now(),
+  startTime:   Date.now(),
   totalEvents: 0
 };
 
-// Wire ingestion → revenue engine → treasury → aws exchange
+// Wire brain to revenue and ingestion
+brain.wire(revenueEngine, ingestion);
+
+// ── Event pipeline ─────────────────────────────────────────────────────────
+// ingestion → brain (handles revenue recording internally)
+// ingestion → global state + aws exchange
 ingestion.on('event', (event) => {
   global.m7state.totalEvents++;
 
-  // Record revenue (auto-credits treasury)
-  const tx = revenueEngine.recordEvent(event);
+  // Brain ingests and processes — it calls revenueEngine.recordEvent internally
+  brain.ingestEvent(event);
 
-  // Enrich event with revenue data
-  const enriched = {
-    ...event,
-    total:   tx.pricing.totalRevenue,
-    revenue: tx.pricing
+  // Enrich with pricing for display
+  const PRICING = {
+    finance:1.00,government:0.80,healthcare:0.75,health:0.75,
+    ai:0.50,energy:0.40,tech:0.20,social:0.10,
+    defense:2.00,cybersecurity:1.80,legal:1.50,
+    realestate:1.20,supplychain:1.10
   };
+  const base  = PRICING[event.domain] || 0.10;
+  const total = base + base * 5 + base * 20;
 
-  // Rolling window of last 100 events
+  const enriched = { ...event, value: base, total: parseFloat(total.toFixed(2)) };
+
   global.m7recentEvents.push(enriched);
-  if (global.m7recentEvents.length > 100) global.m7recentEvents.shift();
+  if (global.m7recentEvents.length > 200) global.m7recentEvents.shift();
 
-  // Auto-deliver to AWS Exchange subscribers every 50 events
-  if (global.m7state.totalEvents % 50 === 0) {
-    awsExchange.autoDeliver(global.m7recentEvents.slice(-50));
+  // AWS Exchange auto-delivery every 100 events
+  if (global.m7state.totalEvents % 100 === 0) {
+    awsExchange.autoDeliver(global.m7recentEvents.slice(-100));
   }
 });
 
-// Start ingestion
+// Brain events — log to console
+brain.on('threat_detected', (threat) => {
+  console.log(`🚨 THREAT: ${threat.detail}`);
+});
+brain.on('opportunity', (opp) => {
+  if (opp.urgency === 'URGENT' || opp.urgency === 'CRITICAL') {
+    console.log(`🎯 URGENT OPP [${opp.domain.toUpperCase()}]: ${opp.clientType}`);
+  }
+});
+
+// ── Start everything ───────────────────────────────────────────────────────
 ingestion.start();
+brain.start();
 
 // ── Mount RapidAPI gateway ─────────────────────────────────────────────────
 app.use('/rapidapi', rapidApiRouter);
 
-// ── Dashboard ──────────────────────────────────────────────────────────────
+// ── Routes ─────────────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/dashboard.html'));
 });
 
-// ── Core API ───────────────────────────────────────────────────────────────
-
-// Main status — dashboard polls this every 5s
+// Main status
 app.get('/api/status', (req, res) => {
   const rev    = revenueEngine.getReport();
   const treas  = treasury.getStatus();
   const ingest = ingestion.getStats();
+  const brainS = brain.getStatus();
 
   res.json({
-    status:  'LIVE',
-    system:  'M7-77',
-    owner:   'SECKA',
-    uptime:  process.uptime(),
+    status: 'LIVE', system: 'M7-77', owner: 'SECKA',
+    uptime: process.uptime(),
     edab: {
       totalBilled: rev.total,
       totalEvents: rev.transactionCount,
       streams: {
         eventProcessing:     rev.streams.eventProcessing,
         intelligenceLicense: rev.streams.intelligenceLicense,
-        dataProduct:         rev.streams.dataProduct
+        dataProduct:         rev.streams.dataProduct,
+        premium:             rev.streams.premium
       },
-      domainBreakdown: rev.domainBreakdown
+      domainBreakdown: rev.domainBreakdown,
+      momentum:        rev.momentum,
+      velocity:        rev.velocity
     },
     ingestion: {
-      totalEvents: ingest.totalEvents,
-      sources:     ingest.sources,
-      domains:     7,
-      status:      ingest.status
+      totalEvents:  ingest.totalEvents,
+      sources:      ingest.sources,
+      domains:      12,
+      domainCounts: ingest.domainCounts,
+      errors:       ingest.errors,
+      status:       ingest.status
     },
     treasury: {
       balance:       treas.balance,
       ledgerEntries: treas.ledgerEntries,
       routes:        treas.routes
     },
-    awsExchange: awsExchange.getStatus(),
+    brain: {
+      processedCount:   brainS.processedCount,
+      loopInterval:     brainS.loopInterval,
+      speedMetrics:     brainS.speedMetrics,
+      knowledgeBase:    brainS.knowledgeBase,
+      threats:          brainS.threats,
+      opportunities:    brainS.opportunities,
+      urgentLeads:      brainS.urgentLeads,
+      pitchesGenerated: brainS.pitchesGenerated,
+      recentDecisions:  brainS.recentDecisions,
+      operations:       brainS.operations
+    },
+    awsExchange:  awsExchange.getStatus(),
     recentEvents: global.m7recentEvents.slice(-20)
   });
 });
 
-// Revenue breakdown
-app.get('/api/revenue', (req, res) => {
-  res.json(revenueEngine.getReport());
-});
+// Brain status
+app.get('/api/brain', (req, res) => res.json(brain.getStatus()));
 
-// Full ledger
-app.get('/api/ledger', (req, res) => {
-  const limit = parseInt(req.query.limit) || 50;
+// Opportunities
+app.get('/api/opportunities', (req, res) => {
   res.json({
-    total:        treasury.ledger.length,
-    balance:      treasury.balance,
-    transactions: treasury.getRecentLedger(limit)
+    urgent:  brain.clientEngine.urgentLeads.slice(-10).reverse(),
+    top:     brain.clientEngine.getTopOpportunities(10),
+    total:   brain.clientEngine.pitchesGenerated
   });
 });
 
-// Treasury status
-app.get('/api/treasury', (req, res) => {
-  res.json(treasury.getStatus());
+// Intelligence reports
+app.get('/api/reports', (req, res) => res.json(brain.reports));
+
+// Threats
+app.get('/api/threats', (req, res) => {
+  res.json(brain.intelligence.threatLog.slice(-20).reverse());
 });
 
-// Treasury — add routing rail
+// Revenue
+app.get('/api/revenue', (req, res) => res.json(revenueEngine.getReport()));
+
+// Ledger
+app.get('/api/ledger', (req, res) => {
+  const limit = parseInt(req.query.limit) || 50;
+  res.json({ total: treasury.ledger.length, balance: treasury.balance, transactions: treasury.getRecentLedger(limit) });
+});
+
+// Treasury
+app.get('/api/treasury', (req, res) => res.json(treasury.getStatus()));
+
+// Treasury — add route
 app.post('/api/treasury/route', (req, res) => {
   const { name, type, address, allocation } = req.body;
   if (!name) return res.status(400).json({ error: 'name required' });
@@ -143,65 +198,28 @@ app.post('/api/treasury/route', (req, res) => {
   res.json({ success: true, routes: treasury.routes });
 });
 
-// Treasury — authorize transfer
+// Treasury — transfer
 app.post('/api/treasury/transfer', (req, res) => {
   const { amount, destination } = req.body;
   if (!amount || !destination) return res.status(400).json({ error: 'amount and destination required' });
-  const result = treasury.debit(parseFloat(amount), destination);
-  res.json(result);
+  res.json(treasury.debit(parseFloat(amount), destination));
 });
 
-// AWS Exchange status
-app.get('/api/exchange', (req, res) => {
-  res.json(awsExchange.getStatus());
+// AWS Exchange
+app.get('/api/exchange', (req, res) => res.json(awsExchange.getStatus()));
+
+// Autonomous revenue
+app.get('/api/autonomous', (req, res) => res.json(autonomousRevenue.getStatus()));
+
+// Issue API key
+app.post('/api/subscribers', (req, res) => {
+  const { name, plan, domain } = req.body;
+  if (!name || !plan) return res.status(400).json({ error: 'name and plan required' });
+  const key = autonomousRevenue.issueApiKey(name, plan, domain || 'all');
+  res.json({ success: true, apiKey: key, subscriber: name, plan });
 });
 
-// Recent transactions
-app.get('/api/transactions', (req, res) => {
-  const limit = parseInt(req.query.limit) || 20;
-  res.json(revenueEngine.getRecentTransactions(limit));
-});
-
-// Health check
-app.get('/health', (req, res) => {
-  res.json({
-    status:  'LIVE',
-    uptime:  process.uptime(),
-    events:  global.m7state.totalEvents,
-    revenue: treasury.balance,
-    ingestion: ingestion.isRunning
-  });
-});
-
-// ── Start server ───────────────────────────────────────────────────────────
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log('');
-  console.log('██╗   ██╗███████╗      ███████╗███████╗');
-  console.log('███╗ ███║╚════██║      ╚════██║╚════██║');
-  console.log('██╔███╔██║    ██╔╝          ██╔╝    ██╔╝');
-  console.log('██║╚═╝ ██║   ██╔╝          ██╔╝    ██╔╝');
-  console.log('██║    ██║   ██║           ██║     ██║ ');
-  console.log('╚═╝    ╚═╝   ╚═╝           ╚═╝     ╚═╝ ');
-  console.log('');
-  console.log(`✅ M7-77 FULLY LIVE on port ${port}`);
-  console.log(`📊 Dashboard     → http://localhost:${port}`);
-  console.log(`💰 Revenue API   → http://localhost:${port}/api/revenue`);
-  console.log(`🏦 Treasury API  → http://localhost:${port}/api/treasury`);
-  console.log(`📋 Ledger API    → http://localhost:${port}/api/ledger`);
-  console.log(`🌐 RapidAPI GW   → http://localhost:${port}/rapidapi/events`);
-  console.log(`📦 AWS Exchange  → http://localhost:${port}/api/exchange`);
-  console.log('');
-  console.log('⚡ All systems nominal — SECKA DPI Framework active');
-  console.log('');
-});
-
-// ── Autonomous Revenue Engine (appended) ───────────────────────────────────
-const AutonomousRevenue = require('./autonomous-revenue');
-const autonomousRevenue = new AutonomousRevenue(treasury, revenueEngine);
-autonomousRevenue.startGrowthLoop();
-
-// Real revenue — validate API key and meter call
+// Meter real API call
 app.post('/api/call', (req, res) => {
   const { apiKey, domain } = req.body;
   if (!apiKey) return res.status(400).json({ error: 'apiKey required' });
@@ -213,15 +231,39 @@ app.post('/api/call', (req, res) => {
   res.json({ ...result, events });
 });
 
-// Issue API key to new subscriber
-app.post('/api/subscribers', (req, res) => {
-  const { name, plan, domain } = req.body;
-  if (!name || !plan) return res.status(400).json({ error: 'name and plan required' });
-  const key = autonomousRevenue.issueApiKey(name, plan, domain || 'all');
-  res.json({ success: true, apiKey: key, subscriber: name, plan });
+// Transactions
+app.get('/api/transactions', (req, res) => {
+  const limit = parseInt(req.query.limit) || 20;
+  res.json(revenueEngine.getRecentTransactions(limit));
 });
 
-// Real vs simulated revenue dashboard
-app.get('/api/autonomous', (req, res) => {
-  res.json(autonomousRevenue.getStatus());
+// Health
+app.get('/health', (req, res) => res.json({
+  status:    'LIVE',
+  uptime:    process.uptime(),
+  events:    global.m7state.totalEvents,
+  revenue:   treasury.balance,
+  brain:     brain.isRunning,
+  ingestion: ingestion.isRunning,
+  domains:   12,
+  sources:   ingestion.sources.length
+}));
+
+// ── Start server ───────────────────────────────────────────────────────────
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log('');
+  console.log('█▀▄▀█ ▀▀███ ▄▄  ▄▄▀▀▀▀█▀▀');
+  console.log('█ ▀ █   ███ ██  ██▄▄    █  ');
+  console.log('█   █   ███ ██  ██       █  ');
+  console.log('▀   ▀ ▀▀███ ▀▀  ▀▀▀▀▀▀▀▀▀  ');
+  console.log('');
+  console.log(`✅ M7-77 v3.0 FULLY LIVE — port ${port}`);
+  console.log(`🧠 AI Brain     → AUTONOMOUS`);
+  console.log(`🌐 Sources      → ${ingestion.sources.length} across 12 domains`);
+  console.log(`💰 Revenue      → 12-domain tiered + momentum pricing`);
+  console.log(`🏦 Treasury     → SOVEREIGN`);
+  console.log(`🎯 Client Engine → HUNTING`);
+  console.log(`📡 RapidAPI GW  → LIVE`);
+  console.log('');
 });
