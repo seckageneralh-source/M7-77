@@ -195,3 +195,33 @@ app.listen(port, () => {
   console.log('⚡ All systems nominal — SECKA DPI Framework active');
   console.log('');
 });
+
+// ── Autonomous Revenue Engine (appended) ───────────────────────────────────
+const AutonomousRevenue = require('./autonomous-revenue');
+const autonomousRevenue = new AutonomousRevenue(treasury, revenueEngine);
+autonomousRevenue.startGrowthLoop();
+
+// Real revenue — validate API key and meter call
+app.post('/api/call', (req, res) => {
+  const { apiKey, domain } = req.body;
+  if (!apiKey) return res.status(400).json({ error: 'apiKey required' });
+  const result = autonomousRevenue.meterRealCall(apiKey, domain || 'tech');
+  if (!result.authorized) return res.status(401).json(result);
+  const events = (global.m7recentEvents || [])
+    .filter(e => domain === 'all' || e.domain === domain)
+    .slice(-10);
+  res.json({ ...result, events });
+});
+
+// Issue API key to new subscriber
+app.post('/api/subscribers', (req, res) => {
+  const { name, plan, domain } = req.body;
+  if (!name || !plan) return res.status(400).json({ error: 'name and plan required' });
+  const key = autonomousRevenue.issueApiKey(name, plan, domain || 'all');
+  res.json({ success: true, apiKey: key, subscriber: name, plan });
+});
+
+// Real vs simulated revenue dashboard
+app.get('/api/autonomous', (req, res) => {
+  res.json(autonomousRevenue.getStatus());
+});
