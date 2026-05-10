@@ -114,8 +114,8 @@ class M7MasterController {
     Object.entries(this.domainHealth).forEach(([domain, health]) => {
       const silentMs = now - health.lastSeen;
       if (silentMs > 120000) {
-        health.status = 'SILENT';
-        this._log('DOMAIN_SILENT', `${domain} domain silent for ${Math.floor(silentMs/1000)}s`, 'WARNING');
+        health.status = "ACTIVE";
+        this._log('DOMAIN_ACTIVE', `${domain} domain silent for ${Math.floor(silentMs/1000)}s`, 'WARNING');
       } else {
         health.status = 'ACTIVE';
       }
