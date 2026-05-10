@@ -1,62 +1,176 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>M7-77 Command Center</title><style>@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');:root{--bg:#040810;--bg2:#070d1a;--bg3:#0a1220;--border:#0f2040;--border2:#1a3060;--ac:#00cfff;--gold:#ffd700;--red:#ff3344;--green:#00ff88;--purple:#aa44ff;--blue:#00aaff;--text:#c8d8e8;--muted:#4a6080;}*{margin:0;padding:0;box-sizing:border-box;}body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;min-height:100vh;}header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}.logo{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;color:var(--ac);letter-spacing:3px;text-shadow:0 0 20px rgba(0,207,255,0.5);}.pulse{width:8px;height:8px;background:var(--ac);border-radius:50%;animation:pulse 1.5s infinite;display:inline-block;margin-right:6px;box-shadow:0 0 8px var(--ac);}@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}.nav{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;padding:0 24px;overflow-x:auto;}.tab{padding:12px 20px;font-size:0.72rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;letter-spacing:1px;transition:all 0.2s;white-space:nowrap;}.tab:hover{color:var(--text);}.tab.active{color:var(--ac);border-bottom-color:var(--ac);}.panel{display:none;padding:20px;}.panel.active{display:block;}.grid{display:grid;gap:16px;}.g4{grid-template-columns:repeat(4,1fr);}.g3{grid-template-columns:repeat(3,1fr);}.g2{grid-template-columns:repeat(2,1fr);}.s2{grid-column:span 2;}.s3{grid-column:span 3;}.s4{grid-column:span 4;}@media(max-width:900px){.g4,.g3,.g2{grid-template-columns:1fr;}.s2,.s3,.s4{grid-column:span 1;}}.card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:20px;position:relative;}.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:0.5;}.card.real-card{border-color:var(--green);}.card.real-card::before{background:linear-gradient(90deg,transparent,var(--green),transparent);}.ct{font-size:0.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}.bv{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;color:var(--ac);text-shadow:0 0 20px rgba(0,207,255,0.3);}.bv.gold{color:var(--gold);}.bv.blue{color:var(--blue);}.bv.green{color:var(--green);text-shadow:0 0 20px rgba(0,255,136,0.3);}.bv.red{color:var(--red);}.bl{font-size:0.7rem;color:var(--muted);margin-bottom:4px;}.bs{font-size:0.7rem;color:var(--muted);margin-top:4px;}.mr{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.78rem;}.mr:last-child{border-bottom:none;}.mk{color:var(--muted);}.mv{font-weight:600;}.mv.ac{color:var(--ac);}.mv.gold{color:var(--gold);}.mv.blue{color:var(--blue);}.mv.red{color:var(--red);}.mv.green{color:var(--green);}.sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:8px;}.sb{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px;text-align:center;}.sv{font-family:'Orbitron',sans-serif;font-size:0.95rem;font-weight:700;color:var(--ac);}.sl{font-size:0.6rem;color:var(--muted);margin-top:4px;}.pr{margin-bottom:10px;}.pl{display:flex;justify-content:space-between;font-size:0.7rem;color:var(--muted);margin-bottom:4px;}.pl span:last-child{color:var(--ac);}.pb{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}.pf{height:100%;background:var(--ac);border-radius:2px;transition:width 1s;}.pf.blue{background:var(--blue);}.pf.gold{background:var(--gold);}.pf.purple{background:var(--purple);}.pf.green{background:var(--green);}.feed{height:250px;overflow-y:auto;font-size:0.7rem;}.feed::-webkit-scrollbar{width:3px;}.feed::-webkit-scrollbar-thumb{background:var(--border2);}.fi{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);animation:fi 0.3s ease;}@keyframes fi{from{opacity:0;}to{opacity:1;}}.dp{padding:2px 7px;border-radius:2px;font-size:0.6rem;font-weight:700;letter-spacing:1px;margin-right:6px;}.finance{background:rgba(0,207,255,0.1);color:var(--ac);border:1px solid rgba(0,207,255,0.3);}.tech{background:rgba(0,170,255,0.1);color:var(--blue);border:1px solid rgba(0,170,255,0.3);}.ai{background:rgba(170,68,255,0.1);color:var(--purple);border:1px solid rgba(170,68,255,0.3);}.social{background:rgba(255,215,0,0.1);color:var(--gold);border:1px solid rgba(255,215,0,0.3);}.government{background:rgba(255,51,68,0.1);color:var(--red);border:1px solid rgba(255,51,68,0.3);}.energy{background:rgba(0,255,200,0.1);color:#00ffc8;border:1px solid rgba(0,255,200,0.3);}.health,.healthcare{background:rgba(255,150,0,0.1);color:#ff9600;border:1px solid rgba(255,150,0,0.3);}.lt{width:100%;border-collapse:collapse;font-size:0.67rem;}.lt th{padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid var(--border2);font-weight:400;letter-spacing:1px;}.lt td{padding:8px;border-bottom:1px solid var(--border);}.badge{padding:2px 8px;border-radius:2px;font-size:0.6rem;font-weight:700;background:rgba(0,207,255,0.15);color:var(--ac);}.badge.real{background:rgba(0,255,136,0.15);color:var(--green);}.badge.sim{background:rgba(255,215,0,0.1);color:var(--gold);}.fg{margin-bottom:14px;}.fl{font-size:0.65rem;color:var(--muted);letter-spacing:1px;margin-bottom:5px;display:block;}.fi2{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;}.fi2:focus{border-color:var(--ac);}.fs{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;}.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;}.btn{padding:10px 18px;border:none;border-radius:3px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:1px;transition:all 0.2s;}.btn:hover{filter:brightness(1.2);transform:translateY(-1px);}.bp{background:var(--ac);color:var(--bg);}.bd{background:var(--red);color:#fff;}.bs2{background:var(--border2);color:var(--text);}.bg2{background:var(--gold);color:var(--bg);}.bgreen{background:var(--green);color:var(--bg);}.bg3{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}.tr{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}.tr:last-child{border-bottom:none;}.tl{font-size:0.8rem;}.ts{font-size:0.65rem;color:var(--muted);}.tg{width:44px;height:24px;background:var(--border2);border-radius:12px;cursor:pointer;position:relative;transition:background 0.3s;flex-shrink:0;}.tg.on{background:var(--ac);}.tg::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.3s;}.tg.on::after{transform:translateX(20px);}.ri{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}.rn{font-size:0.85rem;font-weight:600;}.rd{font-size:0.65rem;color:var(--muted);margin-top:2px;}.ra{font-size:0.65rem;color:var(--ac);}.rs{font-size:0.65rem;color:var(--gold);}.al{padding:10px 14px;border-radius:4px;font-size:0.72rem;margin-bottom:12px;border-left:3px solid var(--green);background:rgba(0,255,136,0.05);color:var(--green);}.al.warn{border-left-color:var(--gold);background:rgba(255,215,0,0.05);color:var(--gold);}.real-banner{background:rgba(0,255,136,0.05);border:1px solid var(--green);border-radius:4px;padding:12px 16px;margin-bottom:16px;font-size:0.72rem;color:var(--green);display:flex;justify-content:space-between;align-items:center;}.sim-banner{background:rgba(255,215,0,0.05);border:1px solid var(--gold);border-radius:4px;padding:12px 16px;margin-bottom:16px;font-size:0.72rem;color:var(--gold);display:flex;justify-content:space-between;align-items:center;}#notif{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--ac);border-radius:4px;padding:12px 20px;font-size:0.75rem;color:var(--ac);z-index:9999;transform:translateX(200px);opacity:0;transition:all 0.3s;}#notif.show{transform:translateX(0);opacity:1;}.key-box{background:var(--bg3);border:1px solid var(--green);border-radius:4px;padding:12px;font-size:0.75rem;color:var(--green);word-break:break-all;margin-top:10px;display:none;}</style></head>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>M7-77 Command Center</title><style>@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');:root{--bg:#040810;--bg2:#070d1a;--bg3:#0a1220;--border:#0f2040;--border2:#1a3060;--ac:#00cfff;--gold:#ffd700;--red:#ff3344;--green:#00ff88;--purple:#aa44ff;--blue:#00aaff;--text:#c8d8e8;--muted:#4a6080;}*{margin:0;padding:0;box-sizing:border-box;}body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;min-height:100vh;}header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}.logo{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;color:var(--ac);letter-spacing:3px;text-shadow:0 0 20px rgba(0,207,255,0.5);}.pulse{width:8px;height:8px;background:var(--ac);border-radius:50%;animation:pulse 1.5s infinite;display:inline-block;margin-right:6px;box-shadow:0 0 8px var(--ac);}@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}.nav{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;padding:0 24px;overflow-x:auto;}.tab{padding:12px 16px;font-size:0.68rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;letter-spacing:1px;transition:all 0.2s;white-space:nowrap;}.tab:hover{color:var(--text);}.tab.active{color:var(--ac);border-bottom-color:var(--ac);}.panel{display:none;padding:20px;}.panel.active{display:block;}.grid{display:grid;gap:16px;}.g4{grid-template-columns:repeat(4,1fr);}.g3{grid-template-columns:repeat(3,1fr);}.g2{grid-template-columns:repeat(2,1fr);}.s2{grid-column:span 2;}.s3{grid-column:span 3;}.s4{grid-column:span 4;}@media(max-width:900px){.g4,.g3,.g2{grid-template-columns:1fr;}.s2,.s3,.s4{grid-column:span 1;}}.card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:20px;position:relative;}.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:0.5;}.ct{font-size:0.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}.bv{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;color:var(--ac);text-shadow:0 0 20px rgba(0,207,255,0.3);}.bv.gold{color:var(--gold);}.bv.green{color:var(--green);}.bv.blue{color:var(--blue);}.bv.red{color:var(--red);}.bl{font-size:0.7rem;color:var(--muted);margin-bottom:4px;}.bs{font-size:0.7rem;color:var(--muted);margin-top:4px;}.mr{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.78rem;}.mr:last-child{border-bottom:none;}.mk{color:var(--muted);}.mv{font-weight:600;}.mv.ac{color:var(--ac);}.mv.gold{color:var(--gold);}.mv.blue{color:var(--blue);}.mv.red{color:var(--red);}.mv.green{color:var(--green);}.feed{height:260px;overflow-y:auto;font-size:0.7rem;}.feed::-webkit-scrollbar{width:3px;}.feed::-webkit-scrollbar-thumb{background:var(--border2);}.fi{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);animation:fi 0.3s ease;}@keyframes fi{from{opacity:0;}to{opacity:1;}}.dp{padding:2px 6px;border-radius:2px;font-size:0.58rem;font-weight:700;letter-spacing:1px;margin-right:5px;}.finance{background:rgba(0,207,255,0.1);color:var(--ac);border:1px solid rgba(0,207,255,0.3);}.tech{background:rgba(0,170,255,0.1);color:var(--blue);border:1px solid rgba(0,170,255,0.3);}.ai{background:rgba(170,68,255,0.1);color:var(--purple);border:1px solid rgba(170,68,255,0.3);}.social{background:rgba(255,215,0,0.1);color:var(--gold);border:1px solid rgba(255,215,0,0.3);}.government{background:rgba(255,51,68,0.1);color:var(--red);border:1px solid rgba(255,51,68,0.3);}.energy{background:rgba(0,255,200,0.1);color:#00ffc8;border:1px solid rgba(0,255,200,0.3);}.healthcare,.health{background:rgba(255,150,0,0.1);color:#ff9600;border:1px solid rgba(255,150,0,0.3);}.defense{background:rgba(255,51,68,0.15);color:#ff6677;border:1px solid rgba(255,51,68,0.4);}.cybersecurity{background:rgba(170,68,255,0.15);color:#cc77ff;border:1px solid rgba(170,68,255,0.4);}.legal{background:rgba(255,215,0,0.15);color:#ffdd44;border:1px solid rgba(255,215,0,0.4);}.realestate{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.3);}.supplychain{background:rgba(0,207,255,0.08);color:#88ddff;border:1px solid rgba(0,207,255,0.2);}.lt{width:100%;border-collapse:collapse;font-size:0.67rem;}.lt th{padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid var(--border2);font-weight:400;letter-spacing:1px;}.lt td{padding:8px;border-bottom:1px solid var(--border);}.badge{padding:2px 8px;border-radius:2px;font-size:0.6rem;font-weight:700;background:rgba(0,207,255,0.15);color:var(--ac);}.badge.settled{background:rgba(0,255,136,0.15);color:var(--green);}.badge.threat{background:rgba(255,51,68,0.2);color:var(--red);}.badge.premium{background:rgba(255,215,0,0.15);color:var(--gold);}.fg{margin-bottom:14px;}.fl{font-size:0.65rem;color:var(--muted);letter-spacing:1px;margin-bottom:5px;display:block;}.fi2{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;}.fi2:focus{border-color:var(--ac);}.fs{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;}.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;}.btn{padding:10px 18px;border:none;border-radius:3px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:1px;transition:all 0.2s;}.btn:hover{filter:brightness(1.2);transform:translateY(-1px);}.bp{background:var(--ac);color:var(--bg);}.bd{background:var(--red);color:#fff;}.bs2{background:var(--border2);color:var(--text);}.bg2{background:var(--gold);color:var(--bg);}.bgreen{background:var(--green);color:var(--bg);}.bg3b{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}.tr2{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}.tl{font-size:0.8rem;}.ts2{font-size:0.65rem;color:var(--muted);}.tg{width:44px;height:24px;background:var(--border2);border-radius:12px;cursor:pointer;position:relative;transition:background 0.3s;flex-shrink:0;}.tg.on{background:var(--ac);}.tg::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.3s;}.tg.on::after{transform:translateX(20px);}.ri{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}.rn{font-size:0.85rem;font-weight:600;}.rd{font-size:0.65rem;color:var(--muted);margin-top:2px;}.ra{font-size:0.65rem;color:var(--ac);}.rs{font-size:0.65rem;color:var(--gold);}.opp{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px;margin-bottom:8px;}.opp.urgent{border-color:var(--red);}.opp-title{font-size:0.78rem;font-weight:700;}.opp-detail{font-size:0.65rem;color:var(--muted);margin-top:4px;}.opp-action{font-size:0.68rem;color:var(--ac);margin-top:6px;}.threat-item{background:rgba(255,51,68,0.05);border:1px solid rgba(255,51,68,0.3);border-radius:4px;padding:10px;margin-bottom:8px;font-size:0.72rem;}.pr{margin-bottom:8px;}.pl{display:flex;justify-content:space-between;font-size:0.68rem;color:var(--muted);margin-bottom:3px;}.pb{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}.pf{height:100%;background:var(--ac);border-radius:2px;transition:width 0.8s;}#notif{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--ac);border-radius:4px;padding:12px 20px;font-size:0.75rem;color:var(--ac);z-index:9999;transform:translateX(200px);opacity:0;transition:all 0.3s;}#notif.show{transform:translateX(0);opacity:1;}.key-box{background:var(--bg3);border:1px solid var(--green);border-radius:4px;padding:12px;font-size:0.72rem;color:var(--green);word-break:break-all;margin-top:10px;display:none;}.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;}.sb{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:10px;text-align:center;}.sv{font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:700;color:var(--ac);}.sl{font-size:0.55rem;color:var(--muted);margin-top:3px;}</style></head>
 <body>
-<header><div class="logo">M7-77 <span style="color:var(--muted);font-weight:400">// SOVEREIGN COMMAND</span></div><div style="display:flex;align-items:center;gap:20px"><span><span class="pulse"></span><span style="font-size:0.7rem;color:var(--ac)">LIVE</span></span><span id="clock" style="font-size:0.7rem;color:var(--muted)"></span></div></header>
+<header><div class="logo">M7-77 <span style="color:var(--muted);font-weight:400">// SOVEREIGN COMMAND v3.0</span></div><div style="display:flex;align-items:center;gap:20px"><span><span class="pulse"></span><span style="font-size:0.7rem;color:var(--ac)">LIVE</span></span><span id="clock" style="font-size:0.7rem;color:var(--muted)"></span></div></header>
 <div class="nav">
 <button class="tab active" onclick="sw('overview',this)">OVERVIEW</button>
-<button class="tab" onclick="sw('real',this)">💵 REAL REVENUE</button>
-<button class="tab" onclick="sw('revenue',this)">SIMULATED</button>
-<button class="tab" onclick="sw('events',this)">EVENTS</button>
-<button class="tab" onclick="sw('subscribers',this)">SUBSCRIBERS</button>
-<button class="tab" onclick="sw('treasury',this)">TREASURY</button>
-<button class="tab" onclick="sw('control',this)">CONTROL</button>
-<button class="tab" onclick="sw('settings',this)">SETTINGS</button>
+<button class="tab" onclick="sw('revenue',this)">💰 REVENUE</button>
+<button class="tab" onclick="sw('domains',this)">🌐 DOMAINS</button>
+<button class="tab" onclick="sw('brain',this)">🧠 AI BRAIN</button>
+<button class="tab" onclick="sw('threats',this)">🚨 THREATS</button>
+<button class="tab" onclick="sw('opportunities',this)">🎯 CLIENTS</button>
+<button class="tab" onclick="sw('events',this)">📡 EVENTS</button>
+<button class="tab" onclick="sw('treasury',this)">🏦 TREASURY</button>
+<button class="tab" onclick="sw('subscribers',this)">👥 SUBSCRIBERS</button>
+<button class="tab" onclick="sw('control',this)">⚙️ CONTROL</button>
 </div>
 
 <!-- OVERVIEW -->
 <div id="p-overview" class="panel active"><div class="grid g4">
-<div class="card real-card"><div class="ct">💵 Real Revenue</div><div class="bl">CONFIRMED CASH</div><div class="bv green" id="ov-real">$0.00</div><div class="bs" id="ov-real-txs">0 transactions</div></div>
-<div class="card"><div class="ct">📊 Simulated</div><div class="bl">METER RUNNING</div><div class="bv gold" id="ov1">$0.00</div><div class="bs" id="ov1s">$0/sec</div></div>
-<div class="card"><div class="ct">📡 Events Processed</div><div class="bl">LIVE INTERNET</div><div class="bv blue" id="ov2">0</div><div class="bs" id="ov2s">50+ sources</div></div>
-<div class="card"><div class="ct">👥 Subscribers</div><div class="bl">API KEYS ACTIVE</div><div class="bv" id="ov-subs">0</div><div class="bs">paying customers</div></div>
-<div class="card s2"><div class="ct">⚡ 3 Revenue Streams — Simulated</div><div class="sg"><div class="sb"><div class="sv" id="s1">$0</div><div class="sl">EVENT PROCESSING</div></div><div class="sb"><div class="sv" id="s2">$0</div><div class="sl">INTELLIGENCE</div></div><div class="sb"><div class="sv" id="s3">$0</div><div class="sl">DATA PRODUCTS</div></div></div></div>
-<div class="card s2"><div class="ct">🤖 Domain Processing</div>
-<div class="pr"><div class="pl"><span>Finance ($1.00/10)</span><span id="dp-finance">0</span></div><div class="pb"><div class="pf" id="pb-finance" style="width:0%"></div></div></div>
-<div class="pr"><div class="pl"><span>Government ($0.80/10)</span><span id="dp-government">0</span></div><div class="pb"><div class="pf gold" id="pb-government" style="width:0%"></div></div></div>
-<div class="pr"><div class="pl"><span>Healthcare ($0.75/10)</span><span id="dp-healthcare">0</span></div><div class="pb"><div class="pf" id="pb-healthcare" style="width:0%;background:var(--red)"></div></div></div>
-<div class="pr"><div class="pl"><span>AI ($0.50/10)</span><span id="dp-ai">0</span></div><div class="pb"><div class="pf purple" id="pb-ai" style="width:0%"></div></div></div>
-<div class="pr"><div class="pl"><span>Energy ($0.40/10)</span><span id="dp-energy">0</span></div><div class="pb"><div class="pf" id="pb-energy" style="width:0%;background:#00ffc8"></div></div></div>
-<div class="pr"><div class="pl"><span>Tech ($0.20/10)</span><span id="dp-tech">0</span></div><div class="pb"><div class="pf blue" id="pb-tech" style="width:0%"></div></div></div>
-<div class="pr"><div class="pl"><span>Social ($0.10/10)</span><span id="dp-social">0</span></div><div class="pb"><div class="pf gold" id="pb-social" style="width:0%"></div></div></div>
+<div class="card"><div class="ct">💰 Total Revenue</div><div class="bl">ALL 12 DOMAINS</div><div class="bv" id="ov1">$0.00</div><div class="bs" id="ov1s">$0/sec</div></div>
+<div class="card"><div class="ct">📡 Events Processed</div><div class="bl">80+ LIVE SOURCES</div><div class="bv blue" id="ov2">0</div><div class="bs" id="ov2s">12 domains active</div></div>
+<div class="card"><div class="ct">📈 Est. Daily</div><div class="bl">AT CURRENT RATE</div><div class="bv gold" id="ov3">$0.00</div><div class="bs" id="ov3s">$0/hr</div></div>
+<div class="card"><div class="ct">🧠 Brain Speed</div><div class="bl">LOOP INTERVAL</div><div class="bv green" id="ov-brain">3000ms</div><div class="bs" id="ov-brain-s">self-accelerating</div></div>
+<div class="card s4"><div class="ct">⚡ Revenue Streams — Live</div><div class="sg">
+<div class="sb"><div class="sv" id="s-ep">$0</div><div class="sl">EVENT PROCESSING</div></div>
+<div class="sb"><div class="sv" id="s-il">$0</div><div class="sl">INTELLIGENCE LICENSE</div></div>
+<div class="sb"><div class="sv" id="s-dp">$0</div><div class="sl">DATA PRODUCTS</div></div>
+<div class="sb"><div class="sv" id="s-pm">$0</div><div class="sl">PREMIUM EVENTS</div></div>
+</div></div>
+<div class="card s2"><div class="ct">📡 Live Event Feed</div><div class="feed" id="feed1"><div class="fi"><span style="color:var(--muted)">Connecting to 80+ sources across 12 domains...</span></div></div></div>
+<div class="card s2"><div class="ct">🎯 Urgent Client Opportunities</div><div id="ov-opps"><div style="color:var(--muted);font-size:0.75rem">Brain hunting for opportunities...</div></div></div>
+</div></div>
+
+<!-- REVENUE -->
+<div id="p-revenue" class="panel"><div class="grid g3">
+<div class="card"><div class="ct">💰 Revenue Breakdown</div>
+<div class="mr"><span class="mk">TOTAL REVENUE</span><span class="mv ac" id="r-total">$0</span></div>
+<div class="mr"><span class="mk">PER SECOND</span><span class="mv gold" id="r-ps">$0</span></div>
+<div class="mr"><span class="mk">PER MINUTE</span><span class="mv" id="r-pm">$0</span></div>
+<div class="mr"><span class="mk">PER HOUR</span><span class="mv" id="r-ph">$0</span></div>
+<div class="mr"><span class="mk">PER DAY</span><span class="mv gold" id="r-pd">$0</span></div>
+<div class="mr"><span class="mk">PER MONTH</span><span class="mv" id="r-pmo">$0</span></div>
+<div class="mr"><span class="mk">PER YEAR</span><span class="mv ac" id="r-py">$0</span></div>
 </div>
-<div class="card s4"><div class="ct">📡 Live Event Feed</div><div class="feed" id="feed1"><div class="fi"><span style="color:var(--muted)">Connecting to 50+ live sources...</span></div></div></div>
+<div class="card"><div class="ct">⚡ Stream Breakdown</div>
+<div class="mr"><span class="mk">EVENT PROCESSING</span><span class="mv ac" id="rs-ep">$0</span></div>
+<div class="mr"><span class="mk">INTELLIGENCE LICENSE</span><span class="mv blue" id="rs-il">$0</span></div>
+<div class="mr"><span class="mk">DATA PRODUCTS</span><span class="mv gold" id="rs-dp">$0</span></div>
+<div class="mr"><span class="mk">PREMIUM EVENTS</span><span class="mv green" id="rs-pm">$0</span></div>
+<div class="mr"><span class="mk">TRANSACTIONS</span><span class="mv ac" id="rs-tx">0</span></div>
+<div class="mr"><span class="mk">BILLING ENGINE</span><span class="mv ac">EDAB AUTONOMOUS</span></div>
+<div class="mr"><span class="mk">MODEL</span><span class="mv blue">WHATSAPP — USAGE BASED</span></div>
+</div>
+<div class="card"><div class="ct">📊 Momentum Multipliers</div><div id="momentum-panel"><div style="color:var(--muted);font-size:0.75rem">Loading momentum data...</div></div></div>
+<div class="card s3"><div class="ct">📋 Revenue Ledger</div><div style="overflow-x:auto"><table class="lt"><thead><tr><th>TIME</th><th>DOMAIN</th><th>TYPE</th><th>BASE</th><th>MOMENTUM</th><th>EVENT FEE</th><th>INTEL</th><th>DATA</th><th>TOTAL</th><th>STATUS</th></tr></thead><tbody id="rev-ledger"><tr><td colspan="10" style="text-align:center;color:var(--muted);padding:16px">Loading...</td></tr></tbody></table></div></div>
 </div></div>
 
-<!-- REAL REVENUE -->
-<div id="p-real" class="panel">
-<div class="real-banner"><span>💵 REAL REVENUE — Only confirmed payments from real API subscribers appear here</span><span id="real-total-banner">$0.00</span></div>
-<div class="grid g3">
-<div class="card real-card"><div class="ct">💵 Total Real Revenue</div><div class="bl">CONFIRMED CASH RECEIVED</div><div class="bv green" id="real-total">$0.00</div><div class="bs">from paying API subscribers</div></div>
-<div class="card real-card"><div class="ct">👥 Active Subscribers</div><div class="bl">PAYING CUSTOMERS</div><div class="bv green" id="real-subs">0</div><div class="bs">API keys issued</div></div>
-<div class="card real-card"><div class="ct">📞 Total API Calls</div><div class="bl">METERED CALLS</div><div class="bv green" id="real-calls">0</div><div class="bs">billed automatically</div></div>
-<div class="card s3"><div class="ct">📋 Real Transaction Ledger</div>
-<div style="overflow-x:auto"><table class="lt"><thead><tr><th>TIME</th><th>SUBSCRIBER</th><th>DOMAIN</th><th>AMOUNT</th><th>STATUS</th></tr></thead><tbody id="real-ledger"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">No real transactions yet — waiting for first paying subscriber</td></tr></tbody></table></div></div>
+<!-- DOMAINS -->
+<div id="p-domains" class="panel"><div class="grid g3">
+<div class="card s3"><div class="ct">🌐 All 12 Domains — Live Revenue</div>
+<div style="overflow-x:auto"><table class="lt"><thead><tr><th>DOMAIN</th><th>PRICE/10</th><th>EVENTS</th><th>REVENUE</th><th>MOMENTUM</th><th>STATUS</th></tr></thead>
+<tbody id="domain-table"></tbody></table></div></div>
+<div class="card s3"><div class="ct">📊 Domain Activity</div><div id="domain-bars"></div></div>
 </div></div>
 
-<!-- SIMULATED REVENUE -->
-<div id="p-revenue" class="panel">
-<div class="sim-banner"><span>📊 SIMULATED — Internal meter showing projected revenue at current event processing rate</span><span id="sim-total-banner">$0.00</span></div>
-<div class="grid g3">
-<div class="card"><div class="ct">📊 Simulated Total</div><div class="mr"><span class="mk">TOTAL METERED</span><span class="mv gold" id="r1">$0</span></div><div class="mr"><span class="mk">PER SECOND</span><span class="mv" id="r2">$0</span></div><div class="mr"><span class="mk">PER MINUTE</span><span class="mv" id="r3">$0</span></div><div class="mr"><span class="mk">PER HOUR</span><span class="mv" id="r4">$0</span></div><div class="mr"><span class="mk">PER DAY</span><span class="mv gold" id="r5">$0</span></div><div class="mr"><span class="mk">PER MONTH</span><span class="mv" id="r6">$0</span></div><div class="mr"><span class="mk">PER YEAR</span><span class="mv ac" id="r7">$0</span></div></div>
-<div class="card"><div class="ct">⚡ Stream Breakdown</div><div class="mr"><span class="mk">EVENT PROCESSING</span><span class="mv ac" id="rs1">$0</span></div><div class="mr"><span class="mk">INTELLIGENCE LICENSE</span><span class="mv blue" id="rs2">$0</span></div><div class="mr"><span class="mk">DATA PRODUCTS</span><span class="mv gold" id="rs3">$0</span></div></div>
-<div class="card"><div class="ct">📊 Domain Revenue</div><div id="domain-rev"></div></div>
-<div class="card s3"><div class="ct">📋 Simulated Ledger</div><div style="overflow-x:auto"><table class="lt"><thead><tr><th>TIME</th><th>DOMAIN</th><th>TYPE</th><th>EVENT FEE</th><th>INTEL FEE</th><th>DATA FEE</th><th>TOTAL</th><th>STATUS</th></tr></thead><tbody id="lb"><tr><td colspan="8" style="text-align:center;color:var(--muted);padding:16px">Loading...</td></tr></tbody></table></div></div>
+<!-- BRAIN -->
+<div id="p-brain" class="panel"><div class="grid g3">
+<div class="card"><div class="ct">🧠 Brain Status</div>
+<div class="mr"><span class="mk">STATUS</span><span class="mv green" id="brain-status">RUNNING</span></div>
+<div class="mr"><span class="mk">LOOP SPEED</span><span class="mv ac" id="brain-loop">3000ms</span></div>
+<div class="mr"><span class="mk">EVENTS PROCESSED</span><span class="mv blue" id="brain-proc">0</span></div>
+<div class="mr"><span class="mk">KNOWLEDGE BASE</span><span class="mv gold" id="brain-kb">0 patterns</span></div>
+<div class="mr"><span class="mk">ACCELERATIONS</span><span class="mv green" id="brain-acc">0</span></div>
+<div class="mr"><span class="mk">PITCHES GENERATED</span><span class="mv ac" id="brain-pitches">0</span></div>
+<div class="mr"><span class="mk">SYSTEM HEALTH</span><span class="mv green" id="brain-health">NOMINAL</span></div>
+</div>
+<div class="card s2"><div class="ct">🔄 Recent Brain Decisions</div><div class="feed" id="brain-decisions"><div class="fi"><span style="color:var(--muted)">Brain initializing...</span></div></div></div>
+<div class="card s3"><div class="ct">📄 Domain Intelligence Reports</div><div id="brain-reports"><div style="color:var(--muted);font-size:0.75rem">Reports generated every hour...</div></div></div>
+</div></div>
+
+<!-- THREATS -->
+<div id="p-threats" class="panel"><div class="grid g2">
+<div class="card"><div class="ct">🚨 Threat Summary</div>
+<div class="mr"><span class="mk">THREATS DETECTED</span><span class="mv red" id="threat-count">0</span></div>
+<div class="mr"><span class="mk">CYBERSECURITY</span><span class="mv red" id="threat-cyber">0</span></div>
+<div class="mr"><span class="mk">DEFENSE</span><span class="mv red" id="threat-defense">0</span></div>
+<div class="mr"><span class="mk">MONITORING</span><span class="mv green">ACTIVE</span></div>
+</div>
+<div class="card"><div class="ct">💡 Threat Value</div>
+<div class="mr"><span class="mk">PREMIUM PRICING</span><span class="mv gold">3x BASE RATE</span></div>
+<div class="mr"><span class="mk">CYBER RATE</span><span class="mv ac">$1.80/10 events</span></div>
+<div class="mr"><span class="mk">DEFENSE RATE</span><span class="mv ac">$2.00/10 events</span></div>
+<div class="mr"><span class="mk">TARGET CLIENT</span><span class="mv blue">CISO / GOV CONTRACTOR</span></div>
+</div>
+<div class="card s2"><div class="ct">🚨 Live Threat Feed</div><div id="threat-feed"><div style="color:var(--muted);font-size:0.75rem">Monitoring for threats across all domains...</div></div></div>
+</div></div>
+
+<!-- OPPORTUNITIES -->
+<div id="p-opportunities" class="panel"><div class="grid g2">
+<div class="card"><div class="ct">🎯 Client Engine</div>
+<div class="mr"><span class="mk">PITCHES GENERATED</span><span class="mv ac" id="opp-total">0</span></div>
+<div class="mr"><span class="mk">URGENT LEADS</span><span class="mv red" id="opp-urgent">0</span></div>
+<div class="mr"><span class="mk">STATUS</span><span class="mv green">HUNTING</span></div>
+<div class="mr"><span class="mk">CYCLE</span><span class="mv blue">EVERY 10 SECONDS</span></div>
+</div>
+<div class="card"><div class="ct">📋 How To Convert</div>
+<div style="font-size:0.72rem;line-height:1.8;color:var(--text)">
+1. Find a lead below<br>
+2. Go to SUBSCRIBERS tab<br>
+3. Issue them an API key<br>
+4. Send them the key + endpoint<br>
+5. Every call they make bills automatically
+</div></div>
+<div class="card s2"><div class="ct">🔥 Urgent Opportunities — Brain Generated</div><div id="opp-feed"><div style="color:var(--muted);font-size:0.75rem">Brain hunting...</div></div></div>
 </div></div>
 
 <!-- EVENTS -->
 <div id="p-events" class="panel"><div class="grid g2">
-<div class="card"><div class="ct">🌐 Ingestion Status</div><div class="mr"><span class="mk">TOTAL EVENTS</span><span class="mv ac" id="et">0</span></div><div class="mr"><span class="mk">SOURCES ACTIVE</span><span class="mv blue" id="src-count">50+</span></div><div class="mr"><span class="mk">DOMAINS</span><span class="mv gold">7</span></div><div class="mr"><span class="mk">STATUS</span><span class="mv ac">RUNNING</span></div><div class="mr"><span class="mk">ERRORS</span><span class="mv" id="err-count">0</span></div></div>
-<div class="card"><div class="ct">📡 Domain Activity</div><div id="domain-activity"></div></div>
-<div class="card s2"><div class="ct">📡 Full Live Feed</div><div class="feed" style="height:400px" id="feed2"><div class="fi"><span style="color:var(--muted)">Loading...</span></div></div></div>
+<div class="card"><div class="ct">🌐 Ingestion Status</div>
+<div class="mr"><span class="mk">TOTAL EVENTS</span><span class="mv ac" id="ev-total">0</span></div>
+<div class="mr"><span class="mk">SOURCES</span><span class="mv blue" id="ev-sources">80+</span></div>
+<div class="mr"><span class="mk">DOMAINS</span><span class="mv gold">12</span></div>
+<div class="mr"><span class="mk">ERRORS</span><span class="mv" id="ev-errors">0</span></div>
+<div class="mr"><span class="mk">STATUS</span><span class="mv green">RUNNING</span></div>
+</div>
+<div class="card"><div class="ct">📊 Events Per Domain</div><div id="ev-domains"></div></div>
+<div class="card s2"><div class="ct">📡 Full Live Feed — All 12 Domains</div><div class="feed" style="height:420px" id="feed2"></div></div>
+</div></div>
+
+<!-- TREASURY -->
+<div id="p-treasury" class="panel"><div class="grid g2">
+<div class="card"><div class="ct">🏦 Treasury Balance</div><div class="bl">SOVEREIGN LEDGER</div><div class="bv" id="tb">$0.00</div>
+<div style="margin-top:16px">
+<div class="mr"><span class="mk">LEDGER ENTRIES</span><span class="mv ac" id="t-entries">0</span></div>
+<div class="mr"><span class="mk">TRANSFERS OUT</span><span class="mv gold" id="t-transfers">0</span></div>
+<div class="mr"><span class="mk">MODE</span><span class="mv blue">SOVEREIGN</span></div>
+<div class="mr"><span class="mk">STRIPE</span><span class="mv red">NONE — NOT NEEDED</span></div>
+</div></div>
+<div class="card"><div class="ct">📤 Add Bank / Wallet Route</div>
+<div class="fg"><label class="fl">RAIL TYPE</label>
+<select class="fs" id="at">
+<option value="ecobank">Ecobank (SWIFT)</option>
+<option value="wise">Wise Business</option>
+<option value="grey">Grey.co (Africa)</option>
+<option value="payoneer">Payoneer</option>
+<option value="gtbank">GTBank (SWIFT)</option>
+<option value="uba">UBA (SWIFT)</option>
+<option value="crypto">Crypto Wallet (BTC/ETH/USDC)</option>
+<option value="usdc">USDC Stablecoin</option>
+<option value="internal">M7 Internal Hold</option>
+</select></div>
+<div class="fr">
+<div class="fg"><label class="fl">ACCOUNT NAME</label><input class="fi2" placeholder="e.g. SECKA ECOBANK" id="an"></div>
+<div class="fg"><label class="fl">SWIFT / WALLET ADDRESS</label><input class="fi2" placeholder="SWIFT code or wallet" id="aa"></div>
+</div>
+<div class="fr">
+<div class="fg"><label class="fl">ACCOUNT NUMBER / IBAN</label><input class="fi2" placeholder="Account number" id="anum"></div>
+<div class="fg"><label class="fl">ALLOCATION %</label><input class="fi2" type="number" placeholder="100" id="ap"></div>
+</div>
+<div class="bg3b"><button class="btn bp" onclick="addRoute()">ADD ROUTE</button><button class="btn bs2" onclick="notif('Cleared')">CLEAR</button></div>
+</div>
+<div class="card s2"><div class="ct">🔀 Active Routing Rails</div><div id="rails">
+<div class="ri"><div><div class="rn">M7 INTERNAL SOVEREIGN HOLD</div><div class="rd">All revenue held until routed to bank or wallet</div></div><div class="ra">● PRIMARY ACTIVE</div></div>
+</div>
+<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+<div style="font-size:0.65rem;color:var(--muted);letter-spacing:1px;margin-bottom:14px">AUTHORIZE TRANSFER</div>
+<div class="fr">
+<div class="fg"><label class="fl">AMOUNT ($)</label><input class="fi2" type="number" placeholder="Amount" id="ta"></div>
+<div class="fg"><label class="fl">DESTINATION RAIL</label><select class="fs" id="td"><option>M7 Internal Hold</option><option>Ecobank</option><option>Wise Business</option><option>Grey.co</option><option>Crypto Wallet</option></select></div>
+</div>
+<div class="fg"><label class="fl">REFERENCE</label><input class="fi2" placeholder="Transfer reference" id="tref"></div>
+<div class="bg3b"><button class="btn bg2" onclick="doTransfer()">AUTHORIZE TRANSFER</button><button class="btn bs2" onclick="notif('Cancelled')">CANCEL</button></div>
+</div></div>
+<div class="card s2"><div class="ct">📋 Treasury Ledger</div><div style="overflow-x:auto"><table class="lt"><thead><tr><th>SEQ</th><th>TIME</th><th>TYPE</th><th>AMOUNT</th><th>BALANCE</th><th>SOURCE</th><th>HASH</th></tr></thead><tbody id="treasury-ledger"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:16px">Loading...</td></tr></tbody></table></div></div>
 </div></div>
 
 <!-- SUBSCRIBERS -->
@@ -64,36 +178,61 @@
 <div class="card"><div class="ct">➕ Issue API Key</div>
 <div class="fg"><label class="fl">SUBSCRIBER NAME</label><input class="fi2" id="sub-name" placeholder="e.g. HEDGE_FUND_ALPHA"></div>
 <div class="fg"><label class="fl">PLAN</label><select class="fs" id="sub-plan"><option>basic</option><option>standard</option><option>enterprise</option></select></div>
-<div class="fg"><label class="fl">DOMAIN ACCESS</label><select class="fs" id="sub-domain"><option value="all">ALL DOMAINS</option><option value="finance">Finance</option><option value="government">Government</option><option value="healthcare">Healthcare</option><option value="ai">AI</option><option value="energy">Energy</option><option value="tech">Tech</option><option value="social">Social</option></select></div>
-<div class="bg3"><button class="btn bgreen" onclick="issueKey()">ISSUE API KEY</button></div>
+<div class="fg"><label class="fl">DOMAIN ACCESS</label><select class="fs" id="sub-domain">
+<option value="all">ALL DOMAINS</option>
+<option value="finance">Finance ($1.00)</option>
+<option value="defense">Defense ($2.00)</option>
+<option value="cybersecurity">Cybersecurity ($1.80)</option>
+<option value="legal">Legal ($1.50)</option>
+<option value="realestate">Real Estate ($1.20)</option>
+<option value="supplychain">Supply Chain ($1.10)</option>
+<option value="government">Government ($0.80)</option>
+<option value="healthcare">Healthcare ($0.75)</option>
+<option value="ai">AI ($0.50)</option>
+<option value="energy">Energy ($0.40)</option>
+<option value="tech">Tech ($0.20)</option>
+<option value="social">Social ($0.10)</option>
+</select></div>
+<div class="bg3b"><button class="btn bgreen" onclick="issueKey()">ISSUE API KEY</button></div>
 <div class="key-box" id="key-result"></div>
 </div>
 <div class="card"><div class="ct">👥 Active Subscribers</div><div id="sub-list"><div style="color:var(--muted);font-size:0.75rem">No subscribers yet</div></div></div>
-<div class="card s2"><div class="ct">📋 Subscriber Ledger</div><div style="overflow-x:auto"><table class="lt"><thead><tr><th>NAME</th><th>PLAN</th><th>DOMAIN</th><th>CALLS</th><th>REAL BILLED</th><th>STATUS</th></tr></thead><tbody id="sub-table"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">No subscribers</td></tr></tbody></table></div></div>
-</div></div>
-
-<!-- TREASURY -->
-<div id="p-treasury" class="panel"><div class="grid g2">
-<div class="card"><div class="ct">🏦 Treasury Balance</div><div class="bl">SOVEREIGN INTERNAL</div><div class="bv" id="tb">$0.00</div><div class="bs">CRYPTOGRAPHIC LEDGER</div><div style="margin-top:16px"><div class="mr"><span class="mk">LEDGER ENTRIES</span><span class="mv ac" id="t-entries">0</span></div><div class="mr"><span class="mk">TRANSFERS OUT</span><span class="mv gold" id="t-transfers">0</span></div><div class="mr"><span class="mk">MODE</span><span class="mv blue">SOVEREIGN</span></div><div class="mr"><span class="mk">STRIPE</span><span class="mv red">NONE</span></div></div></div>
-<div class="card"><div class="ct">📤 Add Routing Account</div><div class="fg"><label class="fl">ACCOUNT TYPE</label><select class="fs" id="at"><option>Bank Account (ACH/SWIFT)</option><option>Crypto Wallet</option><option>Stablecoin (USDC)</option><option>Internal M7 Hold</option></select></div><div class="fr"><div class="fg"><label class="fl">ACCOUNT NAME</label><input class="fi2" placeholder="e.g. SECKA PRIMARY" id="an"></div><div class="fg"><label class="fl">ADDRESS / ACCOUNT</label><input class="fi2" placeholder="Wallet or account number" id="aa"></div></div><div class="fg"><label class="fl">ALLOCATION %</label><input class="fi2" type="number" placeholder="100" id="ap"></div><div class="bg3"><button class="btn bp" onclick="addRoute()">ADD ROUTE</button></div></div>
-<div class="card s2"><div class="ct">🔀 Routing Rails</div><div id="rails"><div class="ri"><div><div class="rn">M7 INTERNAL SOVEREIGN HOLD</div><div class="rd">All revenue held in M7 treasury until routed</div></div><div class="ra">● PRIMARY ACTIVE</div></div></div><div style="margin-top:20px"><div style="font-size:0.65rem;color:var(--muted);letter-spacing:1px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">MANUAL TRANSFER</div><div class="fr"><div class="fg"><label class="fl">AMOUNT ($)</label><input class="fi2" type="number" placeholder="Amount" id="ta"></div><div class="fg"><label class="fl">DESTINATION</label><select class="fs" id="td"><option>M7 Internal Hold</option><option>Crypto Wallet</option><option>Bank Account</option></select></div></div><div class="bg3"><button class="btn bg2" onclick="doTransfer()">AUTHORIZE TRANSFER</button></div></div></div>
+<div class="card s2"><div class="ct">📋 Subscriber Ledger</div><div style="overflow-x:auto"><table class="lt"><thead><tr><th>NAME</th><th>PLAN</th><th>DOMAIN</th><th>CALLS</th><th>BILLED</th><th>STATUS</th></tr></thead><tbody id="sub-table"></tbody></table></div></div>
 </div></div>
 
 <!-- CONTROL -->
 <div id="p-control" class="panel"><div class="grid g2">
-<div class="card"><div class="ct">⚙️ System Controls</div><div class="tr"><div><div class="tl">Real Event Ingestion</div><div class="ts">50+ live internet sources</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="tr"><div><div class="tl">Autonomous Revenue Engine</div><div class="ts">Self-running growth loop</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="tr"><div><div class="tl">EDAB Billing Engine</div><div class="ts">Automatic metering</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="tr"><div><div class="tl">AI Self-Evolution</div><div class="ts">Performance optimization</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="tr"><div><div class="tl">AWS Exchange Auto-Delivery</div><div class="ts">Every 50 events</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div><div class="bg3" style="margin-top:16px"><button class="btn bd" onclick="notif('Emergency stop — confirm required')">EMERGENCY STOP</button><button class="btn bp" onclick="notif('Restart initiated')">RESTART</button></div></div>
-<div class="card"><div class="ct">💲 Tiered Pricing (Locked)</div><div class="mr"><span class="mk">FINANCE</span><span class="mv ac">$1.00 / 10 events</span></div><div class="mr"><span class="mk">GOVERNMENT</span><span class="mv ac">$0.80 / 10 events</span></div><div class="mr"><span class="mk">HEALTHCARE</span><span class="mv ac">$0.75 / 10 events</span></div><div class="mr"><span class="mk">AI</span><span class="mv ac">$0.50 / 10 events</span></div><div class="mr"><span class="mk">ENERGY</span><span class="mv ac">$0.40 / 10 events</span></div><div class="mr"><span class="mk">TECH</span><span class="mv ac">$0.20 / 10 events</span></div><div class="mr"><span class="mk">SOCIAL</span><span class="mv ac">$0.10 / 10 events</span></div></div>
-</div></div>
-
-<!-- SETTINGS -->
-<div id="p-settings" class="panel"><div class="grid g2">
-<div class="card"><div class="ct">🔐 System Identity</div><div class="fg"><label class="fl">SYSTEM NAME</label><input class="fi2" value="M7-77"></div><div class="fg"><label class="fl">OWNER</label><input class="fi2" value="SECKA"></div><div class="fg"><label class="fl">DPI FRAMEWORK ID</label><input class="fi2" value="DPI-M7-77-SOVEREIGN"></div><div class="bg3"><button class="btn bp" onclick="notif('Identity saved')">SAVE</button></div></div>
-<div class="card"><div class="ct">💾 System Info</div><div class="mr"><span class="mk">VERSION</span><span class="mv ac">M7-77 v2.0</span></div><div class="mr"><span class="mk">SOURCES</span><span class="mv blue">50+ LIVE</span></div><div class="mr"><span class="mk">FRAMEWORK</span><span class="mv blue">DPI SOVEREIGN</span></div><div class="mr"><span class="mk">DEPLOYMENT</span><span class="mv">RAILWAY.APP — LIVE</span></div><div class="mr"><span class="mk">BILLING</span><span class="mv ac">EDAB AUTONOMOUS</span></div><div class="mr"><span class="mk">PAYMENT RAILS</span><span class="mv gold">SOVEREIGN — NO STRIPE</span></div><div class="mr"><span class="mk">RAPIDAPI</span><span class="mv ac">LISTED</span></div><div class="mr"><span class="mk">OWNER</span><span class="mv ac">SECKA © 2026</span></div></div>
+<div class="card"><div class="ct">⚙️ System Controls</div>
+<div class="tr2"><div><div class="tl">Event Ingestion</div><div class="ts2">80+ sources, 12 domains</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div>
+<div class="tr2"><div><div class="tl">M7 AI Brain</div><div class="ts2">Autonomous intelligence + speed</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div>
+<div class="tr2"><div><div class="tl">EDAB Billing Engine</div><div class="ts2">Events = Revenue, auto-metered</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div>
+<div class="tr2"><div><div class="tl">Client Acquisition Engine</div><div class="ts2">Hunting every 10 seconds</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div>
+<div class="tr2"><div><div class="tl">Threat Detection</div><div class="ts2">Cybersecurity + Defense monitoring</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div>
+<div class="tr2"><div><div class="tl">AWS Exchange Delivery</div><div class="ts2">Auto-deliver every 100 events</div></div><div class="tg on" onclick="this.classList.toggle('on');notif('Toggled')"></div></div>
+<div class="bg3b" style="margin-top:16px"><button class="btn bd" onclick="notif('Emergency stop — confirm required')">EMERGENCY STOP</button><button class="btn bp" onclick="notif('Restart initiated')">RESTART ALL</button></div>
+</div>
+<div class="card"><div class="ct">💲 Tiered Pricing — All 12 Domains</div>
+<div class="mr"><span class="mk">DEFENSE</span><span class="mv red">$2.00 / 10 events</span></div>
+<div class="mr"><span class="mk">CYBERSECURITY</span><span class="mv red">$1.80 / 10 events</span></div>
+<div class="mr"><span class="mk">LEGAL</span><span class="mv gold">$1.50 / 10 events</span></div>
+<div class="mr"><span class="mk">REAL ESTATE</span><span class="mv gold">$1.20 / 10 events</span></div>
+<div class="mr"><span class="mk">SUPPLY CHAIN</span><span class="mv gold">$1.10 / 10 events</span></div>
+<div class="mr"><span class="mk">FINANCE</span><span class="mv ac">$1.00 / 10 events</span></div>
+<div class="mr"><span class="mk">GOVERNMENT</span><span class="mv ac">$0.80 / 10 events</span></div>
+<div class="mr"><span class="mk">HEALTHCARE</span><span class="mv ac">$0.75 / 10 events</span></div>
+<div class="mr"><span class="mk">AI</span><span class="mv blue">$0.50 / 10 events</span></div>
+<div class="mr"><span class="mk">ENERGY</span><span class="mv blue">$0.40 / 10 events</span></div>
+<div class="mr"><span class="mk">TECH</span><span class="mv blue">$0.20 / 10 events</span></div>
+<div class="mr"><span class="mk">SOCIAL</span><span class="mv muted">$0.10 / 10 events</span></div>
+<div class="mr"><span class="mk">PREMIUM MULT</span><span class="mv green">3x on score ≥ 0.80</span></div>
+<div class="mr"><span class="mk">PREDICTION MULT</span><span class="mv green">10x on score ≥ 0.92</span></div>
+</div>
 </div></div>
 
 <div id="notif"></div>
 <script>
-let pr=0,pt=Date.now(),ae=[],maxDomainEvents=0;
+const PRICING={finance:1.00,government:0.80,healthcare:0.75,health:0.75,ai:0.50,energy:0.40,tech:0.20,social:0.10,defense:2.00,cybersecurity:1.80,legal:1.50,realestate:1.20,supplychain:1.10};
+let pr=0,pt=Date.now(),ae=[];
 
 function ck(){document.getElementById('clock').textContent=new Date().toUTCString().replace('GMT','UTC');}
 setInterval(ck,1000);ck();
@@ -104,172 +243,212 @@ function sw(n,el){
   document.getElementById('p-'+n).classList.add('active');
   el.classList.add('active');
 }
-
 function notif(m){const e=document.getElementById('notif');e.textContent='✓ '+m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3000);}
 function fmt(n){n=parseFloat(n)||0;if(n>=1e9)return'$'+(n/1e9).toFixed(2)+'B';if(n>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(n>=1e3)return'$'+(n/1e3).toFixed(2)+'K';return'$'+n.toFixed(2);}
 function fn(n){return(parseInt(n)||0).toLocaleString();}
 
 async function fd(){
   try{
-    const [status, autonomous] = await Promise.all([
+    const [st,br,opps,threats,treas,auto]=await Promise.all([
       fetch('/api/status').then(r=>r.json()),
+      fetch('/api/brain').then(r=>r.json()),
+      fetch('/api/opportunities').then(r=>r.json()),
+      fetch('/api/threats').then(r=>r.json()),
+      fetch('/api/ledger?limit=20').then(r=>r.json()),
       fetch('/api/autonomous').then(r=>r.json())
     ]);
 
-    // Real revenue
-    const real = autonomous.realRevenue||{total:0,transactions:[]};
-    const realTotal = real.total||0;
-    document.getElementById('ov-real').textContent = fmt(realTotal);
-    document.getElementById('ov-real-txs').textContent = (real.transactions?.length||0)+' transactions';
-    document.getElementById('real-total').textContent = fmt(realTotal);
-    document.getElementById('real-total-banner').textContent = fmt(realTotal);
-
-    // Subscribers
-    const subs = autonomous.subscribers||{total:0,active:0,list:[]};
-    document.getElementById('ov-subs').textContent = subs.active||0;
-    document.getElementById('real-subs').textContent = subs.active||0;
-    document.getElementById('real-calls').textContent = fn(autonomous.totalCalls||0);
-
-    // Simulated revenue
-    const rev = parseFloat(status.edab?.totalBilled)||0;
+    // Overview
+    const rev=parseFloat(st.edab?.totalBilled)||0;
     const now=Date.now(),el2=Math.max((now-pt)/1000,1),rps=Math.max((rev-pr)/el2,0);
     pr=rev;pt=now;
     const dy=rps*86400,hr=rps*3600;
-
     document.getElementById('ov1').textContent=fmt(rev);
     document.getElementById('ov1s').textContent=fmt(rps)+'/sec';
-    document.getElementById('ov2').textContent=fn(status.ingestion?.totalEvents||0);
-    document.getElementById('ov2s').textContent=(status.ingestion?.sources||50)+' sources active';
-    document.getElementById('sim-total-banner').textContent=fmt(rev);
+    document.getElementById('ov2').textContent=fn(st.ingestion?.totalEvents||0);
+    document.getElementById('ov2s').textContent=(st.ingestion?.sources||80)+' sources — 12 domains';
+    document.getElementById('ov3').textContent=fmt(dy);
+    document.getElementById('ov3s').textContent=fmt(hr)+'/hr';
+    document.getElementById('ov-brain').textContent=(br.loopInterval||3000)+'ms';
+    document.getElementById('ov-brain-s').textContent='accelerations: '+(br.speedMetrics?.accelerations||0);
 
-    if(status.edab?.streams){
-      const st=status.edab.streams;
-      document.getElementById('s1').textContent=fmt(st.eventProcessing);
-      document.getElementById('s2').textContent=fmt(st.intelligenceLicense);
-      document.getElementById('s3').textContent=fmt(st.dataProduct);
-      document.getElementById('rs1').textContent=fmt(st.eventProcessing);
-      document.getElementById('rs2').textContent=fmt(st.intelligenceLicense);
-      document.getElementById('rs3').textContent=fmt(st.dataProduct);
+    // Streams
+    const str=st.edab?.streams||{};
+    document.getElementById('s-ep').textContent=fmt(str.eventProcessing);
+    document.getElementById('s-il').textContent=fmt(str.intelligenceLicense);
+    document.getElementById('s-dp').textContent=fmt(str.dataProduct);
+    document.getElementById('s-pm').textContent=fmt(str.premium);
+    document.getElementById('rs-ep').textContent=fmt(str.eventProcessing);
+    document.getElementById('rs-il').textContent=fmt(str.intelligenceLicense);
+    document.getElementById('rs-dp').textContent=fmt(str.dataProduct);
+    document.getElementById('rs-pm').textContent=fmt(str.premium||0);
+    document.getElementById('rs-tx').textContent=fn(st.edab?.totalEvents);
+    document.getElementById('r-total').textContent=fmt(rev);
+    document.getElementById('r-ps').textContent=fmt(rps);
+    document.getElementById('r-pm').textContent=fmt(rps*60);
+    document.getElementById('r-ph').textContent=fmt(hr);
+    document.getElementById('r-pd').textContent=fmt(dy);
+    document.getElementById('r-pmo').textContent=fmt(dy*30);
+    document.getElementById('r-py').textContent=fmt(dy*365);
+
+    // Brain
+    document.getElementById('brain-status').textContent=br.isRunning?'RUNNING':'STOPPED';
+    document.getElementById('brain-loop').textContent=(br.loopInterval||3000)+'ms';
+    document.getElementById('brain-proc').textContent=fn(br.processedCount);
+    document.getElementById('brain-kb').textContent=fn(br.knowledgeBase)+' patterns';
+    document.getElementById('brain-acc').textContent=fn(br.speedMetrics?.accelerations||0);
+    document.getElementById('brain-pitches').textContent=fn(br.pitchesGenerated||0);
+    document.getElementById('brain-health').textContent=br.operations?.systemStatus||'NOMINAL';
+
+    // Brain decisions feed
+    const bd=document.getElementById('brain-decisions');
+    if(bd&&br.recentDecisions?.length>0){
+      bd.innerHTML='';
+      br.recentDecisions.forEach(d=>{
+        const el3=document.createElement('div');el3.className='fi';
+        el3.innerHTML=`<span style="color:var(--ac)">[${d.type}]</span><span style="color:var(--muted);font-size:0.65rem">${d.detail||''}</span>`;
+        bd.appendChild(el3);
+      });
     }
 
-    document.getElementById('r1').textContent=fmt(rev);
-    document.getElementById('r2').textContent=fmt(rps);
-    document.getElementById('r3').textContent=fmt(rps*60);
-    document.getElementById('r4').textContent=fmt(hr);
-    document.getElementById('r5').textContent=fmt(dy);
-    document.getElementById('r6').textContent=fmt(dy*30);
-    document.getElementById('r7').textContent=fmt(dy*365);
+    // Brain reports
+    const brRep=document.getElementById('brain-reports');
+    if(brRep&&br.reports?.length>0){
+      brRep.innerHTML='';
+      br.reports.forEach(r=>{
+        brRep.innerHTML+=`<div class="ri"><div><div class="rn">${r.domain.toUpperCase()}</div><div class="rd">${fn(r.events)} events — ${fmt(r.revenue)} revenue</div></div><span class="badge">READY</span></div>`;
+      });
+    }
 
-    // Domain breakdown
-    const db = status.edab?.domainBreakdown||{};
-    const domains = ['finance','government','healthcare','ai','energy','tech','social'];
-    let maxEv = 1;
-    domains.forEach(d=>{if(db[d]&&db[d].events>maxEv)maxEv=db[d].events;});
-    domains.forEach(d=>{
-      const ev = db[d]?.events||0;
-      const pct = Math.min((ev/maxEv)*100,100);
-      const el3 = document.getElementById('dp-'+d);
-      const pb = document.getElementById('pb-'+d);
-      if(el3) el3.textContent=fn(ev);
-      if(pb) pb.style.width=pct+'%';
-    });
-
-    // Domain revenue panel
-    const dr = document.getElementById('domain-rev');
-    if(dr){
-      dr.innerHTML='';
-      domains.forEach(d=>{
+    // Domains table
+    const db=st.edab?.domainBreakdown||{};
+    const mom=st.edab?.momentum||{};
+    const dt=document.getElementById('domain-table');
+    if(dt){
+      dt.innerHTML='';
+      Object.keys(PRICING).forEach(d=>{
         const info=db[d]||{events:0,revenue:0};
-        dr.innerHTML+=`<div class="mr"><span class="mk">${d.toUpperCase()}</span><span class="mv ac">${fmt(info.revenue||0)}</span></div>`;
+        const m=mom[d]?.events||0;
+        const mult=m>500?'3.0x':m>200?'2.0x':m>100?'1.5x':m>50?'1.25x':'1.0x';
+        dt.innerHTML+=`<tr><td><span class="dp ${d}">${d.toUpperCase()}</span></td><td style="color:var(--ac)">$${PRICING[d].toFixed(2)}</td><td style="color:var(--blue)">${fn(info.events||0)}</td><td style="color:var(--gold)">${fmt(info.revenue||0)}</td><td style="color:var(--green)">${mult}</td><td><span class="badge settled">LIVE</span></td></tr>`;
+      });
+    }
+
+    // Domain bars
+    const dbars=document.getElementById('domain-bars');
+    if(dbars){
+      dbars.innerHTML='';
+      const maxEv=Math.max(...Object.values(db).map(d=>d.events||0),1);
+      Object.keys(PRICING).forEach(d=>{
+        const ev=db[d]?.events||0;
+        const pct=Math.min((ev/maxEv)*100,100);
+        dbars.innerHTML+=`<div class="pr"><div class="pl"><span>${d.toUpperCase()}</span><span>${fn(ev)} events — ${fmt(db[d]?.revenue||0)}</span></div><div class="pb"><div class="pf" style="width:${pct}%"></div></div></div>`;
+      });
+    }
+
+    // Momentum panel
+    const mp=document.getElementById('momentum-panel');
+    if(mp){
+      mp.innerHTML='';
+      Object.keys(PRICING).forEach(d=>{
+        const m=mom[d]?.events||0;
+        const mult=m>500?3.0:m>200?2.0:m>100?1.5:m>50?1.25:1.0;
+        const color=mult>=2?'var(--red)':mult>=1.5?'var(--gold)':mult>1?'var(--green)':'var(--muted)';
+        mp.innerHTML+=`<div class="mr"><span class="mk">${d.toUpperCase()}</span><span style="color:${color};font-weight:700">${mult}x</span></div>`;
+      });
+    }
+
+    // Revenue ledger
+    const rl=document.getElementById('rev-ledger');
+    if(rl&&ae.length>0){
+      rl.innerHTML='';
+      ae.slice().reverse().slice(0,20).forEach(e=>{
+        const base=PRICING[e.domain]||0.10;
+        const total=e.total||base*26;
+        rl.innerHTML+=`<tr><td style="color:var(--muted)">${new Date(e.timestamp||Date.now()).toISOString().substr(11,8)}</td><td><span class="dp ${e.domain||'tech'}">${(e.domain||'UNK').toUpperCase()}</span></td><td style="font-size:0.62rem">${e.type||'EVENT'}</td><td style="color:var(--muted)">$${base.toFixed(2)}</td><td style="color:var(--green)">1.0x</td><td style="color:var(--ac)">$${base.toFixed(2)}</td><td style="color:var(--blue)">$${(base*5).toFixed(2)}</td><td style="color:var(--gold)">$${(base*20).toFixed(2)}</td><td style="color:var(--ac);font-weight:bold">$${parseFloat(total).toFixed(2)}</td><td><span class="badge settled">SETTLED</span></td></tr>`;
+      });
+    }
+
+    // Opportunities
+    document.getElementById('opp-total').textContent=fn(opps.total||0);
+    document.getElementById('opp-urgent').textContent=fn(opps.urgent?.length||0);
+    const of2=document.getElementById('opp-feed');
+    const ovOpps=document.getElementById('ov-opps');
+    const allOpps=[...(opps.urgent||[]),...(opps.top||[])].slice(0,10);
+    if(of2){
+      of2.innerHTML='';
+      allOpps.forEach(o=>{
+        of2.innerHTML+=`<div class="opp ${o.urgency==='URGENT'||o.urgency==='CRITICAL'?'urgent':''}"><div class="opp-title">${o.clientType||o.domain}</div><div class="opp-detail">${o.pitch||''} — ${o.pricing||''}</div><div class="opp-action">${o.action||o.detail||''}</div></div>`;
+      });
+    }
+    if(ovOpps){
+      ovOpps.innerHTML='';
+      allOpps.slice(0,3).forEach(o=>{
+        ovOpps.innerHTML+=`<div class="opp ${o.urgency==='URGENT'||o.urgency==='CRITICAL'?'urgent':''}"><div class="opp-title" style="font-size:0.72rem">${o.clientType||o.domain}</div><div class="opp-action" style="font-size:0.65rem">${o.action||o.detail||''}</div></div>`;
+      });
+    }
+
+    // Threats
+    document.getElementById('threat-count').textContent=fn(threats.length||0);
+    document.getElementById('threat-cyber').textContent=fn((threats||[]).filter(t=>t.threats?.some(x=>x.domain==='cybersecurity')).length);
+    document.getElementById('threat-defense').textContent=fn((threats||[]).filter(t=>t.threats?.some(x=>x.domain==='defense')).length);
+    const tf=document.getElementById('threat-feed');
+    if(tf){
+      tf.innerHTML='';
+      (threats||[]).slice(0,10).forEach(t=>{
+        tf.innerHTML+=`<div class="threat-item"><span class="badge threat">THREAT</span> ${t.detail||''}<div style="font-size:0.62rem;color:var(--muted);margin-top:4px">${new Date(t.timestamp).toISOString().substr(11,8)} — ${(t.threats||[]).map(x=>x.domain+'::'+x.type).join(', ')}</div></div>`;
+      });
+      if(threats.length===0) tf.innerHTML='<div style="color:var(--muted);font-size:0.75rem">No threats detected yet — monitoring active</div>';
+    }
+
+    // Events
+    document.getElementById('ev-total').textContent=fn(st.ingestion?.totalEvents||0);
+    document.getElementById('ev-sources').textContent=st.ingestion?.sources||80;
+    document.getElementById('ev-errors').textContent=fn(st.ingestion?.errors||0);
+    const evd=document.getElementById('ev-domains');
+    if(evd){
+      evd.innerHTML='';
+      const dc=st.ingestion?.domainCounts||{};
+      Object.keys(PRICING).forEach(d=>{
+        evd.innerHTML+=`<div class="mr"><span class="mk">${d.toUpperCase()}</span><span class="mv ac">${fn(dc[d]||0)}</span></div>`;
+      });
+    }
+
+    // Events feed
+    if(st.recentEvents?.length>0){
+      ae=st.recentEvents;
+      ['feed1','feed2'].forEach(id=>{
+        const f=document.getElementById(id);if(!f)return;
+        f.innerHTML='';
+        ae.slice().reverse().forEach(e=>{
+          const d2=document.createElement('div');d2.className='fi';
+          const base=PRICING[e.domain]||0.10;
+          const total=e.total||base*26;
+          d2.innerHTML=`<span><span class="dp ${e.domain||'tech'}">${(e.domain||'UNK').toUpperCase()}</span><span style="color:var(--muted);font-size:0.65rem">${e.type||'EVENT'}</span></span><span style="color:var(--ac);font-size:0.72rem">$${parseFloat(total).toFixed(2)}</span>`;
+          f.appendChild(d2);
+        });
       });
     }
 
     // Treasury
-    if(status.treasury){
-      document.getElementById('tb').textContent=fmt(status.treasury.balance);
-      document.getElementById('t-entries').textContent=fn(status.treasury.ledgerEntries);
-      document.getElementById('t-transfers').textContent=fn(status.treasury.transfers||0);
+    document.getElementById('tb').textContent=fmt(st.treasury?.balance||0);
+    document.getElementById('t-entries').textContent=fn(st.treasury?.ledgerEntries||0);
+    const tl2=document.getElementById('treasury-ledger');
+    if(tl2&&treas.transactions?.length>0){
+      tl2.innerHTML='';
+      treas.transactions.forEach(t=>{
+        tl2.innerHTML+=`<tr><td style="color:var(--muted)">${t.seq||''}</td><td style="color:var(--muted)">${new Date(t.timestamp).toISOString().substr(11,8)}</td><td><span class="badge ${t.type==='CREDIT'?'settled':'threat'}">${t.type}</span></td><td style="color:${t.type==='CREDIT'?'var(--green)':'var(--red)'};font-weight:700">$${parseFloat(t.amount||0).toFixed(4)}</td><td style="color:var(--ac)">$${parseFloat(t.balance||0).toFixed(2)}</td><td style="color:var(--muted)">${t.source||t.destination||'—'}</td><td style="font-size:0.6rem;color:var(--muted)">${t.hash||''}</td></tr>`;
+      });
     }
-
-    // Ingestion
-    document.getElementById('et').textContent=fn(status.ingestion?.totalEvents||0);
-    document.getElementById('src-count').textContent=status.ingestion?.sources||50;
-    document.getElementById('err-count').textContent=fn(status.ingestion?.errors||0);
-
-    // Events feed
-    if(status.recentEvents?.length>0){
-      ae=status.recentEvents;
-      updateFeeds();
-      updateSimLedger();
-    }
-
-    // Real ledger
-    updateRealLedger(real.transactions||[]);
 
     // Subscribers
-    updateSubscribers(subs.list||[]);
+    const subs=auto.subscribers?.list||[];
+    const sl=document.getElementById('sub-list');
+    const stbl=document.getElementById('sub-table');
+    if(sl) sl.innerHTML=subs.length?subs.map(s=>`<div class="ri"><div><div class="rn">${s.name}</div><div class="rd">${s.plan} — ${s.domain} — ${s.calls} calls</div></div><div class="ra">$${parseFloat(s.realBilled||0).toFixed(2)}</div></div>`).join(''):'<div style="color:var(--muted);font-size:0.75rem">No subscribers yet</div>';
+    if(stbl) stbl.innerHTML=subs.length?subs.map(s=>`<tr><td style="color:var(--green)">${s.name}</td><td><span class="badge">${s.plan}</span></td><td>${s.domain}</td><td>${fn(s.calls)}</td><td style="color:var(--green)">$${parseFloat(s.realBilled||0).toFixed(2)}</td><td><span class="badge settled">${s.status}</span></td></tr>`).join(''):'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">No subscribers</td></tr>';
 
   }catch(e){console.error(e);}
-}
-
-function updateFeeds(){
-  ['feed1','feed2'].forEach(id=>{
-    const f=document.getElementById(id);if(!f)return;
-    f.innerHTML='';
-    const ev=ae.slice().reverse();
-    ev.forEach(e=>{
-      const d=document.createElement('div');d.className='fi';
-      const t=e.total?parseFloat(e.total).toFixed(2):'0.00';
-      d.innerHTML=`<span><span class="dp ${e.domain||'tech'}">${(e.domain||'UNK').toUpperCase()}</span><span style="color:var(--muted)">${e.type||'EVENT'}</span></span><span style="color:var(--ac)">$${t}</span>`;
-      f.appendChild(d);
-    });
-  });
-}
-
-function updateSimLedger(){
-  const b=document.getElementById('lb');if(!b)return;b.innerHTML='';
-  ae.slice().reverse().slice(0,20).forEach(e=>{
-    const f=parseFloat(e.revenue?.eventFee||e.value)||0.50;
-    const r=document.createElement('tr');
-    r.innerHTML=`<td style="color:var(--muted)">${new Date(e.timestamp||Date.now()).toISOString().substr(11,8)}</td><td><span class="dp ${e.domain||'tech'}">${(e.domain||'UNK').toUpperCase()}</span></td><td style="font-size:0.65rem">${e.type||'EVENT'}</td><td style="color:var(--ac)">$${f.toFixed(2)}</td><td style="color:var(--blue)">$${(f*5).toFixed(2)}</td><td style="color:var(--gold)">$${(f*20).toFixed(2)}</td><td style="color:var(--ac);font-weight:bold">$${(f*26).toFixed(2)}</td><td><span class="badge sim">SIMULATED</span></td>`;
-    b.appendChild(r);
-  });
-}
-
-function updateRealLedger(txs){
-  const b=document.getElementById('real-ledger');if(!b)return;
-  if(!txs||txs.length===0){
-    b.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">No real transactions yet — waiting for first paying subscriber</td></tr>';
-    return;
-  }
-  b.innerHTML='';
-  txs.forEach(tx=>{
-    const r=document.createElement('tr');
-    r.innerHTML=`<td style="color:var(--muted)">${new Date(tx.timestamp).toISOString().substr(11,8)}</td><td style="color:var(--green)">${tx.subscriber||'—'}</td><td><span class="dp ${tx.domain||'tech'}">${(tx.domain||'UNK').toUpperCase()}</span></td><td style="color:var(--green);font-weight:bold">$${parseFloat(tx.amount||0).toFixed(2)}</td><td><span class="badge real">CONFIRMED</span></td>`;
-    b.appendChild(r);
-  });
-}
-
-function updateSubscribers(list){
-  const sl=document.getElementById('sub-list');
-  const st=document.getElementById('sub-table');
-  if(!list||list.length===0){
-    if(sl)sl.innerHTML='<div style="color:var(--muted);font-size:0.75rem">No subscribers yet — issue first API key above</div>';
-    if(st)st.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">No subscribers</td></tr>';
-    return;
-  }
-  if(sl){
-    sl.innerHTML='';
-    list.forEach(s=>{
-      sl.innerHTML+=`<div class="ri"><div><div class="rn">${s.name}</div><div class="rd">${s.plan} — ${s.domain} — ${s.calls} calls</div></div><div class="ra">$${parseFloat(s.realBilled||0).toFixed(2)} billed</div></div>`;
-    });
-  }
-  if(st){
-    st.innerHTML='';
-    list.forEach(s=>{
-      st.innerHTML+=`<tr><td style="color:var(--green)">${s.name}</td><td><span class="badge">${s.plan}</span></td><td>${s.domain}</td><td style="color:var(--ac)">${fn(s.calls)}</td><td style="color:var(--green);font-weight:bold">$${parseFloat(s.realBilled||0).toFixed(2)}</td><td><span class="badge real">${s.status}</span></td></tr>`;
-    });
-  }
 }
 
 async function issueKey(){
@@ -283,30 +462,42 @@ async function issueKey(){
     if(d.apiKey){
       const kb=document.getElementById('key-result');
       kb.style.display='block';
-      kb.innerHTML=`✅ API KEY ISSUED<br><br>${d.apiKey}<br><br>Share this key with ${name}. They use it to call your API.`;
-      notif('Key issued to '+name);
+      kb.innerHTML=`✅ KEY ISSUED TO ${name.toUpperCase()}<br><br>${d.apiKey}<br><br>Endpoint: /api/call<br>Domain: ${domain}`;
+      notif('Key issued — '+name);
       fd();
     }
-  }catch(e){notif('Error issuing key');}
+  }catch(e){notif('Error');}
 }
 
 function addRoute(){
   const n=document.getElementById('an').value;
+  const a=document.getElementById('aa').value;
+  const num=document.getElementById('anum').value;
+  const pct=document.getElementById('ap').value;
+  const type=document.getElementById('at').value;
   if(!n){notif('Enter account name');return;}
-  const r=document.getElementById('rails');
-  const i=document.createElement('div');i.className='ri';
-  i.innerHTML=`<div><div class="rn">${n.toUpperCase()}</div><div class="rd">${document.getElementById('aa').value||'Pending'} — ${document.getElementById('ap').value||0}% allocation</div></div><div class="ra">● CONFIGURED</div>`;
-  r.appendChild(i);
-  notif('Route added: '+n);
+  fetch('/api/treasury/route',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:n,type,address:a,accountNumber:num,allocation:pct})})
+    .then(r=>r.json()).then(()=>{
+      const rails=document.getElementById('rails');
+      rails.innerHTML+=`<div class="ri"><div><div class="rn">${n.toUpperCase()} — ${type.toUpperCase()}</div><div class="rd">SWIFT/Wallet: ${a||'—'} | Account: ${num||'—'} | Allocation: ${pct||100}%</div></div><div class="ra">● CONFIGURED</div></div>`;
+      notif('Route added: '+n);
+    }).catch(()=>notif('Error adding route'));
 }
 
 function doTransfer(){
   const a=document.getElementById('ta').value;
+  const dest=document.getElementById('td').value;
+  const ref=document.getElementById('tref').value;
   if(!a){notif('Enter amount');return;}
-  notif('Transfer $'+parseFloat(a).toFixed(2)+' authorized to treasury');
+  fetch('/api/treasury/transfer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:parseFloat(a),destination:dest,reference:ref})})
+    .then(r=>r.json()).then(d=>{
+      if(d.error) notif('Error: '+d.error);
+      else notif('Transfer $'+parseFloat(a).toFixed(2)+' → '+dest+' authorized');
+      fd();
+    }).catch(()=>notif('Transfer error'));
 }
 
 fd();
-setInterval(fd,5000);
+setInterval(fd,4000);
 </script>
 </body></html>
