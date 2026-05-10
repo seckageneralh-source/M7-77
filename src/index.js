@@ -341,6 +341,59 @@ app.get('/api/transactions', (req, res) => {
   res.json(revenueEngine.getRecentTransactions(limit));
 });
 
+
+// ── M7 Chat — Claude with system context ──────────────────────────────────
+app.post('/api/chat', async (req, res) => {
+  const { message, context } = req.body;
+  if (!message) return res.status(400).json({ error: 'message required' });
+  try {
+    const rev   = revenueEngine.getReport();
+    const ing   = ingestion.getStats();
+    const brS   = brain.getStatus();
+    const sys = `You are M7, the sovereign intelligence system for SECKA. Live system data:
+REVENUE: $${rev.total.toFixed(2)} total, ${rev.transactionCount} transactions
+TOP DOMAINS: ${JSON.stringify(Object.entries(rev.domainBreakdown||{}).sort((a,b)=>b[1].revenue-a[1].revenue).slice(0,5).map(([d,v])=>d+':$'+v.revenue.toFixed(2)))}
+EVENTS: ${ing.totalEvents} total, ${ing.sources} sources, ${ing.errors} errors
+BRAIN: ${brS.processedCount} processed, ${brS.claudeMetrics?.totalCalls||0} Claude calls, ${brS.patterns} patterns
+THREATS: ${brS.threats?.length||0} recent threats
+HEALTH: ${brS.operations?.systemStatus||'NOMINAL'}
+Be direct, precise, and autonomous. You are the intelligence operator for this sovereign system.`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 600, system: sys, messages: [{ role: 'user', content: message }] })
+    });
+    const data = await response.json();
+    res.json({ response: data.content?.[0]?.text || 'M7 processing...' });
+  } catch (err) {
+    res.json({ response: 'M7 system active. ' + err.message });
+  }
+});
+
+// ── Flutterwave Transfer ───────────────────────────────────────────────────
+app.post('/api/treasury/flutterwave', async (req, res) => {
+  const { amount, account_number, account_name, bank_code, currency, narration } = req.body;
+  if (!amount || !account_number || !account_name) return res.status(400).json({ error: 'amount, account_number, account_name required' });
+  if (amount > treasury.balance) return res.status(400).json({ error: 'Insufficient treasury balance', balance: treasury.balance });
+  try {
+    const ref = 'M7-' + Date.now() + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+    const response = await fetch('https://api.flutterwave.com/v3/transfers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.FLW_SECRET_KEY },
+      body: JSON.stringify({ account_bank: bank_code || 'ECOBANK', account_number, amount, narration: narration || 'M7 SOVEREIGN TRANSFER', currency: currency || 'GMD', reference: ref, beneficiary_name: account_name })
+    });
+    const data = await response.json();
+    if (data.status === 'success') {
+      treasury.debit(amount, account_name + ' via Flutterwave', 'SECKA');
+      console.log(`💸 Flutterwave transfer: $${amount} → ${account_name} | Ref: ${ref}`);
+    }
+    res.json({ ...data, reference: ref });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Health
 app.get('/health', (req, res) => res.json({
   status:    'LIVE',
