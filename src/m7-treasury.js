@@ -1,212 +1,100 @@
-// M7-77 Treasury System
-// Temporary holding of revenue + Rail system for fund transfers
-
 const EventEmitter = require('events');
+const crypto = require('crypto');
 
 class M7Treasury extends EventEmitter {
-  constructor(config) {
+  constructor() {
     super();
-    this.config = config;
     this.balance = 0;
-    this.bankAccounts = {};
+    this.ledger  = [];
+    this.routes  = [
+      { name: 'M7 SOVEREIGN HOLD', type: 'internal', allocation: 100, status: 'ACTIVE' }
+    ];
     this.transfers = [];
-    this.ledger = [];
-    this.accountDetailsStored = false;
+    console.log('🏦 M7 Treasury initialized — Sovereign mode, no Stripe');
   }
 
-  // Add bank account details for routing
-  addBankAccount(accountDetails) {
-    const accountId = `bank_${Date.now()}`;
-    
-    this.bankAccounts[accountId] = {
-      accountId: accountId,
-      accountHolder: accountDetails.accountHolder,
-      accountNumber: this.maskAccountNumber(accountDetails.accountNumber),
-      routingNumber: this.maskRoutingNumber(accountDetails.routingNumber),
-      bankName: accountDetails.bankName,
-      accountType: accountDetails.accountType || 'checking',
-      addedAt: Date.now(),
-      isDefault: accountDetails.isDefault || false,
-      status: 'verified'
-    };
-
-    if (accountDetails.isDefault) {
-      // Set all others to non-default
-      Object.values(this.bankAccounts).forEach(acc => {
-        if (acc.accountId !== accountId) acc.isDefault = false;
-      });
-      this.bankAccounts[accountId].isDefault = true;
-    }
-
-    console.log(`✅ Bank account added: ${accountDetails.bankName} - ${accountDetails.accountHolder}`);
-    return accountId;
+  // Hash each transaction into the ledger chain
+  _hash(data) {
+    return crypto.createHash('sha256').update(JSON.stringify(data)).digest('hex').substr(0, 16);
   }
 
-  // Add crypto wallet for routing
-  addCryptoWallet(walletDetails) {
-    const walletId = `crypto_${Date.now()}`;
-    
-    this.bankAccounts[walletId] = {
-      walletId: walletId,
-      currency: walletDetails.currency.toUpperCase(),
-      address: this.maskCryptoAddress(walletDetails.address),
-      label: walletDetails.label || walletDetails.currency,
-      addedAt: Date.now(),
-      isDefault: walletDetails.isDefault || false,
-      status: 'verified'
-    };
+  // Credit revenue into treasury
+  credit(amount, tx) {
+    this.balance += amount;
 
-    if (walletDetails.isDefault) {
-      Object.values(this.bankAccounts).forEach(acc => {
-        if (acc.walletId !== walletId) acc.isDefault = false;
-      });
-      this.bankAccounts[walletId].isDefault = true;
-    }
-
-    console.log(`✅ Crypto wallet added: ${walletDetails.currency.toUpperCase()}`);
-    return walletId;
-  }
-
-  // Receive revenue into treasury
-  depositRevenue(revenue) {
-    this.balance += revenue.totalRevenue;
-    
-    this.ledger.push({
-      id: `deposit_${Date.now()}`,
-      type: 'deposit',
-      amount: revenue.totalRevenue,
-      source: revenue.domain,
-      eventId: revenue.eventId,
+    const prev = this.ledger.length > 0 ? this.ledger[this.ledger.length - 1].hash : '0000000000000000';
+    const entry = {
+      seq:       this.ledger.length + 1,
       timestamp: Date.now(),
-      status: 'confirmed'
-    });
+      type:      'CREDIT',
+      amount:    parseFloat(amount.toFixed(4)),
+      balance:   parseFloat(this.balance.toFixed(4)),
+      source:    tx ? tx.domain : 'system',
+      txId:      tx ? tx.id : null,
+      prevHash:  prev
+    };
+    entry.hash = this._hash(entry);
 
-    this.emit('balance_updated', {
-      newBalance: this.balance,
-      deposit: revenue.totalRevenue
-    });
+    this.ledger.push(entry);
+    if (this.ledger.length > 2000) this.ledger.shift();
+
+    this.emit('credit', entry);
+    return entry;
   }
 
-  // Transfer funds from treasury to bank/crypto
-  transferFunds(transferRequest) {
-    const { amount, destinationAccountId, rail } = transferRequest;
-
+  // Debit — manual transfer out
+  debit(amount, destination, authorizedBy = 'SECKA') {
     if (amount > this.balance) {
-      return {
-        success: false,
-        error: 'Insufficient balance in treasury',
-        available: this.balance,
-        requested: amount
-      };
+      return { error: 'Insufficient treasury balance', balance: this.balance };
     }
 
-    const account = this.bankAccounts[destinationAccountId];
-    if (!account) {
-      return {
-        success: false,
-        error: 'Account not found'
-      };
-    }
-
-    const transfer = {
-      id: `transfer_${Date.now()}`,
-      amount: amount,
-      destination: account,
-      rail: rail,
-      status: 'processing',
-      initiatedAt: Date.now(),
-      estimatedDelivery: this.getEstimatedDelivery(rail)
-    };
-
-    // Deduct from treasury
     this.balance -= amount;
 
-    // Record transfer
-    this.transfers.push(transfer);
+    const prev = this.ledger[this.ledger.length - 1]?.hash || '0000000000000000';
+    const entry = {
+      seq:          this.ledger.length + 1,
+      timestamp:    Date.now(),
+      type:         'DEBIT',
+      amount:       parseFloat(amount.toFixed(4)),
+      balance:      parseFloat(this.balance.toFixed(4)),
+      destination,
+      authorizedBy,
+      prevHash:     prev
+    };
+    entry.hash = this._hash(entry);
 
-    this.ledger.push({
-      id: transfer.id,
-      type: 'transfer',
-      amount: amount,
-      destination: account.accountId || account.walletId,
-      rail: rail,
-      timestamp: Date.now(),
-      status: 'initiated'
+    this.ledger.push(entry);
+    this.transfers.push(entry);
+
+    this.emit('debit', entry);
+    return entry;
+  }
+
+  // Add a routing rail (bank, crypto, USDC)
+  addRoute(route) {
+    this.routes.push({
+      name:       route.name,
+      type:       route.type || 'external',
+      address:    route.address,
+      allocation: route.allocation || 0,
+      status:     'CONFIGURED',
+      addedAt:    Date.now()
     });
+    console.log('💳 Treasury route added:', route.name);
+  }
 
-    console.log(`💸 Transfer initiated: $${amount.toFixed(2)} via ${rail} to ${account.accountHolder || account.label}`);
-
-    // Simulate transfer processing
-    this.processTransfer(transfer);
-
+  getStatus() {
     return {
-      success: true,
-      transferId: transfer.id,
-      amount: amount,
-      rail: rail,
-      estimatedDelivery: new Date(transfer.estimatedDelivery).toISOString(),
-      newBalance: this.balance.toFixed(2)
+      balance:       parseFloat(this.balance.toFixed(2)),
+      ledgerEntries: this.ledger.length,
+      transfers:     this.transfers.length,
+      routes:        this.routes,
+      lastEntry:     this.ledger[this.ledger.length - 1] || null
     };
   }
 
-  processTransfer(transfer) {
-    const processingTime = this.getProcessingTime(transfer.rail);
-    
-    setTimeout(() => {
-      transfer.status = 'completed';
-      transfer.completedAt = Date.now();
-      
-      console.log(`✅ Transfer completed: ${transfer.id}`);
-      
-      this.emit('transfer_completed', transfer);
-    }, processingTime);
-  }
-
-  getEstimatedDelivery(rail) {
-    const times = {
-      bankTransfer: 1000 * 60 * 60 * 24 * 2, // 2 days
-      wireTransfer: 1000 * 60 * 60 * 2, // 2 hours
-      cryptoRail: 1000 * 60 * 10, // 10 minutes
-      paypalTransfer: 1000 * 60 * 60 * 2 // 2 hours
-    };
-    return Date.now() + (times[rail] || times.bankTransfer);
-  }
-
-  getProcessingTime(rail) {
-    const times = {
-      bankTransfer: 100, // Demo: 100ms = 2 days
-      wireTransfer: 50,
-      cryptoRail: 20,
-      paypalTransfer: 50
-    };
-    return times[rail] || times.bankTransfer;
-  }
-
-  maskAccountNumber(accountNumber) {
-    const last4 = accountNumber.slice(-4);
-    return `****${last4}`;
-  }
-
-  maskRoutingNumber(routingNumber) {
-    return `****${routingNumber.slice(-4)}`;
-  }
-
-  maskCryptoAddress(address) {
-    const first6 = address.slice(0, 6);
-    const last4 = address.slice(-4);
-    return `${first6}...${last4}`;
-  }
-
-  getTreasuryStatus() {
-    return {
-      balance: this.balance.toFixed(2),
-      accountsConfigured: Object.keys(this.bankAccounts).length,
-      pendingTransfers: this.transfers.filter(t => t.status === 'processing').length,
-      completedTransfers: this.transfers.filter(t => t.status === 'completed').length,
-      totalDeposited: this.ledger.filter(l => l.type === 'deposit').reduce((sum, l) => sum + l.amount, 0).toFixed(2),
-      totalTransferred: this.ledger.filter(l => l.type === 'transfer').reduce((sum, l) => sum + l.amount, 0).toFixed(2),
-      accounts: Object.values(this.bankAccounts)
-    };
+  getRecentLedger(n = 20) {
+    return this.ledger.slice(-n).reverse();
   }
 }
 
