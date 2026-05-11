@@ -444,3 +444,38 @@ app.listen(port, () => {
   console.log('⚡ M7 AI handles everything. SECKA commands.');
   console.log('');
 });
+
+// ── Routing control — SECKA can stop/resume fund routing ──────────────────
+app.post('/api/treasury/routing', (req, res) => {
+  const { enabled } = req.body;
+  treasury.autoSweepEnabled = enabled !== false;
+  console.log('⚡ Fund routing: ' + (treasury.autoSweepEnabled ? 'ENABLED' : 'STOPPED'));
+  res.json({ success: true, autoSweepEnabled: treasury.autoSweepEnabled });
+});
+
+// ── Live pricing update ───────────────────────────────────────────────────
+app.post('/api/pricing', (req, res) => {
+  const updates = req.body;
+  Object.entries(updates).forEach(([domain, price]) => {
+    if (DOMAIN_PRICING[domain] !== undefined) DOMAIN_PRICING[domain] = parseFloat(price);
+  });
+  console.log('💲 Pricing updated:', updates);
+  res.json({ success: true, pricing: DOMAIN_PRICING });
+});
+
+// ── Routing stop/resume ───────────────────────────────────────────────────
+app.post('/api/treasury/routing', (req, res) => {
+  const { enabled } = req.body;
+  treasury.autoSweepEnabled = enabled !== false;
+  console.log('⚡ Fund routing: ' + (treasury.autoSweepEnabled ? 'ENABLED' : 'STOPPED'));
+  res.json({ success: true, autoSweepEnabled: treasury.autoSweepEnabled });
+});
+
+// ── Live pricing update ───────────────────────────────────────────────────
+app.post('/api/pricing', (req, res) => {
+  const updates = req.body;
+  Object.entries(updates).forEach(([domain, price]) => {
+    if (DOMAIN_PRICING[domain] !== undefined) DOMAIN_PRICING[domain] = parseFloat(price);
+  });
+  res.json({ success: true, pricing: DOMAIN_PRICING });
+});
