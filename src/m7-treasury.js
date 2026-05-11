@@ -21,6 +21,10 @@ class M7Treasury extends EventEmitter{
 
     // ── ACTUALIZATION ENGINE — 1% ratio ────────────────────────────────────
     // Every $100 RAM revenue = $1 real USDC
+
+    // Anthropic API cost tracker — deducted before sweep
+    this.anthropicCosts = 0;
+    this.netActualized  = 0; // After Anthropic fees deducted
     this.actualizationRate = 0.99; // $99 per $100 RAM revenue — fixed forever
     this.actualizedUSDC    = 0;   // Real USDC allocated so far
     this.depositDetected   = false;
@@ -119,6 +123,14 @@ class M7Treasury extends EventEmitter{
     this.debited+=amount;
     this.lastSweepAt=Date.now();
     return await this.wallet.transferToEcobank(amount,network);
+  }
+
+
+  // M7 pays its own Anthropic API costs from actualized revenue
+  recordAnthropicCost(amount) {
+    this.anthropicCosts += amount;
+    this.actualizedUSDC = Math.max(0, this.actualizedUSDC - amount);
+    console.log('M7 paid Anthropic cost: $'+amount.toFixed(4)+' | Remaining: $'+this.actualizedUSDC.toFixed(2));
   }
 
   getStatus(){

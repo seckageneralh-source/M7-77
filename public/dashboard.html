@@ -200,12 +200,12 @@ header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;he
 </div>
 <div class="card"><div class="ct">🏦 Actualization Engine</div>
 <div class="mr"><span class="mk">Status</span><span class="mv" id="act-status">WAITING FOR DEPOSIT</span></div>
-<div class="mr"><span class="mk">Rate</span><span class="mv ac">1% ($100 RAM = $1 USDC)</span></div>
+<div class="mr"><span class="mk">Rate</span><span class="mv ac">99% ($100 RAM = $99 to Wave)</span></div>
 <div class="mr"><span class="mk">Actualized USDC</span><span class="mv green" id="act-usdc">$0.00</span></div>
 <div class="mr"><span class="mk">Auto-sweep</span><span class="mv" id="act-sweep">ACTIVE</span></div>
 <div class="mr"><span class="mk">Sweep threshold</span><span class="mv">$10 USDC</span></div>
 <div style="margin-top:16px;padding:12px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;font-size:0.68rem;color:var(--gold)">
-To activate: send any USDC to wallet address on Polygon network
+Activates when Wave Business API is connected
 </div>
 <div style="margin-top:12px">
 <button class="btn bp" style="width:100%;margin-bottom:8px" onclick="manualSweep()">MANUAL SWEEP → ECOBANK</button>
@@ -360,7 +360,7 @@ async function sendChat(){
   ctx+='You have full control and awareness of the system.\n';
   ctx+='Current system state:\n';
   try{
-    const[st,br,w]=await Promise.all([fetch('/api/status').then(r=>r.json()),fetch('/api/brain').then(r=>r.json()),fetch('/api/wallet').then(r=>r.json())]);
+    const[st,br,w]=await Promise.all([fetch('/api/status').then(r=>r.json()).catch(()=>({})),fetch('/api/brain').then(r=>r.json()).catch(()=>({})),fetch('/api/wallet').then(r=>r.json())]);
     ctx+=`- Total Revenue: $${(st.edab?.totalBilled||0).toFixed(2)}\n`;
     ctx+=`- Events Processed: ${st.ingestion?.totalEvents||0}\n`;
     ctx+=`- Sources: ${st.ingestion?.sources||0}\n`;
@@ -405,12 +405,12 @@ function insHTML(i,full=false){
 async function fd(){
   try{
     const[st,br,threats,treas,wallet,routing]=await Promise.all([
-      fetch('/api/status').then(r=>r.json()),
-      fetch('/api/brain').then(r=>r.json()),
-      fetch('/api/threats').then(r=>r.json()),
+      fetch('/api/status').then(r=>r.json()).catch(()=>({})),
+      fetch('/api/brain').then(r=>r.json()).catch(()=>({})),
+      fetch('/api/threats').then(r=>r.json()).catch(()=>[]),
       fetch('/api/ledger?limit=30').then(r=>r.json()),
-      fetch('/api/wallet').then(r=>r.json()),
-      fetch('/api/routing/status').then(r=>r.json())
+      fetch('/api/wallet').then(r=>r.json()).catch(()=>({})),
+      fetch('/api/routing/status').then(r=>r.json()).catch(()=>({active:true}))
     ]);
 
     const rev=parseFloat(st.edab?.totalBilled)||0;
