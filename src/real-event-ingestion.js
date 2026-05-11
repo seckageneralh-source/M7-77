@@ -656,6 +656,29 @@ class RealEventIngestion extends EventEmitter {
     });
   }
 
+
+  async _claudeExpand(){
+    const apiKey=process.env.ANTHROPIC_API_KEY;
+    if(!apiKey||apiKey==='your_key_here')return;
+    const currentDomains=[...new Set(this.sources.map(s=>s.domain))];
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are M7 expansion engine. Respond ONLY with valid JSON array, no markdown.',messages:[{role:'user',content:'Current domains: '+currentDomains.join(', ')+'. Sources: '+this.sources.length+'. Suggest 10 new real public API sources. Return JSON: [{"url":"full_url","domain":"domain","type":"TYPE","interval":15000}]. Only real publicly accessible URLs, no auth required.'}]})});
+      const data=await res.json();
+      const parsed=JSON.parse(data.content[0].text.replace(/```json|```/g,'').trim());
+      if(Array.isArray(parsed)){
+        let added=0;
+        parsed.forEach(src=>{
+          if(!this.sources.find(s=>s.url===src.url)&&src.url&&src.domain&&src.type){
+            this.sources.push(src);
+            if(this.isRunning){this._poll(src);const iv=setInterval(()=>{if(this.isRunning)this._poll(src);},src.interval||15000);this.intervals.push(iv);}
+            added++;
+          }
+        });
+        if(added>0)console.log('Claude expanded: +'+added+' sources (total: '+this.sources.length+')');
+      }
+    }catch(e){}
+  }
+
   start() {
     this.isRunning = true;
     console.log(`🌐 M7 Ingestion v5.0 — ${this.sources.length} sources — 15 domains`);
