@@ -20,7 +20,7 @@ class M7Brain extends EventEmitter {
         name: 'Finance Domain Manager',
         domains: ['finance'],
         responsibilities: ['market_analysis', 'price_prediction', 'risk_assessment'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.85,
         lastUpdate: Date.now()
       },
@@ -28,7 +28,7 @@ class M7Brain extends EventEmitter {
         name: 'Tech Domain Manager',
         domains: ['tech'],
         responsibilities: ['trend_detection', 'innovation_tracking', 'disruption_analysis'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.82,
         lastUpdate: Date.now()
       },
@@ -36,7 +36,7 @@ class M7Brain extends EventEmitter {
         name: 'AI & Intelligence Manager',
         domains: ['ai'],
         responsibilities: ['breakthrough_detection', 'capability_analysis', 'research_synthesis'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.88,
         lastUpdate: Date.now()
       },
@@ -44,7 +44,7 @@ class M7Brain extends EventEmitter {
         name: 'Social & Sentiment Manager',
         domains: ['social'],
         responsibilities: ['sentiment_analysis', 'trend_prediction', 'influence_mapping'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.80,
         lastUpdate: Date.now()
       },
@@ -52,7 +52,7 @@ class M7Brain extends EventEmitter {
         name: 'Healthcare Domain Manager',
         domains: ['healthcare'],
         responsibilities: ['medical_intelligence', 'fda_tracking', 'clinical_analysis'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.84,
         lastUpdate: Date.now()
       },
@@ -60,7 +60,7 @@ class M7Brain extends EventEmitter {
         name: 'Energy Domain Manager',
         domains: ['energy'],
         responsibilities: ['market_tracking', 'supply_analysis', 'policy_impact'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.81,
         lastUpdate: Date.now()
       },
@@ -68,7 +68,7 @@ class M7Brain extends EventEmitter {
         name: 'Government & Policy Manager',
         domains: ['government'],
         responsibilities: ['policy_analysis', 'regulation_tracking', 'legislative_intelligence'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.79,
         lastUpdate: Date.now()
       },
@@ -76,7 +76,7 @@ class M7Brain extends EventEmitter {
         name: 'Cross-Domain Correlation Manager',
         domains: ['all'],
         responsibilities: ['correlation_detection', 'macro_analysis', 'pattern_synthesis'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.86,
         lastUpdate: Date.now()
       },
@@ -84,7 +84,7 @@ class M7Brain extends EventEmitter {
         name: 'Self-Evolution Manager',
         domains: ['all'],
         responsibilities: ['system_optimization', 'capability_expansion', 'learning_loop'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.87,
         lastUpdate: Date.now()
       },
@@ -92,7 +92,7 @@ class M7Brain extends EventEmitter {
         name: 'Quality & Compliance Manager',
         domains: ['all'],
         responsibilities: ['output_validation', 'accuracy_verification', 'compliance_checking'],
-        model: 'gpt-4-turbo',
+        model: 'claude-sonnet-4-20250514',
         performanceScore: 0.89,
         lastUpdate: Date.now()
       }
