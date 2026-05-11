@@ -18,6 +18,17 @@ class M7Treasury extends EventEmitter{
       this.emit('sweep',t);
     });
     setInterval(()=>this._autoSweep(),300000);
+
+    // ── ACTUALIZATION ENGINE — 1% ratio ────────────────────────────────────
+    // Every $100 RAM revenue = $1 real USDC
+    this.actualizationRate = 0.01;
+    this.actualizedUSDC    = 0;   // Real USDC allocated so far
+    this.depositDetected   = false;
+    this.depositAmount     = 0;
+
+    // Poll for USDC deposit every 2 minutes
+    setInterval(()=>this._checkDeposit(),120000);
+    setTimeout(()=>this._checkDeposit(),10000);
     console.log('M7 Treasury — Ledger + Wallet initialized');
     console.log('  Sweep threshold: $'+SWEEP_THRESHOLD);
   }
@@ -25,6 +36,12 @@ class M7Treasury extends EventEmitter{
   credit(amount,tx){
     this.balance+=amount;this.credited+=amount;
     this.wallet.accumulate(amount);
+
+    // Actualize 1% of every credit into real USDC allocation
+    if(this.depositDetected){
+      const usdc = parseFloat((amount * this.actualizationRate).toFixed(4));
+      this.actualizedUSDC += usdc;
+    }
     const prev=this.ledger.length>0?this.ledger[this.ledger.length-1].hash:'0000000000000000';
     const entry={seq:this.ledger.length+1,timestamp:Date.now(),type:'CREDIT',amount:parseFloat(amount.toFixed(4)),balance:parseFloat(this.balance.toFixed(4)),source:tx?tx.domain:'system',txId:tx?tx.id:null,prevHash:prev};
     entry.hash=this._hash(entry);
@@ -57,11 +74,65 @@ class M7Treasury extends EventEmitter{
     this.lastSweepAt=Date.now();
     return await this.wallet.transferToEcobank(amount,network);
   }
+  // Check if USDC has been deposited to wallet
+  async _checkDeposit(){
+    try{
+      const status = this.wallet.getStatus();
+      const polyUSDC = status.balances?.polygon?.USDC || 0;
+      const ethUSDC  = status.balances?.ethereum?.USDC || 0;
+      const total    = polyUSDC + ethUSDC;
+      if(total > 0 && !this.depositDetected){
+        this.depositDetected = true;
+        this.depositAmount   = total;
+        // Bootstrap actualized USDC from existing RAM balance
+        this.actualizedUSDC  = parseFloat((this.balance * this.actualizationRate).toFixed(2));
+        console.log('M7 DEPOSIT DETECTED: $'+total+' USDC');
+        console.log('Actualization ACTIVE — 1% ratio — $'+this.actualizedUSDC+' USDC allocated from existing revenue');
+        this.emit('deposit_detected',{amount:total,actualizedUSDC:this.actualizedUSDC});
+      }
+      if(total > 0){
+        this.depositAmount = total;
+      }
+    }catch(e){}
+  }
+
+  // Override autoSweep to use actualized USDC
+  async _autoSweep(){
+    if(!this.autoSweepEnabled)return;
+    if(!this.depositDetected)return; // Wait for deposit
+    if(this.actualizedUSDC < 10)return; // Min $10 USDC
+    const amount = parseFloat(Math.min(this.actualizedUSDC, this.depositAmount).toFixed(2));
+    if(amount < 10)return;
+    console.log('M7 Auto-sweep: $'+amount+' USDC -> Ecobank');
+    this.actualizedUSDC -= amount;
+    this.debited += amount;
+    this.lastSweepAt = Date.now();
+    const result = await this.wallet.transferToEcobank(amount,'polygon');
+    this.emit('auto_sweep',{amount,result});
+    return result;
+  }
+
+  async manualSweep(amount,network='polygon'){
+    if(!this.depositDetected)return{error:'No USDC deposit detected yet. Send USDC to: '+this.wallet.getStatus().addresses.polygon};
+    if(amount>this.actualizedUSDC)return{error:'Insufficient actualized USDC',available:this.actualizedUSDC};
+    this.actualizedUSDC-=amount;
+    this.debited+=amount;
+    this.lastSweepAt=Date.now();
+    return await this.wallet.transferToEcobank(amount,network);
+  }
+
   getStatus(){
     return{
       ledger:{balance:parseFloat(this.balance.toFixed(2)),totalCredited:parseFloat(this.credited.toFixed(2)),totalDebited:parseFloat(this.debited.toFixed(2)),entries:this.ledger.length,lastEntry:this.ledger[this.ledger.length-1]||null},
       wallet:this.wallet.getStatus(),
-      sweep:{autoEnabled:this.autoSweepEnabled,threshold:SWEEP_THRESHOLD,totalSwept:parseFloat(this.totalSwept.toFixed(2)),lastSweepAt:this.lastSweepAt,recentSweeps:this.sweepLog.slice(-5).reverse()}
+      sweep:{autoEnabled:this.autoSweepEnabled,threshold:SWEEP_THRESHOLD,totalSwept:parseFloat(this.totalSwept.toFixed(2)),lastSweepAt:this.lastSweepAt,recentSweeps:this.sweepLog.slice(-5).reverse()},
+      actualization:{
+        active:          this.depositDetected,
+        rate:            '1%',
+        depositAmount:   parseFloat(this.depositAmount.toFixed(2)),
+        actualizedUSDC:  parseFloat(this.actualizedUSDC.toFixed(2)),
+        pendingMessage:  this.depositDetected?'ACTIVE':'Send USDC to '+this.wallet.getStatus().addresses.polygon+' on Polygon to activate'
+      }
     };
   }
   getRecentLedger(n=20){return this.ledger.slice(-n).reverse();}
