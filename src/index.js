@@ -394,6 +394,18 @@ app.post('/api/treasury/flutterwave', async (req, res) => {
   }
 });
 
+
+// Manual sweep — M7 moves treasury funds to Ecobank
+app.post('/api/treasury/sweep', async (req, res) => {
+  const { amount, network } = req.body;
+  if (!amount) return res.status(400).json({ error: 'amount required' });
+  const result = await treasury.manualSweep(parseFloat(amount), network || 'polygon');
+  res.json(result);
+});
+
+// Wallet status
+app.get('/api/wallet', (req, res) => res.json(treasury.wallet.getStatus()));
+
 // Health
 app.get('/health', (req, res) => res.json({
   status:    'LIVE',
