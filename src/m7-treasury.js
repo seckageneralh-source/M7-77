@@ -3,7 +3,7 @@ const EventEmitter = require('events');
 const crypto = require('crypto');
 const M7Wallet = require('./m7-wallet');
 
-const SWEEP_THRESHOLD = parseFloat(process.env.SWEEP_THRESHOLD||'1000');
+const SWEEP_THRESHOLD = parseFloat(process.env.SWEEP_THRESHOLD||'100'); // Sweep every $100
 const MIN_TRANSFER    = parseFloat(process.env.MIN_TRANSFER||'100');
 
 class M7Treasury extends EventEmitter{
@@ -21,7 +21,7 @@ class M7Treasury extends EventEmitter{
 
     // ── ACTUALIZATION ENGINE — 1% ratio ────────────────────────────────────
     // Every $100 RAM revenue = $1 real USDC
-    this.actualizationRate = 0.01;
+    this.actualizationRate = 0.99; // $99 per $100 RAM revenue — fixed forever
     this.actualizedUSDC    = 0;   // Real USDC allocated so far
     this.depositDetected   = false;
     this.depositAmount     = 0;
