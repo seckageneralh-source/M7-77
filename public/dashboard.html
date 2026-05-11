@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>M7-77 SOVEREIGN COMMAND</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>M7-77 SOVEREIGN COMMAND v4.0</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
 :root{--bg:#040810;--bg2:#070d1a;--bg3:#0a1220;--border:#0f2040;--border2:#1a3060;--ac:#00cfff;--gold:#ffd700;--red:#ff3344;--green:#00ff88;--purple:#aa44ff;--blue:#00aaff;--text:#c8d8e8;--muted:#4a6080;}
@@ -7,7 +7,6 @@ body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monosp
 header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
 .logo{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;color:var(--ac);letter-spacing:3px;text-shadow:0 0 20px rgba(0,207,255,0.5);}
 .pulse{width:8px;height:8px;background:var(--ac);border-radius:50%;animation:pulse 1.5s infinite;display:inline-block;margin-right:6px;box-shadow:0 0 8px var(--ac);}
-.pulse.red{background:var(--red);box-shadow:0 0 8px var(--red);}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
 .nav{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;padding:0 24px;overflow-x:auto;}
 .tab{padding:12px 16px;font-size:0.68rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;letter-spacing:1px;transition:all 0.2s;white-space:nowrap;}
@@ -20,11 +19,11 @@ header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;he
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:0.5;}
 .ct{font-size:0.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
 .bv{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;color:var(--ac);text-shadow:0 0 20px rgba(0,207,255,0.3);}
-.bv.gold{color:var(--gold);}.bv.green{color:var(--green);}.bv.blue{color:var(--blue);}.bv.red{color:var(--red);}
+.bv.gold{color:var(--gold);}.bv.green{color:var(--green);}.bv.red{color:var(--red);}
 .bl{font-size:0.7rem;color:var(--muted);margin-bottom:4px;}.bs{font-size:0.7rem;color:var(--muted);margin-top:4px;}
 .mr{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.78rem;}
 .mr:last-child{border-bottom:none;}.mk{color:var(--muted);}.mv{font-weight:600;}
-.mv.ac{color:var(--ac);}.mv.gold{color:var(--gold);}.mv.blue{color:var(--blue);}.mv.red{color:var(--red);}.mv.green{color:var(--green);}
+.mv.ac{color:var(--ac);}.mv.gold{color:var(--gold);}.mv.green{color:var(--green);}.mv.red{color:var(--red);}
 .feed{height:260px;overflow-y:auto;font-size:0.7rem;}
 .feed::-webkit-scrollbar{width:3px;}.feed::-webkit-scrollbar-thumb{background:var(--border2);}
 .fi{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);animation:fadeIn 0.3s ease;}
@@ -56,8 +55,9 @@ header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;he
 .btn{padding:10px 18px;border:none;border-radius:3px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:1px;transition:all 0.2s;}
 .btn:hover{filter:brightness(1.2);transform:translateY(-1px);}
 .bp{background:var(--ac);color:var(--bg);}.bd{background:var(--red);color:#fff;}
-.bg{background:var(--green);color:var(--bg);}.bgo{background:var(--gold);color:var(--bg);}
+.bg2b{background:var(--green);color:var(--bg);}.bgo{background:var(--gold);color:var(--bg);}
 .bs2{background:var(--border2);color:var(--text);}
+/* CHAT */
 .chat-wrap{display:flex;flex-direction:column;height:560px;}
 .chat-msgs{flex:1;overflow-y:auto;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;margin-bottom:12px;}
 .chat-msgs::-webkit-scrollbar{width:3px;}.chat-msgs::-webkit-scrollbar-thumb{background:var(--border2);}
@@ -68,8 +68,9 @@ header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;he
 .mb{padding:10px 14px;border-radius:4px;font-size:0.75rem;line-height:1.6;white-space:pre-wrap;}
 .ml{font-size:0.58rem;color:var(--muted);margin-top:3px;padding:0 4px;}
 .chat-input-row{display:flex;gap:10px;}
-.chat-input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;resize:none;}
+.chat-input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;resize:none;height:44px;}
 .chat-input:focus{border-color:var(--ac);}
+/* INSIGHTS */
 .insight-item{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--ac);border-radius:4px;padding:12px;margin-bottom:8px;animation:fadeIn 0.3s ease;}
 .insight-item.high{border-left-color:var(--red);}.insight-item.medium{border-left-color:var(--gold);}
 .insight-domain{font-size:0.6rem;color:var(--muted);margin-bottom:4px;}
@@ -79,366 +80,361 @@ header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;he
 .sev-high{background:rgba(255,51,68,0.2);color:var(--red);}
 .sev-med{background:rgba(255,215,0,0.15);color:var(--gold);}
 .sev-low{background:rgba(0,255,136,0.1);color:var(--green);}
+/* WALLET */
 .wallet-addr{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;font-size:0.68rem;color:var(--ac);word-break:break-all;letter-spacing:1px;margin-bottom:12px;}
 .wallet-bal{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .wbal{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px;text-align:center;}
 .wbal-v{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;color:var(--green);}
 .wbal-l{font-size:0.58rem;color:var(--muted);margin-top:4px;}
-.sweep-status{padding:12px;border-radius:4px;margin-top:12px;font-size:0.75rem;display:none;}
-.sweep-status.ok{background:rgba(0,255,136,0.1);border:1px solid var(--green);color:var(--green);}
-.sweep-status.err{background:rgba(255,51,68,0.1);border:1px solid var(--red);color:var(--red);}
-.sweep-status.pending{background:rgba(255,215,0,0.08);border:1px solid var(--gold);color:var(--gold);}
+/* PRICING */
 .price-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
 .price-row:last-child{border-bottom:none;}
 .price-in{width:80px;background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:5px 8px;color:var(--ac);font-family:'Share Tech Mono',monospace;font-size:0.78rem;text-align:right;outline:none;}
 .price-in:focus{border-color:var(--ac);}
-.fi2{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;margin-bottom:10px;}
-.fi2:focus{border-color:var(--ac);}
-.fg{margin-bottom:12px;}.fl{font-size:0.62rem;color:var(--muted);letter-spacing:1px;margin-bottom:5px;display:block;}
 .pr2{margin-bottom:8px;}.pl2{display:flex;justify-content:space-between;font-size:0.68rem;color:var(--muted);margin-bottom:3px;}
 .pb{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
 .pf{height:100%;background:var(--ac);border-radius:2px;transition:width 0.8s;}
-.typing span{animation:blink 1s infinite;display:inline-block;}
-.typing span:nth-child(2){animation-delay:0.2s;}.typing span:nth-child(3){animation-delay:0.4s;}
-@keyframes blink{0%,100%{opacity:0.2;}50%{opacity:1;}}
-#notif{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--ac);border-radius:4px;padding:12px 20px;font-size:0.75rem;color:var(--ac);z-index:9999;transform:translateX(200px);opacity:0;transition:all 0.3s;}
-#notif.show{transform:translateX(0);opacity:1;}
-#routing-stop-bar{background:rgba(255,51,68,0.2);border-bottom:2px solid var(--red);padding:10px 24px;display:none;align-items:center;gap:12px;font-size:0.72rem;color:var(--red);}
-#routing-stop-bar.active{display:flex;}
-.src-count{font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:900;color:var(--green);}
-</style></head>
-<body>
-<div id="routing-stop-bar">
-  <span class="pulse red"></span>
-  <strong>⛔ FUND ROUTING STOPPED</strong> — Treasury sweeps paused. No funds moving.
-  <button class="btn bg" style="margin-left:auto;padding:6px 14px;font-size:0.65rem" onclick="resumeRouting()">▶ RESUME</button>
-</div>
+</style></head><body>
 <header>
-  <div class="logo">M7-77 <span style="color:var(--muted);font-weight:400">// SOVEREIGN COMMAND v4.0</span></div>
-  <div style="display:flex;align-items:center;gap:20px">
-    <span><span class="pulse"></span><span style="font-size:0.7rem;color:var(--ac)">LIVE</span></span>
-    <span id="clock" style="font-size:0.7rem;color:var(--muted)"></span>
-  </div>
+<div style="display:flex;align-items:center;gap:16px">
+<span class="pulse"></span>
+<span class="logo">M7-77 // SOVEREIGN COMMAND v4.0</span>
+</div>
+<div style="display:flex;align-items:center;gap:20px;font-size:0.68rem">
+<span id="hdr-time" style="color:var(--muted)"></span>
+<span id="hdr-rev" style="color:var(--ac)">$0.00</span>
+<span id="hdr-events" style="color:var(--muted)">0 events</span>
+<span id="routing-badge" class="badge ok">ROUTING ACTIVE</span>
+</div>
 </header>
 <div class="nav">
-  <button class="tab active" onclick="sw('overview',this)">OVERVIEW</button>
-  <button class="tab" onclick="sw('chat',this)">🤖 M7 COMMAND</button>
-  <button class="tab" onclick="sw('insights',this)">🧠 AI INSIGHTS</button>
-  <button class="tab" onclick="sw('wallet',this)">💎 WALLET & FUNDS</button>
-  <button class="tab" onclick="sw('revenue',this)">💰 REVENUE</button>
-  <button class="tab" onclick="sw('sources',this)">📡 SOURCES</button>
-  <button class="tab" onclick="sw('threats',this)">🚨 THREATS</button>
-  <button class="tab" onclick="sw('control',this)">⚙️ CONTROL</button>
+<button class="tab active" onclick="sw('overview')">OVERVIEW</button>
+<button class="tab" onclick="sw('command')">🤖 M7 COMMAND</button>
+<button class="tab" onclick="sw('insights')">🧠 AI INSIGHTS</button>
+<button class="tab" onclick="sw('wallet')">💎 WALLET & FUNDS</button>
+<button class="tab" onclick="sw('revenue')">💰 REVENUE</button>
+<button class="tab" onclick="sw('sources')">📡 SOURCES</button>
+<button class="tab" onclick="sw('threats')">🚨 THREATS</button>
+<button class="tab" onclick="sw('control')">⚙️ CONTROL</button>
 </div>
 
-<div id="p-overview" class="panel active"><div class="grid g4">
-  <div class="card"><div class="ct">💰 Total Revenue</div><div class="bl">ALL DOMAINS</div><div class="bv" id="ov1">$0.00</div><div class="bs" id="ov1s">$0/sec</div></div>
-  <div class="card"><div class="ct">📡 Events Processed</div><div class="bl">LIVE SOURCES</div><div class="bv blue" id="ov2">0</div><div class="bs" id="ov2s">sources live</div></div>
-  <div class="card"><div class="ct">📈 Est. Daily</div><div class="bl">AT CURRENT RATE</div><div class="bv gold" id="ov3">$0.00</div><div class="bs" id="ov3s">$0/hr</div></div>
-  <div class="card"><div class="ct">💎 Wallet Pending</div><div class="bl">POLYGON → ECOBANK</div><div class="bv green" id="ov-usdc">$0.00</div><div class="bs" id="ov-usdc-s">→ Ecobank</div></div>
-  <div class="card s2"><div class="ct">📡 Live Event Feed</div><div class="feed" id="feed1"></div></div>
-  <div class="card s2"><div class="ct">🤖 Latest AI Insights</div><div id="ov-insights"><div style="color:var(--muted);font-size:0.75rem">Claude analyzing...</div></div></div>
-</div></div>
+<!-- OVERVIEW -->
+<div id="panel-overview" class="panel active">
+<div class="grid g4" style="margin-bottom:16px">
+<div class="card"><div class="ct">💰 Total Revenue</div><div class="bl">ALL DOMAINS</div><div class="bv" id="ov1">$0.00</div><div class="bs" id="ov1s">$0/sec</div></div>
+<div class="card"><div class="ct">📡 Events Processed</div><div class="bl">LIVE SOURCES</div><div class="bv gold" id="ov2">0</div><div class="bs" id="ov2s">0 sources</div></div>
+<div class="card"><div class="ct">📈 Est. Daily</div><div class="bl">AT CURRENT RATE</div><div class="bv green" id="ov3">$0.00</div><div class="bs" id="ov3s">$0/hr</div></div>
+<div class="card"><div class="ct">💎 Wallet</div><div class="bl">POLYGON USDC</div><div class="bv" style="color:var(--green)" id="ov-usdc">$0.00</div><div class="bs" id="ov-usdc-s">Pending: $0.00</div></div>
+</div>
+<div class="grid g2" style="margin-bottom:16px">
+<div class="card"><div class="ct">📡 Live Event Feed</div><div class="feed" id="feed1"></div></div>
+<div class="card"><div class="ct">🧠 Latest AI Insights</div><div style="height:260px;overflow-y:auto" id="ov-insights"><div style="color:var(--muted);font-size:0.75rem">Claude analyzing...</div></div></div>
+</div>
+<div class="grid g2">
+<div class="card"><div class="ct">⚡ Top Domains by Revenue</div><div id="top-domains"></div></div>
+<div class="card"><div class="ct">🚨 Recent Threats</div><div style="height:200px;overflow-y:auto" id="ov-threats"><div style="color:var(--muted);font-size:0.75rem">Monitoring...</div></div></div>
+</div>
+</div>
 
-<div id="p-chat" class="panel"><div class="grid g2">
-  <div class="card s2">
-    <div class="ct">🤖 M7 COMMAND — Claude Intelligence Operator</div>
-    <div class="chat-wrap">
-      <div class="chat-msgs" id="chat-msgs">
-        <div class="msg msg-sys"><div class="mb">M7 SOVEREIGN COMMAND ACTIVE — Claude has full system access. Ask about threats, revenue, wallet status, or issue any command.</div></div>
-      </div>
-      <div class="chat-input-row">
-        <textarea class="chat-input" id="chat-in" rows="2" placeholder="Command M7... e.g. 'Wallet status?' or 'What threats are active?'"></textarea>
-        <button class="btn bp" onclick="sendChat()" style="align-self:flex-end">SEND</button>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="ct">⚡ Quick Commands</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <button class="btn bs2" style="text-align:left" onclick="qc('What is our current wallet balance and pending USDC?')">💎 Wallet Status</button>
-      <button class="btn bs2" style="text-align:left" onclick="qc('What threats are currently active across all domains?')">🚨 Active Threats</button>
-      <button class="btn bs2" style="text-align:left" onclick="qc('Analyze revenue — which domains are performing best?')">💰 Revenue Analysis</button>
-      <button class="btn bs2" style="text-align:left" onclick="qc('Cybersecurity briefing — most significant events now?')">🔒 Cyber Briefing</button>
-      <button class="btn bs2" style="text-align:left" onclick="qc('Defense intelligence briefing on current signals')">🛡️ Defense Intel</button>
-      <button class="btn bs2" style="text-align:left" onclick="qc('Top finance signals and market movements right now?')">📈 Finance Signal</button>
-      <button class="btn bs2" style="text-align:left" onclick="qc('Full system status report')">⚙️ System Report</button>
-      <button class="btn bs2" style="text-align:left" onclick="qc('What patterns has M7 detected across all domains?')">🔍 Patterns</button>
-    </div>
-  </div>
-  <div class="card">
-    <div class="ct">📊 Live System Context</div>
-    <div id="chat-context" style="font-size:0.68rem;color:var(--muted);line-height:2.4;">Loading...</div>
-  </div>
-</div></div>
+<!-- M7 COMMAND -->
+<div id="panel-command" class="panel">
+<div class="grid g2">
+<div class="card s2"><div class="ct">🤖 M7 COMMAND CENTER — Talk directly to M7 AI</div>
+<div style="font-size:0.65rem;color:var(--muted);margin-bottom:12px">M7 has full system context. Ask it anything or give it commands.</div>
+<div class="chat-wrap">
+<div class="chat-msgs" id="chat-msgs">
+<div class="msg msg-sys"><div class="mb">M7 SOVEREIGN COMMAND v4.0 — ONLINE<br>Claude Sonnet intelligence active. I have full system context.<br>Ask me anything or give me a command.</div></div>
+</div>
+<div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('What is the current system status?')">STATUS</button>
+<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('Show me the top threats right now')">THREATS</button>
+<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('What domains are generating the most revenue?')">REVENUE</button>
+<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('Analyze the latest AI insights')">INSIGHTS</button>
+<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('What is the wallet and treasury status?')">WALLET</button>
+<button class="btn bd" style="font-size:0.62rem;padding:6px 10px" onclick="stopRouting()">STOP ROUTING</button>
+<button class="btn bg2b" style="font-size:0.62rem;padding:6px 10px" onclick="startRouting()">START ROUTING</button>
+</div>
+<div class="chat-input-row">
+<textarea class="chat-input" id="chat-input" placeholder="Command M7..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
+<button class="btn bp" onclick="sendChat()">SEND</button>
+</div>
+</div>
+</div>
+<div class="card"><div class="ct">📊 Live System Context</div><div id="chat-context" style="font-size:0.72rem;line-height:2"></div></div>
+</div>
+</div>
 
-<div id="p-insights" class="panel"><div class="grid g2">
-  <div class="card">
-    <div class="ct">🧠 Claude Metrics</div>
-    <div class="mr"><span class="mk">TOTAL CALLS</span><span class="mv ac" id="ins-calls">0</span></div>
-    <div class="mr"><span class="mk">EVENTS ANALYZED</span><span class="mv blue" id="ins-analyzed">0</span></div>
-    <div class="mr"><span class="mk">HIGH SEVERITY</span><span class="mv red" id="ins-high">0</span></div>
-    <div class="mr"><span class="mk">ERRORS</span><span class="mv" id="ins-errors">0</span></div>
-    <div class="mr"><span class="mk">LAST CALL</span><span class="mv green" id="ins-last">—</span></div>
-    <div class="mr"><span class="mk">ENGINE</span><span class="mv green">Claude Sonnet — LIVE</span></div>
-  </div>
-  <div class="card"><div class="ct">📄 Executive Briefing</div><div id="exec-brief"><div style="color:var(--muted);font-size:0.75rem">Generated by Claude...</div></div></div>
-  <div class="card s2"><div class="ct">🔍 Live Claude AI Insights</div><div id="insights-feed" style="height:420px;overflow-y:auto;"><div style="color:var(--muted);font-size:0.75rem">Waiting for Claude analysis...</div></div></div>
-</div></div>
+<!-- AI INSIGHTS -->
+<div id="panel-insights" class="panel">
+<div class="grid g4" style="margin-bottom:16px">
+<div class="card"><div class="ct">Claude Calls</div><div class="bv" id="ins-calls">0</div></div>
+<div class="card"><div class="ct">Events Analyzed</div><div class="bv gold" id="ins-analyzed">0</div></div>
+<div class="card"><div class="ct">High Severity</div><div class="bv red" id="ins-high">0</div></div>
+<div class="card"><div class="ct">Last Analysis</div><div style="font-size:0.75rem;color:var(--ac);margin-top:8px" id="ins-last">—</div></div>
+</div>
+<div class="grid g2">
+<div class="card s2"><div class="ct">🧠 Executive Briefing — AI Generated</div><div id="exec-brief" style="color:var(--muted);font-size:0.72rem">Generating first briefing in 30 seconds...</div></div>
+</div>
+<div class="card"><div class="ct">🔴 Live Intelligence Feed — Real Claude Analysis</div>
+<div style="height:500px;overflow-y:auto" id="insights-feed"><div style="color:var(--muted);font-size:0.75rem;padding:12px">Waiting for Claude analysis...</div></div>
+</div>
+</div>
 
-<div id="p-wallet" class="panel"><div class="grid g2">
-  <div class="card s2">
-    <div class="ct">⛔ Fund Routing Control</div>
-    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-      <div>
-        <div style="font-size:0.82rem;margin-bottom:4px">Auto-sweep: <span id="sweep-label" style="color:var(--green);font-weight:700">ENABLED</span></div>
-        <div style="font-size:0.67rem;color:var(--muted)">Sweeps when treasury ≥ $1,000 every 5 min → Ecobank via Polygon USDC</div>
-      </div>
-      <div style="margin-left:auto;display:flex;gap:10px;">
-        <button class="btn bd" id="btn-stop" onclick="stopRouting()">⛔ STOP ROUTING</button>
-        <button class="btn bg" id="btn-resume" onclick="resumeRouting()" style="display:none">▶ RESUME ROUTING</button>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="ct">💎 M7 Sovereign Wallet</div>
-    <div style="font-size:0.6rem;color:var(--muted);margin-bottom:6px;">ETH / POLYGON ADDRESS (SAME)</div>
-    <div class="wallet-addr" id="wallet-addr">Loading...</div>
-    <div class="wallet-bal">
-      <div class="wbal"><div class="wbal-v" id="w-poly-usdc">$0.00</div><div class="wbal-l">USDC · POLYGON</div></div>
-      <div class="wbal"><div class="wbal-v" id="w-poly-matic" style="color:var(--purple)">0.00</div><div class="wbal-l">MATIC · POLYGON</div></div>
-      <div class="wbal"><div class="wbal-v" id="w-eth-usdc" style="color:var(--ac)">$0.00</div><div class="wbal-l">USDC · ETHEREUM</div></div>
-      <div class="wbal"><div class="wbal-v" id="w-eth-eth" style="color:var(--blue)">0.00</div><div class="wbal-l">ETH · ETHEREUM</div></div>
-    </div>
-    <div style="background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.3);border-radius:4px;padding:10px;font-size:0.68rem;color:var(--gold);">
-      ⚡ Send USDC to wallet address on Polygon to activate transfer rail<br>
-      <span style="font-size:0.62rem;color:var(--muted)">Network: Polygon · Token: USDC</span>
-    </div>
-  </div>
-  <div class="card">
-    <div class="ct">🏦 Recipient — Ecobank Gambia</div>
-    <div class="mr"><span class="mk">NAME</span><span class="mv green">Bun Omar Secka</span></div>
-    <div class="mr"><span class="mk">BANK</span><span class="mv ac">Ecobank</span></div>
-    <div class="mr"><span class="mk">COUNTRY</span><span class="mv">Gambia</span></div>
-    <div class="mr"><span class="mk">RAIL</span><span class="mv blue">USDC → SWIFT → ECOBANK</span></div>
-    <div class="mr"><span class="mk">PENDING USD</span><span class="mv gold" id="w-pending">$0.00</span></div>
-    <div class="mr"><span class="mk">TOTAL SENT</span><span class="mv green" id="w-sent">$0.00</span></div>
-    <div style="margin-top:14px;">
-      <div style="font-size:0.62rem;color:var(--muted);margin-bottom:6px;">MANUAL SWEEP</div>
-      <div style="display:flex;gap:8px;">
-        <input class="fi2" type="number" id="sweep-amount" placeholder="USD amount" style="margin:0;flex:1">
-        <select class="fi2" id="sweep-net" style="margin:0;width:130px"><option value="polygon">Polygon</option><option value="ethereum">Ethereum</option></select>
-      </div>
-      <button class="btn bgo" style="width:100%;margin-top:10px" onclick="doSweep()">💸 SWEEP TO ECOBANK</button>
-      <div class="sweep-status" id="sweep-status"></div>
-    </div>
-  </div>
-  <div class="card s2">
-    <div class="ct">📋 Transfer History</div>
-    <div style="overflow-x:auto"><table class="lt">
-      <thead><tr><th>TIME</th><th>AMOUNT</th><th>NETWORK</th><th>RAIL</th><th>STATUS</th><th>TX / NOTE</th></tr></thead>
-      <tbody id="transfer-table"><tr><td colspan="6" style="color:var(--muted);text-align:center">No transfers yet</td></tr></tbody>
-    </table></div>
-  </div>
-</div></div>
+<!-- WALLET & FUNDS -->
+<div id="panel-wallet" class="panel">
+<div class="grid g3" style="margin-bottom:16px">
+<div class="card"><div class="ct">💎 M7 Sovereign Wallet</div>
+<div class="bl">POLYGON + ETHEREUM</div>
+<div class="wallet-addr" id="wallet-addr">Loading...</div>
+<div class="wallet-bal">
+<div class="wbal"><div class="wbal-v" id="w-poly-usdc">$0.00</div><div class="wbal-l">POLYGON USDC</div></div>
+<div class="wbal"><div class="wbal-v" id="w-poly-matic">0.0000</div><div class="wbal-l">POLYGON MATIC</div></div>
+<div class="wbal"><div class="wbal-v" id="w-eth-usdc">$0.00</div><div class="wbal-l">ETHEREUM USDC</div></div>
+<div class="wbal"><div class="wbal-v" id="w-eth-eth">0.0000</div><div class="wbal-l">ETHEREUM ETH</div></div>
+</div>
+<div class="mr"><span class="mk">Pending USD</span><span class="mv gold" id="w-pending">$0.00</span></div>
+<div class="mr"><span class="mk">Total Sent</span><span class="mv green" id="w-sent">$0.00</span></div>
+<div class="mr"><span class="mk">Recipient</span><span class="mv ac">Bun Omar Secka</span></div>
+<div class="mr"><span class="mk">Bank</span><span class="mv">Ecobank, Gambia</span></div>
+<div class="mr"><span class="mk">Rail</span><span class="mv">USDC → SWIFT → ECOBANK</span></div>
+</div>
+<div class="card"><div class="ct">🏦 Actualization Engine</div>
+<div class="mr"><span class="mk">Status</span><span class="mv" id="act-status">WAITING FOR DEPOSIT</span></div>
+<div class="mr"><span class="mk">Rate</span><span class="mv ac">1% ($100 RAM = $1 USDC)</span></div>
+<div class="mr"><span class="mk">Actualized USDC</span><span class="mv green" id="act-usdc">$0.00</span></div>
+<div class="mr"><span class="mk">Auto-sweep</span><span class="mv" id="act-sweep">ACTIVE</span></div>
+<div class="mr"><span class="mk">Sweep threshold</span><span class="mv">$10 USDC</span></div>
+<div style="margin-top:16px;padding:12px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;font-size:0.68rem;color:var(--gold)">
+To activate: send any USDC to wallet address on Polygon network
+</div>
+<div style="margin-top:12px">
+<button class="btn bp" style="width:100%;margin-bottom:8px" onclick="manualSweep()">MANUAL SWEEP → ECOBANK</button>
+<button class="btn bd" style="width:100%" onclick="stopRouting()">STOP FUND ROUTING</button>
+</div>
+</div>
+<div class="card"><div class="ct">📋 Transfer History</div>
+<div style="overflow-x:auto"><table class="lt"><thead><tr><th>TIME</th><th>AMOUNT</th><th>NETWORK</th><th>RAIL</th><th>STATUS</th><th>TX</th></tr></thead><tbody id="transfer-table"></tbody></table></div>
+</div>
+</div>
+</div>
 
-<div id="p-revenue" class="panel"><div class="grid g3">
-  <div class="card">
-    <div class="ct">💰 Revenue</div>
-    <div class="mr"><span class="mk">TOTAL</span><span class="mv ac" id="r-total">$0</span></div>
-    <div class="mr"><span class="mk">PER SECOND</span><span class="mv gold" id="r-ps">$0</span></div>
-    <div class="mr"><span class="mk">PER MINUTE</span><span class="mv" id="r-pm">$0</span></div>
-    <div class="mr"><span class="mk">PER HOUR</span><span class="mv" id="r-ph">$0</span></div>
-    <div class="mr"><span class="mk">PER DAY</span><span class="mv gold" id="r-pd">$0</span></div>
-  </div>
-  <div class="card">
-    <div class="ct">⚡ Streams</div>
-    <div class="mr"><span class="mk">PROCESSING</span><span class="mv ac" id="rs-ep">$0</span></div>
-    <div class="mr"><span class="mk">TRANSACTIONS</span><span class="mv ac" id="rs-tx">0</span></div>
-    <div class="mr"><span class="mk">VELOCITY</span><span class="mv gold" id="rs-vel">$0/min</span></div>
-    <div class="mr"><span class="mk">APPROVAL</span><span class="mv green" id="rs-apr">100%</span></div>
-  </div>
-  <div class="card"><div class="ct">🏆 Top Domains</div><div id="top-domains"></div></div>
-  <div class="card s3">
-    <div class="ct">📊 Domain Breakdown</div>
-    <div id="domain-bars"></div>
-  </div>
-</div></div>
+<!-- REVENUE -->
+<div id="panel-revenue" class="panel">
+<div class="grid g4" style="margin-bottom:16px">
+<div class="card"><div class="ct">Total Revenue</div><div class="bv" id="r-total">$0.00</div></div>
+<div class="card"><div class="ct">Per Second</div><div class="bv gold" id="r-ps">$0.00</div></div>
+<div class="card"><div class="ct">Per Hour</div><div class="bv green" id="r-ph">$0.00</div></div>
+<div class="card"><div class="ct">Est. Daily</div><div class="bv" style="color:var(--purple)" id="r-pd">$0.00</div></div>
+</div>
+<div class="grid g2">
+<div class="card"><div class="ct">Domain Revenue Breakdown</div><div id="domain-bars"></div></div>
+<div class="card"><div class="ct">⚙️ Adjust Domain Pricing (Live)</div>
+<div id="pricing-inputs"></div>
+<div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+<button class="btn bp" onclick="savePricing()">SAVE PRICING</button>
+<span id="price-msg" style="display:none;color:var(--green);font-size:0.7rem">✓ Saved</span>
+</div>
+</div>
+</div>
+</div>
 
-<div id="p-sources" class="panel"><div class="grid g3">
-  <div class="card">
-    <div class="ct">📡 Source Network</div>
-    <div style="text-align:center;padding:10px 0">
-      <div class="src-count" id="src-total">0</div>
-      <div style="font-size:0.68rem;color:var(--muted);margin-top:4px">LIVE SOURCES</div>
-    </div>
-    <div class="mr"><span class="mk">DOMAINS</span><span class="mv gold" id="src-domains">15</span></div>
-    <div class="mr"><span class="mk">EVENTS/MIN</span><span class="mv ac" id="src-epm">—</span></div>
-    <div class="mr"><span class="mk">ERRORS</span><span class="mv" id="src-errors">0</span></div>
-    <div class="mr"><span class="mk">STATUS</span><span class="mv green">RUNNING</span></div>
-  </div>
-  <div class="card s2"><div class="ct">📊 Events Per Domain</div><div id="src-domain-bars"></div></div>
-  <div class="card s3"><div class="ct">📡 Live Full Feed</div><div class="feed" style="height:400px" id="feed2"></div></div>
-</div></div>
+<!-- SOURCES -->
+<div id="panel-sources" class="panel">
+<div class="grid g4" style="margin-bottom:16px">
+<div class="card"><div class="ct">Total Sources</div><div class="bv" id="src-total">0</div></div>
+<div class="card"><div class="ct">Domains</div><div class="bv gold" id="src-domains">0</div></div>
+<div class="card"><div class="ct">Events Today</div><div class="bv green" id="src-events">0</div></div>
+<div class="card"><div class="ct">Errors</div><div class="bv red" id="src-errors">0</div></div>
+</div>
+<div class="grid g2">
+<div class="card"><div class="ct">📡 Live Event Feed</div><div class="feed" id="feed2"></div></div>
+<div class="card"><div class="ct">Domain Activity</div><div id="src-domain-bars"></div></div>
+</div>
+</div>
 
-<div id="p-threats" class="panel"><div class="grid g2">
-  <div class="card">
-    <div class="ct">🚨 Threats</div>
-    <div class="mr"><span class="mk">TOTAL</span><span class="mv red" id="threat-count">0</span></div>
-    <div class="mr"><span class="mk">CYBERSECURITY</span><span class="mv red" id="threat-cyber">0</span></div>
-    <div class="mr"><span class="mk">DEFENSE</span><span class="mv red" id="threat-defense">0</span></div>
-    <div class="mr"><span class="mk">ENGINE</span><span class="mv green">Claude Sonnet ACTIVE</span></div>
-  </div>
-  <div class="card">
-    <div class="ct">💡 Rates</div>
-    <div class="mr"><span class="mk">CYBER</span><span class="mv ac">$1.80/event</span></div>
-    <div class="mr"><span class="mk">DEFENSE</span><span class="mv ac">$2.00/event</span></div>
-  </div>
-  <div class="card s2"><div class="ct">🚨 Live Threat Feed</div><div id="threat-feed" style="height:380px;overflow-y:auto;"></div></div>
-</div></div>
+<!-- THREATS -->
+<div id="panel-threats" class="panel">
+<div class="grid g3" style="margin-bottom:16px">
+<div class="card"><div class="ct">Threats Detected</div><div class="bv red" id="threat-count">0</div></div>
+<div class="card"><div class="ct">Cybersecurity</div><div class="bv" style="color:var(--purple)" id="threat-cyber">0</div></div>
+<div class="card"><div class="ct">Defense</div><div class="bv red" id="threat-defense">0</div></div>
+</div>
+<div class="card"><div class="ct">🚨 Live Threat Feed</div><div style="height:500px;overflow-y:auto" id="threat-feed"></div></div>
+</div>
 
-<div id="p-control" class="panel"><div class="grid g2">
-  <div class="card">
-    <div class="ct">⚙️ System</div>
-    <div class="mr"><span class="mk">Ingestion</span><span class="mv green">LIVE</span></div>
-    <div class="mr"><span class="mk">AI Brain</span><span class="mv green">LIVE</span></div>
-    <div class="mr"><span class="mk">Revenue Engine</span><span class="mv green">LIVE</span></div>
-    <div class="mr"><span class="mk">Treasury</span><span class="mv green">LIVE</span></div>
-    <div class="mr"><span class="mk">Wallet</span><span class="mv green">LIVE</span></div>
-    <div class="mr"><span class="mk">Fund Routing</span><span class="mv green" id="ctrl-routing">ACTIVE</span></div>
-  </div>
-  <div class="card">
-    <div class="ct">💲 Live Pricing Editor</div>
-    <div id="pricing-editor"></div>
-    <button class="btn bp" style="width:100%;margin-top:14px" onclick="savePricing()">💾 SAVE PRICING</button>
-    <div id="price-msg" style="font-size:0.68rem;color:var(--green);margin-top:8px;display:none">✓ Saved</div>
-  </div>
-  <div class="card s2">
-    <div class="ct">📋 Treasury Ledger</div>
-    <div style="overflow-x:auto"><table class="lt">
-      <thead><tr><th>SEQ</th><th>TIME</th><th>TYPE</th><th>AMOUNT</th><th>BALANCE</th><th>SOURCE</th><th>HASH</th></tr></thead>
-      <tbody id="treasury-ledger"></tbody>
-    </table></div>
-  </div>
-</div></div>
+<!-- CONTROL -->
+<div id="panel-control" class="panel">
+<div class="grid g2">
+<div class="card"><div class="ct">⚙️ System Control</div>
+<div class="mr"><span class="mk">Fund Routing</span><span class="mv" id="ctrl-routing">ACTIVE</span></div>
+<div class="mr"><span class="mk">Brain Status</span><span class="mv green">RUNNING</span></div>
+<div class="mr"><span class="mk">Ingestion</span><span class="mv green">RUNNING</span></div>
+<div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+<button class="btn bd" onclick="stopRouting()">🛑 STOP FUND ROUTING</button>
+<button class="btn bg2b" onclick="startRouting()">▶ START FUND ROUTING</button>
+<button class="btn bgo" onclick="manualSweep()">💸 MANUAL SWEEP → ECOBANK</button>
+</div>
+</div>
+<div class="card"><div class="ct">🏦 Treasury Ledger</div>
+<div style="overflow-x:auto;max-height:400px;overflow-y:auto"><table class="lt"><thead><tr><th>#</th><th>TIME</th><th>TYPE</th><th>AMOUNT</th><th>BALANCE</th><th>SOURCE</th><th>HASH</th></tr></thead><tbody id="treasury-ledger"></tbody></table></div>
+</div>
+</div>
+</div>
 
-<div id="notif"></div>
 <script>
-const PRICING={finance:1.00,government:0.80,healthcare:0.75,health:0.75,ai:0.50,energy:0.40,tech:0.20,social:0.10,defense:2.00,cybersecurity:1.80,legal:1.50,realestate:1.20,supplychain:1.10,science:0.90,climate:0.60,economy:1.30,emerging:0.70};
-let localP={...PRICING},prevRev=0,prevTime=Date.now(),recentEvents=[],routingStopped=false;
-function ck(){document.getElementById('clock').textContent=new Date().toUTCString().replace('GMT','UTC');}
-setInterval(ck,1000);ck();
-function sw(n,el){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('p-'+n).classList.add('active');el.classList.add('active');}
-function notif(m,c){const e=document.getElementById('notif');e.textContent='✓ '+m;e.style.borderColor=c||'var(--ac)';e.style.color=c||'var(--ac)';e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3000);}
-function fmt(n){n=parseFloat(n)||0;if(n>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(n>=1e3)return'$'+(n/1e3).toFixed(2)+'K';return'$'+n.toFixed(2);}
-function fn(n){return(parseInt(n)||0).toLocaleString();}
-function ts(ms){return ms?new Date(ms).toISOString().substr(11,8):'—';}
-function set(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
-async function stopRouting(){
-  routingStopped=true;
-  document.getElementById('routing-stop-bar').classList.add('active');
-  document.getElementById('btn-stop').style.display='none';
-  document.getElementById('btn-resume').style.display='inline-block';
-  document.getElementById('sweep-label').textContent='STOPPED';
-  document.getElementById('sweep-label').style.color='var(--red)';
-  document.getElementById('ctrl-routing').textContent='STOPPED';
-  document.getElementById('ctrl-routing').style.color='var(--red)';
-  try{await fetch('/api/treasury/routing',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({enabled:false})});}catch(e){}
-  notif('Fund routing STOPPED','var(--red)');
+const PANELS=['overview','command','insights','wallet','revenue','sources','threats','control'];
+function sw(p){PANELS.forEach(x=>{document.getElementById('panel-'+x).classList.remove('active');document.querySelectorAll('.tab').forEach((t,i)=>{if(PANELS[i]===x)t.classList.remove('active');});});document.getElementById('panel-'+p).classList.add('active');document.querySelectorAll('.tab').forEach(t=>{if(t.textContent.toLowerCase().includes(p.split('-')[0].toLowerCase().replace('🤖 ','').replace('🧠 ','').replace('💎 ','').replace('💰 ','').replace('📡 ','').replace('🚨 ','').replace('⚙️ ','')))t.classList.add('active');});}
+
+let prevRev=0,prevTime=Date.now(),recentEvents=[],localP={},chatHistory=[],routingStopped=false;
+const fmt=v=>{if(v>=1e9)return'$'+(v/1e9).toFixed(2)+'B';if(v>=1e6)return'$'+(v/1e6).toFixed(2)+'M';if(v>=1e3)return'$'+(v/1e3).toFixed(2)+'K';return'$'+parseFloat(v).toFixed(2);};
+const fn=v=>{if(v>=1e9)return(v/1e9).toFixed(2)+'B';if(v>=1e6)return(v/1e6).toFixed(2)+'M';if(v>=1e3)return(v/1e3).toFixed(1)+'K';return v.toString();};
+const ts=t=>{const d=new Date(t);return d.toTimeString().split(' ')[0];};
+const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+
+// Update header clock
+setInterval(()=>{set('hdr-time',new Date().toUTCString().replace('GMT','UTC'));},1000);
+
+// Load pricing
+async function loadPricing(){
+  try{const r=await fetch('/api/pricing');localP=await r.json();renderPricing();}catch(e){}
 }
-async function resumeRouting(){
-  routingStopped=false;
-  document.getElementById('routing-stop-bar').classList.remove('active');
-  document.getElementById('btn-stop').style.display='inline-block';
-  document.getElementById('btn-resume').style.display='none';
-  document.getElementById('sweep-label').textContent='ENABLED';
-  document.getElementById('sweep-label').style.color='var(--green)';
-  document.getElementById('ctrl-routing').textContent='ACTIVE';
-  document.getElementById('ctrl-routing').style.color='var(--green)';
-  try{await fetch('/api/treasury/routing',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({enabled:true})});}catch(e){}
-  notif('Fund routing RESUMED','var(--green)');
-}
-async function doSweep(){
-  if(routingStopped){notif('Routing STOPPED — resume first','var(--red)');return;}
-  const amount=parseFloat(document.getElementById('sweep-amount').value);
-  const network=document.getElementById('sweep-net').value;
-  const s=document.getElementById('sweep-status');
-  if(!amount||amount<=0){notif('Enter valid amount');return;}
-  s.style.display='block';s.className='sweep-status pending';s.textContent='⏳ Initiating sweep...';
-  try{
-    const r=await fetch('/api/treasury/sweep',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount,network})});
-    const d=await r.json();
-    if(d.status==='CONFIRMED'){s.className='sweep-status ok';s.textContent='✅ CONFIRMED — TX: '+(d.txHash||d.id);notif('Sweep confirmed!','var(--green)');}
-    else if(d.status==='PENDING_FUNDING'){s.className='sweep-status pending';s.textContent='⏳ PENDING FUNDING — Send USDC to wallet first\n'+(d.note||'');}
-    else if(d.error){s.className='sweep-status err';s.textContent='❌ '+d.error;}
-    else{s.className='sweep-status ok';s.textContent='✓ '+d.status+(d.id?' — '+d.id:'');}
-    fd();
-  }catch(e){s.className='sweep-status err';s.textContent='❌ '+e.message;}
-}
-function addMsg(role,text){
-  const msgs=document.getElementById('chat-msgs');
-  const div=document.createElement('div');div.className='msg msg-'+role;
-  div.innerHTML=`<div class="mb">${text}</div><div class="ml">${role==='user'?'SECKA':role==='ai'?'M7 — CLAUDE':'SYSTEM'} — ${ts(Date.now())}</div>`;
-  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
-}
-function qc(cmd){document.getElementById('chat-in').value=cmd;sendChat();}
-async function sendChat(){
-  const inp=document.getElementById('chat-in');const txt=inp.value.trim();if(!txt)return;
-  inp.value='';addMsg('user',txt);
-  const msgs=document.getElementById('chat-msgs');
-  const t=document.createElement('div');t.className='msg msg-ai';t.id='typing-ind';
-  t.innerHTML='<div class="mb"><span class="typing"><span>●</span><span>●</span><span>●</span></span> M7 analyzing...</div>';
-  msgs.appendChild(t);msgs.scrollTop=msgs.scrollHeight;
-  try{
-    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:txt})});
-    const d=await r.json();
-    document.getElementById('typing-ind')?.remove();
-    addMsg('ai',d.response||'M7 processing...');
-  }catch(e){document.getElementById('typing-ind')?.remove();addMsg('ai','M7 active. Error: '+e.message);}
-}
-document.addEventListener('DOMContentLoaded',()=>{
-  const i=document.getElementById('chat-in');
-  if(i)i.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}});
-  buildPricingEditor();
-});
-function buildPricingEditor(){
-  const c=document.getElementById('pricing-editor');if(!c)return;
-  c.innerHTML=Object.entries(localP).filter(([d])=>d!=='health').sort((a,b)=>b[1]-a[1]).map(([d,p])=>`
-    <div class="price-row"><span><span class="dp ${d}">${d.toUpperCase()}</span></span>
-    <div style="display:flex;align-items:center;gap:6px;"><span style="font-size:0.68rem;color:var(--muted)">$/ev</span>
-    <input class="price-in" type="number" step="0.01" min="0.01" id="price-${d}" value="${p.toFixed(2)}"></div></div>`).join('');
+function renderPricing(){
+  const el=document.getElementById('pricing-inputs');if(!el)return;
+  el.innerHTML=Object.entries(localP).filter(([d])=>d!=='health').map(([d,p])=>`<div class="price-row"><span class="dp ${d}">${d.toUpperCase()}</span><div style="display:flex;align-items:center;gap:6px"><span style="font-size:0.65rem;color:var(--muted)">$/event</span><input class="price-in" type="number" step="0.01" min="0.01" id="price-${d}" value="${parseFloat(p).toFixed(2)}"></div></div>`).join('');
 }
 async function savePricing(){
-  const u={};
-  Object.keys(localP).filter(d=>d!=='health').forEach(d=>{const e=document.getElementById('price-'+d);if(e)u[d]=parseFloat(e.value)||localP[d];});
+  const u={};Object.keys(localP).filter(d=>d!=='health').forEach(d=>{const e=document.getElementById('price-'+d);if(e)u[d]=parseFloat(e.value)||localP[d];});
   try{await fetch('/api/pricing',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(u)});}catch(e){}
   Object.assign(localP,u);
-  const m=document.getElementById('price-msg');m.style.display='block';setTimeout(()=>m.style.display='none',2000);
-  notif('Pricing updated live');
+  const m=document.getElementById('price-msg');if(m){m.style.display='block';setTimeout(()=>m.style.display='none',2000);}
 }
+
+// Routing controls
+async function stopRouting(){
+  await fetch('/api/routing/stop',{method:'POST'});
+  routingStopped=true;
+  document.getElementById('routing-badge').textContent='ROUTING STOPPED';
+  document.getElementById('routing-badge').className='badge err';
+  set('ctrl-routing','STOPPED');
+  addMsg('sys','Fund routing STOPPED by SECKA. No transfers will occur.');
+}
+async function startRouting(){
+  await fetch('/api/routing/start',{method:'POST'});
+  routingStopped=false;
+  document.getElementById('routing-badge').textContent='ROUTING ACTIVE';
+  document.getElementById('routing-badge').className='badge ok';
+  set('ctrl-routing','ACTIVE');
+  addMsg('sys','Fund routing ACTIVE. M7 will sweep to Ecobank automatically.');
+}
+async function manualSweep(){
+  const amt=prompt('Amount to sweep to Ecobank (USDC):');
+  if(!amt||isNaN(amt))return;
+  try{
+    const r=await fetch('/api/treasury/sweep',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:parseFloat(amt),network:'polygon'})});
+    const d=await r.json();
+    addMsg('sys','Sweep initiated: $'+amt+' → Ecobank\nStatus: '+(d.status||d.error||JSON.stringify(d)));
+  }catch(e){addMsg('sys','Sweep error: '+e.message);}
+}
+
+// CHAT
+function addMsg(role,text){
+  const div=document.createElement('div');div.className='msg msg-'+role;
+  const mb=document.createElement('div');mb.className='mb';mb.textContent=text;
+  const ml=document.createElement('div');ml.className='ml';
+  ml.textContent=role==='user'?'SECKA':role==='ai'?'M7 AI':'SYSTEM';
+  div.appendChild(mb);div.appendChild(ml);
+  const msgs=document.getElementById('chat-msgs');msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function quickCmd(cmd){document.getElementById('chat-input').value=cmd;sendChat();}
+
+async function sendChat(){
+  const inp=document.getElementById('chat-input');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';
+  addMsg('user',msg);
+  chatHistory.push({role:'user',content:msg});
+
+  // Build system context
+  let ctx='You are M7, sovereign autonomous intelligence system v4.0.\n';
+  ctx+='You have full control and awareness of the system.\n';
+  ctx+='Current system state:\n';
+  try{
+    const[st,br,w]=await Promise.all([fetch('/api/status').then(r=>r.json()),fetch('/api/brain').then(r=>r.json()),fetch('/api/wallet').then(r=>r.json())]);
+    ctx+=`- Total Revenue: $${(st.edab?.totalBilled||0).toFixed(2)}\n`;
+    ctx+=`- Events Processed: ${st.ingestion?.totalEvents||0}\n`;
+    ctx+=`- Sources: ${st.ingestion?.sources||0}\n`;
+    ctx+=`- Claude API calls: ${br.claudeMetrics?.totalCalls||0}\n`;
+    ctx+=`- Threats detected: ${(br.threats||[]).length}\n`;
+    ctx+=`- Wallet USDC (Polygon): $${w.balances?.polygon?.USDC||0}\n`;
+    ctx+=`- Pending USD: $${w.pendingUSD||0}\n`;
+    ctx+=`- Fund routing: ${routingStopped?'STOPPED':'ACTIVE'}\n`;
+    ctx+=`- Top domain: ${Object.entries(st.edab?.domainBreakdown||{}).sort((a,b)=>b[1].revenue-a[1].revenue)[0]?.[0]||'—'}\n`;
+    if(br.aiInsights?.length>0){ctx+=`- Latest AI insight: ${br.aiInsights[br.aiInsights.length-1]?.insight||'—'}\n`;}
+  }catch(e){}
+  ctx+='\nYou can discuss strategy, analyze data, explain what is happening, or respond to commands.\n';
+  ctx+='Be concise, direct, and intelligent. You are sovereign.';
+
+  addMsg('sys','M7 thinking...');
+  const msgs=document.getElementById('chat-msgs');
+  const thinking=msgs.lastChild;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:600,
+        system:ctx,
+        messages:chatHistory.slice(-10)
+      })
+    });
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||'No response';
+    msgs.removeChild(thinking);
+    chatHistory.push({role:'assistant',content:reply});
+    if(chatHistory.length>20)chatHistory=chatHistory.slice(-20);
+    addMsg('ai',reply);
+  }catch(e){
+    msgs.removeChild(thinking);
+    addMsg('sys','Error: '+e.message);
+  }
+}
+
 function insHTML(i,full=false){
   const s=i.severity>=7?'high':i.severity>=5?'medium':'low';
-  return`<div class="insight-item ${s}"><div class="insight-domain"><span class="dp ${i.domain||''}">${(i.domain||'').toUpperCase()}</span>${i.type||''}<span class="insight-sev sev-${s}">SEV ${i.severity||'?'}</span></div><div class="insight-text">${i.insight||''}</div>${i.clientAction?`<div class="insight-action">→ ${i.clientAction}</div>`:''}${full?`<div style="font-size:0.6rem;color:var(--muted);margin-top:4px">${i.analyzedAt?ts(i.analyzedAt):''} — ${i.threat?'⚠️ THREAT':'✓ SIGNAL'} — Claude Sonnet</div>`:''}</div>`;
+  return`<div class="insight-item ${s}"><div class="insight-domain"><span class="dp ${i.domain||''}">${(i.domain||'').toUpperCase()}</span>${i.type||''}<span class="insight-sev sev-${s}">SEV ${i.severity||'?'}</span></div><div class="insight-text">${i.insight||''}</div>${i.clientAction?`<div class="insight-action">→ ${i.clientAction}</div>`:''} ${full?`<div style="font-size:0.6rem;color:var(--muted);margin-top:4px">${i.analyzedAt?ts(i.analyzedAt):''} — ${i.threat?'⚠️ THREAT':'✓ SIGNAL'} — Claude Sonnet</div>`:''}</div>`;
 }
+
 async function fd(){
   try{
-    const[st,br,threats,treas,wallet]=await Promise.all([
+    const[st,br,threats,treas,wallet,routing]=await Promise.all([
       fetch('/api/status').then(r=>r.json()),
       fetch('/api/brain').then(r=>r.json()),
       fetch('/api/threats').then(r=>r.json()),
       fetch('/api/ledger?limit=30').then(r=>r.json()),
-      fetch('/api/wallet').then(r=>r.json())
+      fetch('/api/wallet').then(r=>r.json()),
+      fetch('/api/routing/status').then(r=>r.json())
     ]);
+
     const rev=parseFloat(st.edab?.totalBilled)||0;
     const now=Date.now(),el=Math.max((now-prevTime)/1000,1),rps=Math.max((rev-prevRev)/el,0);
     prevRev=rev;prevTime=now;
     const daily=rps*86400,hourly=rps*3600;
+
+    // Header
+    set('hdr-rev',fmt(rev));
+    set('hdr-events',fn(st.ingestion?.totalEvents||0)+' events');
+
+    // Overview
     set('ov1',fmt(rev));set('ov1s',fmt(rps)+'/sec');
     set('ov2',fn(st.ingestion?.totalEvents||0));set('ov2s',(st.ingestion?.sources||0)+' sources live');
     set('ov3',fmt(daily));set('ov3s',fmt(hourly)+'/hr');
     set('ov-usdc','$'+(wallet.balances?.polygon?.USDC||0).toFixed(2));
     set('ov-usdc-s','Pending: $'+(wallet.pendingUSD||0).toFixed(2));
-    // wallet
+
+    // Wallet
     set('wallet-addr',wallet.addresses?.polygon||'—');
     set('w-poly-usdc','$'+(wallet.balances?.polygon?.USDC||0).toFixed(2));
     set('w-poly-matic',(wallet.balances?.polygon?.MATIC||0).toFixed(4));
@@ -446,46 +442,57 @@ async function fd(){
     set('w-eth-eth',(wallet.balances?.ethereum?.ETH||0).toFixed(4));
     set('w-pending','$'+(wallet.pendingUSD||0).toFixed(2));
     set('w-sent','$'+(wallet.totalSent||0).toFixed(2));
+    set('act-status',routing.active?'ACTIVE':'STOPPED');
+    set('act-usdc','$'+(routing.actualizedUSDC||0).toFixed(2));
+    set('act-sweep',routing.active?'ACTIVE':'STOPPED');
+
     const tt=document.getElementById('transfer-table');
-    if(tt)tt.innerHTML=wallet.transfers?.length>0?wallet.transfers.map(t=>`<tr><td style="color:var(--muted)">${ts(t.timestamp)}</td><td style="color:var(--gold);font-weight:700">$${(t.amountUSD||0).toFixed(2)}</td><td><span class="badge">${(t.network||'').toUpperCase()}</span></td><td style="font-size:0.62rem;color:var(--muted)">${t.rail||'USDC→ECOBANK'}</td><td><span class="badge ${t.status==='CONFIRMED'?'ok':t.status==='PENDING_FUNDING'?'warn':'err'}">${t.status}</span></td><td style="font-size:0.6rem;color:var(--muted)">${t.txHash?t.txHash.substr(0,14)+'…':t.note?'Needs USDC':'—'}</td></tr>`).join(''):'<tr><td colspan="6" style="color:var(--muted);text-align:center">No transfers yet — fund wallet with USDC to activate</td></tr>';
-    // revenue
-    const str=st.edab?.streams||{};
-    set('r-total',fmt(rev));set('r-ps',fmt(rps));set('r-pm',fmt(rps*60));set('r-ph',fmt(hourly));set('r-pd',fmt(daily));
-    set('rs-ep',fmt(str.eventProcessing||rev));set('rs-tx',fn(st.edab?.totalEvents||0));
-    set('rs-vel',fmt(st.edab?.velocity||0)+'/min');set('rs-apr',st.edab?.approval?.approvalRate||'100%');
+    if(tt)tt.innerHTML=wallet.transfers?.length>0?wallet.transfers.map(t=>`<tr><td style="color:var(--muted)">${ts(t.timestamp)}</td><td style="color:var(--gold);font-weight:700">$${(t.amountUSD||0).toFixed(2)}</td><td><span class="badge">${(t.network||'').toUpperCase()}</span></td><td style="font-size:0.62rem;color:var(--muted)">${t.rail||'USDC→ECOBANK'}</td><td><span class="badge ${t.status==='CONFIRMED'?'ok':t.status==='PENDING_FUNDING'?'warn':'err'}">${t.status}</span></td><td style="font-size:0.6rem;color:var(--muted)">${t.txHash?t.txHash.substr(0,14)+'…':t.note?'Needs USDC':'—'}</td></tr>`).join(''):'<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:12px">No transfers yet — send USDC to wallet to activate</td></tr>';
+
+    // Revenue
     const db=st.edab?.domainBreakdown||{};
+    set('r-total',fmt(rev));set('r-ps',fmt(rps));set('r-ph',fmt(hourly));set('r-pd',fmt(daily));
     const td2=document.getElementById('top-domains');
     if(td2){const s2=Object.entries(db).sort((a,b)=>(b[1].revenue||0)-(a[1].revenue||0)).slice(0,6);td2.innerHTML=s2.map(([d,i])=>`<div class="mr"><span class="mk"><span class="dp ${d}">${d.toUpperCase()}</span></span><span class="mv ac">${fmt(i.revenue||0)}</span></div>`).join('');}
     const dbars=document.getElementById('domain-bars');
     if(dbars){const mx=Math.max(...Object.values(db).map(d=>d.events||0),1);dbars.innerHTML=Object.keys(localP).filter(d=>d!=='health').map(d=>{const ev=db[d]?.events||0;const pct=Math.min((ev/mx)*100,100);return`<div class="pr2"><div class="pl2"><span>${d.toUpperCase()}</span><span>${fn(ev)} events — ${fmt(db[d]?.revenue||0)}</span></div><div class="pb"><div class="pf" style="width:${pct}%"></div></div></div>`;}).join('');}
-    // sources panel
+
+    // Sources
     set('src-total',st.ingestion?.sources||0);
-    set('src-domains',15);set('src-errors',fn(st.ingestion?.errors||0));
+    set('src-domains',Object.keys(st.ingestion?.domainCounts||{}).length);
+    set('src-events',fn(st.ingestion?.totalEvents||0));
+    set('src-errors',fn(st.ingestion?.errors||0));
     const dc=st.ingestion?.domainCounts||{};
     const sdb=document.getElementById('src-domain-bars');
     if(sdb){const mx2=Math.max(...Object.values(dc).map(v=>v||0),1);sdb.innerHTML=Object.keys(localP).filter(d=>d!=='health').map(d=>{const ev=dc[d]||0;const pct=Math.min((ev/mx2)*100,100);return`<div class="pr2"><div class="pl2"><span><span class="dp ${d}">${d.toUpperCase()}</span></span><span>${fn(ev)} events</span></div><div class="pb"><div class="pf" style="width:${pct}%"></div></div></div>`;}).join('');}
-    // insights
+
+    // Insights
     const ins=br.aiInsights||[];
     set('ins-calls',fn(br.claudeMetrics?.totalCalls||0));
     set('ins-analyzed',fn(br.claudeMetrics?.totalEventsAnalyzed||0));
-    set('ins-errors',fn(br.claudeMetrics?.errors||0));
-    set('ins-last',br.claudeMetrics?.lastCallAt?ts(br.claudeMetrics.lastCallAt):'—');
     set('ins-high',fn(ins.filter(i=>i.severity>=7).length));
+    set('ins-last',br.claudeMetrics?.lastCallAt?ts(br.claudeMetrics.lastCallAt):'—');
     const oi=document.getElementById('ov-insights');
-    if(oi)oi.innerHTML=ins.length>0?ins.slice(0,4).map(i=>insHTML(i)).join(''):'<div style="color:var(--muted);font-size:0.75rem">Claude analyzing...</div>';
+    if(oi)oi.innerHTML=ins.length>0?ins.slice(-4).map(i=>insHTML(i)).join(''):'<div style="color:var(--muted);font-size:0.75rem">Claude analyzing...</div>';
     const inf=document.getElementById('insights-feed');
-    if(inf)inf.innerHTML=ins.length>0?ins.slice().reverse().map(i=>insHTML(i,true)).join(''):'<div style="color:var(--muted);font-size:0.75rem">Waiting for Claude analysis...</div>';
+    if(inf)inf.innerHTML=ins.length>0?ins.slice().reverse().map(i=>insHTML(i,true)).join(''):'<div style="color:var(--muted);font-size:0.75rem;padding:12px">Waiting for Claude analysis...</div>';
     const eb=document.getElementById('exec-brief');
     if(eb&&br.executiveBriefing?.bullets)eb.innerHTML=br.executiveBriefing.bullets.map(b=>`<div class="mr"><span style="color:var(--ac)">▸</span><span style="font-size:0.72rem;margin-left:8px">${b}</span></div>`).join('');
+
+    // Chat context
     const cc=document.getElementById('chat-context');
-    if(cc)cc.innerHTML=`<div>Revenue: <span style="color:var(--ac)">${fmt(rev)}</span></div><div>Events: <span style="color:var(--blue)">${fn(st.ingestion?.totalEvents||0)}</span></div><div>Sources: <span style="color:var(--blue)">${st.ingestion?.sources||0}</span></div><div>Wallet USDC: <span style="color:var(--green)">$${(wallet.balances?.polygon?.USDC||0).toFixed(2)}</span></div><div>Pending: <span style="color:var(--gold)">$${(wallet.pendingUSD||0).toFixed(2)}</span></div><div>Claude Calls: <span style="color:var(--green)">${fn(br.claudeMetrics?.totalCalls||0)}</span></div><div>Threats: <span style="color:var(--red)">${fn(threats.length)}</span></div><div>Routing: <span style="${routingStopped?'color:var(--red)':'color:var(--green)'}">${routingStopped?'STOPPED':'ACTIVE'}</span></div>`;
-    // threats
-    set('threat-count',fn(threats.length||0));
+    if(cc)cc.innerHTML=`<div>Revenue: <span style="color:var(--ac)">${fmt(rev)}</span></div><div>Events: <span style="color:var(--blue)">${fn(st.ingestion?.totalEvents||0)}</span></div><div>Sources: <span style="color:var(--blue)">${st.ingestion?.sources||0}</span></div><div>USDC: <span style="color:var(--green)">$${(wallet.balances?.polygon?.USDC||0).toFixed(2)}</span></div><div>Pending: <span style="color:var(--gold)">$${(wallet.pendingUSD||0).toFixed(2)}</span></div><div>Claude Calls: <span style="color:var(--green)">${fn(br.claudeMetrics?.totalCalls||0)}</span></div><div>Threats: <span style="color:var(--red)">${fn((threats||[]).length)}</span></div><div>Routing: <span style="${routingStopped?'color:var(--red)':'color:var(--green)'}">${routingStopped?'STOPPED':'ACTIVE'}</span></div>`;
+
+    // Threats
+    set('threat-count',fn((threats||[]).length));
     set('threat-cyber',fn((threats||[]).filter(t=>t.threats?.some(x=>x.domain==='cybersecurity')).length));
     set('threat-defense',fn((threats||[]).filter(t=>t.threats?.some(x=>x.domain==='defense')).length));
     const tf=document.getElementById('threat-feed');
     if(tf)tf.innerHTML=(threats||[]).length>0?threats.slice(0,15).map(t=>`<div class="insight-item high"><span class="badge err">THREAT</span> <strong>${t.detail||''}</strong><div style="font-size:0.62rem;color:var(--muted);margin-top:4px">${ts(t.timestamp)} — ${(t.threats||[]).map(x=>`<span class="dp ${x.domain}">${x.domain}::${x.type}</span>`).join(' ')}</div></div>`).join(''):'<div style="color:var(--muted);font-size:0.75rem;padding:12px">No threats — monitoring active</div>';
-    // feeds
+    const ot=document.getElementById('ov-threats');
+    if(ot)ot.innerHTML=(threats||[]).length>0?threats.slice(0,3).map(t=>`<div class="insight-item high" style="padding:8px"><div style="font-size:0.7rem">${t.detail||''}</div></div>`).join(''):'<div style="color:var(--muted);font-size:0.75rem">Monitoring...</div>';
+
+    // Event feeds
     if(st.recentEvents?.length>0){
       recentEvents=st.recentEvents;
       ['feed1','feed2'].forEach(id=>{
@@ -498,11 +505,16 @@ async function fd(){
         });
       });
     }
-    // ledger
+
+    // Ledger
     const tl=document.getElementById('treasury-ledger');
     if(tl&&treas.transactions?.length>0)tl.innerHTML=treas.transactions.map(t=>`<tr><td style="color:var(--muted)">${t.seq||''}</td><td style="color:var(--muted)">${ts(t.timestamp)}</td><td><span class="badge ${t.type==='CREDIT'?'ok':'err'}">${t.type}</span></td><td style="color:${t.type==='CREDIT'?'var(--green)':'var(--red)'};font-weight:700">$${parseFloat(t.amount||0).toFixed(4)}</td><td style="color:var(--ac)">$${parseFloat(t.balance||0).toFixed(2)}</td><td style="color:var(--muted)">${t.source||t.destination||'—'}</td><td style="font-size:0.6rem;color:var(--muted)">${(t.hash||'').substr(0,12)}</td></tr>`).join('');
+
   }catch(e){console.error(e);}
 }
-fd();setInterval(fd,4000);
+
+loadPricing();
+fd();
+setInterval(fd,4000);
 </script>
 </body></html>
