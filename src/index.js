@@ -14,6 +14,9 @@ const RealEventIngestion = require('./real-event-ingestion');
 const AWSExchange        = require('./aws-exchange');
 const AutonomousRevenue  = require('./autonomous-revenue');
 const M7AIBrain          = require('./m7-ai-brain');
+const SovereignCapitalEngine = require('./sovereign-capital-engine');
+const Pathfinder             = require('./pathfinder');
+const RailManager            = require('./rail-manager');
 const rapidApiRouter     = require('./rapidapi-gateway');
 
 // ── M7 MASTER CONTROLLER — AI handles everything ───────────────────────────
@@ -156,6 +159,9 @@ const revenueEngine    = new RevenueEngine(treasury);
 const awsExchange      = new AWSExchange(treasury);
 const autonomousRevenue= new AutonomousRevenue(treasury, revenueEngine);
 const brain            = new M7AIBrain();
+const sovereign        = new SovereignCapitalEngine(treasury);
+const pathfinder       = new Pathfinder(sovereign);
+const railManager      = new RailManager(pathfinder, sovereign);
 const ingestion        = new RealEventIngestion();
 const m7               = new M7MasterController();
 
@@ -171,6 +177,14 @@ awsExchange.addSubscriber({ name:'EMERGING_MARKETS_FUND',domains:['emerging','fi
 
 autonomousRevenue.startGrowthLoop();
 brain.wire(revenueEngine, ingestion);
+sovereign.start();
+pathfinder.start();
+
+// Wire revenue to sovereign capital engine
+revenueEngine.on('revenue', (tx) => {
+  const actualized = tx.amount * 0.99;
+  sovereign.receiveActualized(actualized);
+});
 
 // ── Global state ───────────────────────────────────────────────────────────
 global.m7recentEvents = [];
@@ -466,6 +480,52 @@ app.post('/api/backup', async (req, res) => {
   } catch(e) {
     res.status(500).json({ error: e.message });
   }
+});
+
+
+// Sovereign Capital Engine
+app.get('/api/sovereign', (req, res) => res.json(sovereign.getStatus()));
+app.post('/api/sovereign/bootstrap', async (req, res) => {
+  const entity = await sovereign.bootstrap();
+  res.json(entity);
+});
+app.post('/api/sovereign/voucher', (req, res) => {
+  const { amount } = req.body;
+  if (!amount) return res.status(400).json({ error: 'amount required' });
+  res.json(sovereign.generateVoucher(parseFloat(amount)));
+});
+app.get('/api/sovereign/verify/:code', (req, res) => {
+  res.json(sovereign.verifyVoucher(req.params.code));
+});
+app.post('/api/sovereign/redeem/:code', (req, res) => {
+  res.json(sovereign.redeemVoucher(req.params.code));
+});
+
+// Pathfinder
+app.get('/api/pathfinder', (req, res) => res.json(pathfinder.getStatus()));
+app.post('/api/pathfinder/transfer', async (req, res) => {
+  const { amount, railType } = req.body;
+  if (!amount) return res.status(400).json({ error: 'amount required' });
+  const result = await railManager.executeTransfer(parseFloat(amount), railType);
+  res.json(result);
+});
+app.post('/api/pathfinder/discover', async (req, res) => {
+  await pathfinder.discoverRoutes();
+  res.json({ success: true });
+});
+
+// Rail Manager
+app.get('/api/rails', (req, res) => res.json(railManager.getStatus()));
+app.post('/api/rails', (req, res) => {
+  const rail = railManager.addRail(req.body);
+  res.json(rail);
+});
+app.delete('/api/rails/:id', (req, res) => {
+  res.json(railManager.removeRail(req.params.id));
+});
+app.patch('/api/rails/:id', (req, res) => {
+  const { active } = req.body;
+  res.json(railManager.toggleRail(req.params.id, active));
 });
 
 // Health
