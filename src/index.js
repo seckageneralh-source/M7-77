@@ -15,7 +15,8 @@ const AWSExchange        = require('./aws-exchange');
 const AutonomousRevenue  = require('./autonomous-revenue');
 const M7AIBrain          = require('./m7-ai-brain');
 const SovereignCapitalEngine = require('./sovereign-capital-engine');
-const SelfHealingEngine      = require('./self-healing');
+const SelfHealingEngine           = require('./self-healing');
+const IntelligenceProductsEngine  = require('./intelligence-products');
 const Pathfinder             = require('./pathfinder');
 const RailManager            = require('./rail-manager');
 const rapidApiRouter     = require('./rapidapi-gateway');
@@ -165,6 +166,7 @@ const pathfinder       = new Pathfinder(sovereign);
 const railManager      = new RailManager(pathfinder, sovereign);
 const ingestion        = new RealEventIngestion();
 const selfHealing      = new SelfHealingEngine(ingestion, brain, revenueEngine, treasury);
+const intelProducts    = new IntelligenceProductsEngine(brain, revenueEngine, ingestion);
 const m7               = new M7MasterController();
 
 // AWS subscribers across all domains
@@ -182,6 +184,7 @@ brain.wire(revenueEngine, ingestion);
 sovereign.start();
 pathfinder.start();
 selfHealing.start();
+intelProducts.start();
 
 // Wire revenue to sovereign capital engine
 revenueEngine.on('revenue', (tx) => {
@@ -535,6 +538,20 @@ app.get('/api/healing', (req, res) => res.json(selfHealing.getStatus()));
 app.post('/api/healing/run', async (req, res) => {
   const results = await selfHealing.runHealthCycle();
   res.json(results);
+});
+
+app.get('/api/intel', (req, res) => res.json(intelProducts.getStatus()));
+app.get('/api/intel/briefing', async (req, res) => {
+  const b = await intelProducts.generateDailyBriefing();
+  res.json(b || { error: 'Generation failed' });
+});
+app.get('/api/intel/threats', async (req, res) => {
+  const t = await intelProducts.generateThreatReport();
+  res.json(t || { error: 'No threats' });
+});
+app.get('/api/intel/domain/:domain', async (req, res) => {
+  const d = await intelProducts.generateDomainAnalysis(req.params.domain);
+  res.json(d || { error: 'Generation failed' });
 });
 
 // Health
