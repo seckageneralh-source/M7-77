@@ -15,6 +15,7 @@ const AWSExchange        = require('./aws-exchange');
 const AutonomousRevenue  = require('./autonomous-revenue');
 const M7AIBrain          = require('./m7-ai-brain');
 const SovereignCapitalEngine = require('./sovereign-capital-engine');
+const SelfHealingEngine      = require('./self-healing');
 const Pathfinder             = require('./pathfinder');
 const RailManager            = require('./rail-manager');
 const rapidApiRouter     = require('./rapidapi-gateway');
@@ -162,6 +163,7 @@ const brain            = new M7AIBrain();
 const sovereign        = new SovereignCapitalEngine(treasury);
 const pathfinder       = new Pathfinder(sovereign);
 const railManager      = new RailManager(pathfinder, sovereign);
+const selfHealing      = new SelfHealingEngine(ingestion, brain, revenueEngine, treasury);
 const ingestion        = new RealEventIngestion();
 const m7               = new M7MasterController();
 
@@ -179,6 +181,7 @@ autonomousRevenue.startGrowthLoop();
 brain.wire(revenueEngine, ingestion);
 sovereign.start();
 pathfinder.start();
+selfHealing.start();
 
 // Wire revenue to sovereign capital engine
 revenueEngine.on('revenue', (tx) => {
@@ -526,6 +529,12 @@ app.delete('/api/rails/:id', (req, res) => {
 app.patch('/api/rails/:id', (req, res) => {
   const { active } = req.body;
   res.json(railManager.toggleRail(req.params.id, active));
+});
+
+app.get('/api/healing', (req, res) => res.json(selfHealing.getStatus()));
+app.post('/api/healing/run', async (req, res) => {
+  const results = await selfHealing.runHealthCycle();
+  res.json(results);
 });
 
 // Health
