@@ -115,6 +115,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;he
 <button class="tab" onclick="sw('revenue')">💰 REVENUE</button>
 <button class="tab" onclick="sw('sources')">📡 SOURCES</button>
 <button class="tab" onclick="sw('threats')">🚨 THREATS</button>
+<button class="tab" onclick="sw('rails')">🛤️ RAIL MANAGER</button>
 <button class="tab" onclick="sw('control')">⚙️ CONTROL</button>
 </div>
 
@@ -262,6 +263,88 @@ Activates when Wave Business API is connected
 <div class="card"><div class="ct">🚨 Live Threat Feed</div><div style="height:500px;overflow-y:auto" id="threat-feed"></div></div>
 </div>
 
+
+<!-- RAIL MANAGER -->
+<div id="panel-rails" class="panel">
+<div class="grid g3" style="margin-bottom:16px">
+<div class="card"><div class="ct">💎 Sovereign Entity</div>
+<div class="mr"><span class="mk">Entity</span><span class="mv ac" id="sce-name">Loading...</span></div>
+<div class="mr"><span class="mk">Jurisdiction</span><span class="mv" id="sce-jur">—</span></div>
+<div class="mr"><span class="mk">Reg Number</span><span class="mv" id="sce-reg">—</span></div>
+<div class="mr"><span class="mk">Status</span><span class="mv green" id="sce-status">—</span></div>
+<div class="mr"><span class="mk">Way2 Balance</span><span class="mv ac" id="sce-way2">$0.00</span></div>
+<div class="mr"><span class="mk">Way3 Balance</span><span class="mv gold" id="sce-way3">$0.00</span></div>
+<div class="mr"><span class="mk">Total Actualized</span><span class="mv green" id="sce-total">$0.00</span></div>
+<div class="mr"><span class="mk">Expense Reserve</span><span class="mv" id="sce-expense">$0.00</span></div>
+</div>
+<div class="card"><div class="ct">🔍 Pathfinder</div>
+<div class="mr"><span class="mk">Status</span><span class="mv green">RUNNING</span></div>
+<div class="mr"><span class="mk">Success Rate</span><span class="mv green" id="pf-rate">100%</span></div>
+<div class="mr"><span class="mk">Total Delivered</span><span class="mv ac" id="pf-delivered">$0.00</span></div>
+<div class="mr"><span class="mk">Queue</span><span class="mv" id="pf-queue">0</span></div>
+<div class="mr"><span class="mk">Available Routes</span><span class="mv" id="pf-routes">—</span></div>
+<div style="margin-top:12px">
+<button class="btn bp" style="width:100%;margin-bottom:8px" onclick="discoverRoutes()">🔍 DISCOVER NEW ROUTES</button>
+<button class="btn bgo" style="width:100%" onclick="generateVoucher()">🎫 GENERATE VOUCHER</button>
+</div>
+</div>
+<div class="card"><div class="ct">💸 Quick Transfer</div>
+<div class="fg"><span class="fl">AMOUNT (USD)</span>
+<input class="fi2" type="number" id="transfer-amount" placeholder="100.00" step="0.01" min="1"></div>
+<div class="fg"><span class="fl">RAIL TYPE</span>
+<select class="fi2" id="transfer-rail" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-family:'Share Tech Mono',monospace">
+<option value="auto">AUTO (M7 decides)</option>
+<option value="mobile_money">Mobile Money (Wave)</option>
+<option value="bank">Bank (Ecobank SWIFT)</option>
+<option value="stablecoin">Stablecoin (Polygon)</option>
+</select></div>
+<button class="btn bp" style="width:100%" onclick="executeTransfer()">▶ EXECUTE TRANSFER</button>
+<div id="transfer-result" style="margin-top:10px;font-size:0.72rem;display:none"></div>
+</div>
+</div>
+
+<div class="grid g2">
+<div class="card"><div class="ct">🛤️ Configured Rails</div>
+<div id="rails-list" style="margin-bottom:12px"><div style="color:var(--muted);font-size:0.75rem">No rails configured</div></div>
+</div>
+
+<div class="card"><div class="ct">➕ Add New Rail</div>
+<div class="fg"><span class="fl">RAIL TYPE</span>
+<select class="fi2" id="new-rail-type" onchange="updateRailForm()" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-family:'Share Tech Mono',monospace">
+<option value="bank">🏦 Bank Account</option>
+<option value="mobile_money">📱 Mobile Money</option>
+<option value="stablecoin">💎 Stablecoin Wallet</option>
+</select></div>
+<div class="fg"><span class="fl">RAIL NAME</span>
+<input class="fi2" id="new-rail-name" placeholder="e.g. Ecobank Primary"></div>
+<div id="rail-form-bank">
+<div class="fg"><span class="fl">ACCOUNT NAME</span><input class="fi2" id="rf-account-name" placeholder="Full name"></div>
+<div class="fg"><span class="fl">ACCOUNT NUMBER</span><input class="fi2" id="rf-account-number" placeholder="Account number"></div>
+<div class="fg"><span class="fl">BANK NAME</span><input class="fi2" id="rf-bank-name" placeholder="Bank name"></div>
+<div class="fg"><span class="fl">SWIFT CODE</span><input class="fi2" id="rf-swift" placeholder="SWIFT/BIC code"></div>
+<div class="fg"><span class="fl">COUNTRY</span><input class="fi2" id="rf-country" placeholder="Country"></div>
+</div>
+<div id="rail-form-mobile" style="display:none">
+<div class="fg"><span class="fl">PHONE NUMBER</span><input class="fi2" id="rf-phone" placeholder="+220XXXXXXX"></div>
+<div class="fg"><span class="fl">NETWORK</span><input class="fi2" id="rf-network" placeholder="e.g. Wave, Africell"></div>
+<div class="fg"><span class="fl">COUNTRY</span><input class="fi2" id="rf-mobile-country" placeholder="Country"></div>
+</div>
+<div id="rail-form-stablecoin" style="display:none">
+<div class="fg"><span class="fl">WALLET ADDRESS</span><input class="fi2" id="rf-wallet" placeholder="0x..."></div>
+<div class="fg"><span class="fl">NETWORK</span><select class="fi2" id="rf-chain" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-family:'Share Tech Mono',monospace"><option value="polygon">Polygon</option><option value="ethereum">Ethereum</option></select></div>
+</div>
+<button class="btn bp" style="width:100%" onclick="addRail()">➕ ADD RAIL</button>
+<div id="rail-msg" style="display:none;margin-top:8px;font-size:0.7rem;color:var(--green)">✓ Rail added</div>
+</div>
+</div>
+
+<div class="card s2"><div class="ct">📋 Transfer History</div>
+<div style="overflow-x:auto"><table class="lt"><thead><tr>
+<th>ID</th><th>TIME</th><th>AMOUNT</th><th>RAIL</th><th>ROUTE</th><th>STATUS</th><th>NOTE</th>
+</tr></thead><tbody id="pathfinder-transfers"></tbody></table></div>
+</div>
+</div>
+
 <!-- CONTROL -->
 <div id="panel-control" class="panel">
 <div class="grid g2">
@@ -282,7 +365,7 @@ Activates when Wave Business API is connected
 </div>
 
 <script>
-const PANELS=['overview','command','insights','wallet','revenue','sources','threats','control'];
+const PANELS=['overview','command','insights','wallet','revenue','sources','threats','rails','control'];
 function sw(p){PANELS.forEach(x=>{document.getElementById('panel-'+x).classList.remove('active');document.querySelectorAll('.tab').forEach((t,i)=>{if(PANELS[i]===x)t.classList.remove('active');});});document.getElementById('panel-'+p).classList.add('active');document.querySelectorAll('.tab').forEach(t=>{if(t.textContent.toLowerCase().includes(p.split('-')[0].toLowerCase().replace('🤖 ','').replace('🧠 ','').replace('💎 ','').replace('💰 ','').replace('📡 ','').replace('🚨 ','').replace('⚙️ ','')))t.classList.add('active');});}
 
 let prevRev=0,prevTime=Date.now(),recentEvents=[],localP={},chatHistory=[],routingStopped=false;
@@ -508,8 +591,131 @@ async function fd(){
   }catch(e){console.error(e);}
 }
 
+
+// Rail Manager
+function updateRailForm() {
+  const type = document.getElementById('new-rail-type').value;
+  document.getElementById('rail-form-bank').style.display      = type==='bank'?'block':'none';
+  document.getElementById('rail-form-mobile').style.display    = type==='mobile_money'?'block':'none';
+  document.getElementById('rail-form-stablecoin').style.display= type==='stablecoin'?'block':'none';
+}
+
+async function addRail() {
+  const type = document.getElementById('new-rail-type').value;
+  const body = {
+    type, name: document.getElementById('new-rail-name').value || type+' rail',
+    accountName:   document.getElementById('rf-account-name')?.value,
+    accountNumber: document.getElementById('rf-account-number')?.value,
+    bankName:      document.getElementById('rf-bank-name')?.value,
+    swiftCode:     document.getElementById('rf-swift')?.value,
+    country:       document.getElementById('rf-country')?.value,
+    phoneNumber:   document.getElementById('rf-phone')?.value,
+    network:       document.getElementById('rf-network')?.value,
+    walletAddress: document.getElementById('rf-wallet')?.value,
+    chainNetwork:  document.getElementById('rf-chain')?.value
+  };
+  try {
+    await fetch('/api/rails',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const m=document.getElementById('rail-msg');m.style.display='block';setTimeout(()=>m.style.display='none',2000);
+    loadRails();
+  } catch(e) { alert('Error: '+e.message); }
+}
+
+async function loadRails() {
+  try {
+    const[r,s,p]=await Promise.all([
+      fetch('/api/rails').then(x=>x.json()),
+      fetch('/api/sovereign').then(x=>x.json()),
+      fetch('/api/pathfinder').then(x=>x.json())
+    ]);
+    // Sovereign
+    set('sce-name',   s.entity?.name||'—');
+    set('sce-jur',    s.entity?.jurisdiction||'—');
+    set('sce-reg',    s.entity?.regNumber||'—');
+    set('sce-status', s.entity?.status||'—');
+    set('sce-way2',   '$'+(s.way2?.balance||0).toFixed(2));
+    set('sce-way3',   '$'+(s.way3?.balance||0).toFixed(2));
+    set('sce-total',  '$'+(s.totalActualized||0).toFixed(2));
+    set('sce-expense','$'+(s.expenseReserve||0).toFixed(2));
+    // Pathfinder
+    set('pf-rate',      p.successRate||'100%');
+    set('pf-delivered', '$'+(p.totalDelivered||0).toFixed(2));
+    set('pf-queue',     p.queueSize||0);
+    set('pf-routes',    (p.availableRoutes||[]).join(', ')||'—');
+    // Rails list
+    const rl=document.getElementById('rails-list');
+    if(rl)rl.innerHTML=r.rails?.length>0?r.rails.map(rail=>`
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+          <span style="color:var(--ac);font-weight:700">${rail.name}</span>
+          <div style="display:flex;gap:6px">
+            <span class="badge ${rail.active?'ok':'err'}">${rail.active?'ACTIVE':'INACTIVE'}</span>
+            <button class="btn bd" style="padding:2px 8px;font-size:0.6rem" onclick="removeRail('${rail.id}')">✕</button>
+          </div>
+        </div>
+        <div style="font-size:0.65rem;color:var(--muted)">
+          Type: ${rail.type} | Sent: $${(rail.totalSent||0).toFixed(2)} | Success: ${rail.successCount||0}
+          ${rail.phoneNumber?'| Phone: '+rail.phoneNumber:''}
+          ${rail.accountNumber?'| Account: '+rail.accountNumber.substr(0,4)+'****':''}
+          ${rail.walletAddress?'| Wallet: '+rail.walletAddress.substr(0,8)+'...':''}
+        </div>
+      </div>`).join(''):'<div style="color:var(--muted);font-size:0.75rem">No rails configured — add one below</div>';
+    // Transfer history
+    const pt=document.getElementById('pathfinder-transfers');
+    if(pt)pt.innerHTML=p.recentTransfers?.length>0?p.recentTransfers.map(t=>`
+      <tr>
+        <td style="font-size:0.6rem;color:var(--muted)">${(t.id||'').substr(0,12)}</td>
+        <td style="color:var(--muted)">${ts(t.timestamp)}</td>
+        <td style="color:var(--gold);font-weight:700">$${(t.amount||0).toFixed(2)}</td>
+        <td><span class="badge">${t.railType||'auto'}</span></td>
+        <td style="font-size:0.65rem">${t.route||'—'}</td>
+        <td><span class="badge ${t.status==='DELIVERED'?'ok':t.status==='VOUCHER_ISSUED'?'warn':'err'}">${t.status||'—'}</span></td>
+        <td style="font-size:0.6rem;color:var(--muted)">${t.voucher?.code||t.error||'—'}</td>
+      </tr>`).join(''):'<tr><td colspan="7" style="color:var(--muted);text-align:center;padding:12px">No transfers yet</td></tr>';
+  } catch(e) {}
+}
+
+async function removeRail(id) {
+  await fetch('/api/rails/'+id,{method:'DELETE'});
+  loadRails();
+}
+
+async function executeTransfer() {
+  const amount = parseFloat(document.getElementById('transfer-amount').value);
+  const rail   = document.getElementById('transfer-rail').value;
+  if (!amount || amount <= 0) return alert('Enter a valid amount');
+  const el = document.getElementById('transfer-result');
+  el.style.display='block';el.style.color='var(--gold)';el.textContent='Executing transfer...';
+  try {
+    const r=await fetch('/api/pathfinder/transfer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount,railType:rail})});
+    const d=await r.json();
+    el.style.color=d.status==='DELIVERED'?'var(--green)':d.status==='VOUCHER_ISSUED'?'var(--gold)':'var(--red)';
+    el.textContent='Status: '+d.status+(d.route?' via '+d.route:'')+(d.voucher?' | Voucher: '+d.voucher.code:'');
+    loadRails();
+  } catch(e) { el.style.color='var(--red)';el.textContent='Error: '+e.message; }
+}
+
+async function generateVoucher() {
+  const amount = prompt('Voucher amount (USD from Way3 balance):');
+  if (!amount) return;
+  const r=await fetch('/api/sovereign/voucher',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:parseFloat(amount)})});
+  const d=await r.json();
+  if(d.code) alert('Voucher generated!\nCode: '+d.code+'\nAmount: $'+d.amount+'\nExpires: 24 hours\n\nShow this code to a Wave agent to redeem.');
+  else alert('Error: '+JSON.stringify(d));
+}
+
+async function discoverRoutes() {
+  await fetch('/api/pathfinder/discover',{method:'POST'});
+  addMsg('sys','Pathfinder scanning for new routes via Claude AI...');
+  setTimeout(loadRails, 5000);
+}
+
+// Load rails when tab opened
+document.querySelector('[onclick="sw('rails')"]')?.addEventListener('click', loadRails);
+
 loadPricing();
 fd();
 setInterval(fd,4000);
+setInterval(loadRails,10000);
 </script>
 </body></html>
