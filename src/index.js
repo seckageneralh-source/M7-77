@@ -163,8 +163,8 @@ const brain            = new M7AIBrain();
 const sovereign        = new SovereignCapitalEngine(treasury);
 const pathfinder       = new Pathfinder(sovereign);
 const railManager      = new RailManager(pathfinder, sovereign);
-const selfHealing      = new SelfHealingEngine(ingestion, brain, revenueEngine, treasury);
 const ingestion        = new RealEventIngestion();
+const selfHealing      = new SelfHealingEngine(ingestion, brain, revenueEngine, treasury);
 const m7               = new M7MasterController();
 
 // AWS subscribers across all domains
