@@ -1,4 +1,5 @@
 'use strict';
+const { getDB } = require('./m7-database');
 const EventEmitter = require('events');
 const crypto = require('crypto');
 
@@ -86,6 +87,8 @@ class RevenueEngine extends EventEmitter {
     if(this.transactions.length>5000)this.transactions.shift();
 
     if(this.treasury)this.treasury.credit(amount,tx);
+    // Persist to DB
+    try { getDB().saveRevenue(tx); } catch(e) {}
     this.emit('revenue',tx);
     return tx;
   }

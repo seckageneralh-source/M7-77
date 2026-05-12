@@ -1,5 +1,6 @@
 'use strict';
 require('dotenv').config();
+const { getDB } = require('./m7-database');
 const EventEmitter = require('events');
 const DOMAIN_PRICING = {
   finance:1.00,government:0.80,healthcare:0.75,health:0.75,ai:0.50,energy:0.40,
@@ -140,7 +141,10 @@ class M7AIBrain extends EventEmitter{
       const insights=await this.intelligence.analyzeEventBatch(events);
       this.claudeMetrics.totalEventsAnalyzed+=events.length;
       if(insights.length>0){
-        insights.forEach(i=>this.aiInsights.push(Object.assign({},i,{aiPowered:true,analyzedAt:Date.now()})));
+        insights.forEach(i=>{
+          this.aiInsights.push(Object.assign({},i,{aiPowered:true,analyzedAt:Date.now()}));
+          try { getDB().saveInsight({...i, aiPowered:true}); } catch(e) {}
+        });
         if(this.aiInsights.length>200)this.aiInsights.shift();
         const high=insights.filter(i=>i.severity>=7);
         if(high.length>0){console.log('Claude: '+high.length+' high-severity signals');high.forEach(i=>console.log('  ['+i.domain+'] '+i.insight));}

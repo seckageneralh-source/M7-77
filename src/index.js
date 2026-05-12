@@ -1,4 +1,6 @@
 const express  = require('express');
+const { getDB } = require('./m7-database');
+const db = getDB();
 const path     = require('path');
 const app      = express();
 
@@ -174,12 +176,42 @@ brain.wire(revenueEngine, ingestion);
 global.m7recentEvents = [];
 global.m7state = { startTime: Date.now(), totalEvents: 0 };
 
+// Restore persisted state from DB on startup
+try {
+  const savedRevenue = db.getTotalRevenue();
+  const savedBalance = db.getTreasuryBalance();
+  if (savedRevenue > 0) {
+    revenueEngine.total = savedRevenue;
+    console.log('Restored revenue from DB: $' + savedRevenue.toFixed(2));
+  }
+  if (savedBalance > 0) {
+    treasury.balance = savedBalance;
+    console.log('Restored treasury balance from DB: $' + savedBalance.toFixed(2));
+  }
+  // Restore SDL pricing rules
+  const rules = db.getAllRules();
+  rules.filter(r => r.key.startsWith('pricing.')).forEach(r => {
+    const domain = r.key.replace('pricing.', '');
+    const { DOMAIN_PRICING } = require('./revenue-engine');
+    if (DOMAIN_PRICING[domain] !== undefined) {
+      DOMAIN_PRICING[domain] = parseFloat(r.value);
+    }
+  });
+  console.log('SDL pricing rules restored from DB');
+} catch(e) {
+  console.log('DB restore skipped:', e.message);
+}
+
 // ── Event pipeline — M7 handles everything ─────────────────────────────────
 ingestion.on('event', (event) => {
   global.m7state.totalEvents++;
 
   // M7 Master Controller handles the event
   m7.handleEvent(event, revenueEngine, awsExchange, brain);
+  // Persist event to DB (sample 1 in 10 to avoid overload)
+  if (global.m7state.totalEvents % 10 === 0) {
+    db.saveEvent(event, 0.5, false, false);
+  }
 
   // Enrich for display
   const base  = DOMAIN_PRICING[event.domain] || 0.10;
@@ -405,6 +437,36 @@ app.post('/api/treasury/sweep', async (req, res) => {
 
 // Wallet status
 app.get('/api/wallet', (req, res) => res.json(treasury.wallet.getStatus()));
+
+
+// Database stats
+app.get('/api/db', (req, res) => res.json(db.getStats()));
+
+// SDL rules
+app.get('/api/sdl', (req, res) => res.json(db.getAllRules()));
+app.post('/api/sdl', (req, res) => {
+  const { key, value } = req.body;
+  if (!key || value === undefined) return res.status(400).json({ error: 'key and value required' });
+  db.setRule(key, value, 'SECKA');
+  res.json({ success: true, key, value });
+});
+
+// Intelligence products
+app.get('/api/products', (req, res) => {
+  const { domain, limit } = req.query;
+  res.json(db.getProducts(domain, parseInt(limit) || 10));
+});
+
+// GitHub backup
+app.post('/api/backup', async (req, res) => {
+  try {
+    const backupPath = '/workspaces/M7-77/data/m7-backup-' + Date.now() + '.db';
+    db.backup(backupPath);
+    res.json({ success: true, path: backupPath });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 
 // Health
 app.get('/health', (req, res) => res.json({

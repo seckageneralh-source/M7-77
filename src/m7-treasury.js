@@ -1,4 +1,5 @@
 'use strict';
+const { getDB } = require('./m7-database');
 const EventEmitter = require('events');
 const crypto = require('crypto');
 const M7Wallet = require('./m7-wallet');
@@ -50,6 +51,7 @@ class M7Treasury extends EventEmitter{
     const entry={seq:this.ledger.length+1,timestamp:Date.now(),type:'CREDIT',amount:parseFloat(amount.toFixed(4)),balance:parseFloat(this.balance.toFixed(4)),source:tx?tx.domain:'system',txId:tx?tx.id:null,prevHash:prev};
     entry.hash=this._hash(entry);
     this.ledger.push(entry);if(this.ledger.length>5000)this.ledger.shift();
+    try { getDB().saveTreasuryEntry(entry); } catch(e) {}
     this.emit('credit',entry);return entry;
   }
   debit(amount,destination,authorizedBy='SECKA'){
