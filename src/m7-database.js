@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 
-const DB_PATH = process.env.DB_PATH || '/app/data/m7.db';
+const DB_PATH = process.env.DB_PATH || require('path').join(__dirname, '../data/m7.db');
 const DATA_DIR = path.dirname(DB_PATH);
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 
