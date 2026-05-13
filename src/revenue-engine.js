@@ -4,10 +4,23 @@ const EventEmitter = require('events');
 const crypto = require('crypto');
 
 const DOMAIN_PRICING = {
-  finance:1.00, government:0.80, healthcare:0.75, health:0.75,
-  ai:0.50, energy:0.40, tech:0.20, social:0.10, defense:2.00,
-  cybersecurity:1.80, legal:1.50, realestate:1.20, supplychain:1.10,
-  science:0.90, climate:0.60, economy:1.30, emerging:0.70
+  defense:      1000.00,
+  cybersecurity: 900.00,
+  legal:         800.00,
+  finance:       700.00,
+  government:    600.00,
+  economy:       600.00,
+  healthcare:    500.00,
+  ai:            400.00,
+  realestate:    400.00,
+  supplychain:   300.00,
+  energy:        300.00,
+  science:       250.00,
+  tech:          200.00,
+  climate:       200.00,
+  emerging:      200.00,
+  social:        200.00,
+  health:        500.00
 };
 
 class M7ApprovalEngine {

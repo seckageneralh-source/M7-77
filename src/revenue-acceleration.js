@@ -26,22 +26,22 @@ class RevenueAccelerationEngine extends EventEmitter {
 
     // New pricing — adjustable via SDL
     this.PRICING = {
-      defense:      50.00,
-      cybersecurity:45.00,
-      legal:        40.00,
-      finance:      35.00,
-      government:   30.00,
-      economy:      30.00,
-      healthcare:   25.00,
-      ai:           20.00,
-      realestate:   20.00,
-      supplychain:  15.00,
-      energy:       15.00,
-      science:      12.00,
-      tech:         10.00,
-      climate:      10.00,
-      emerging:     10.00,
-      social:       10.00
+      defense:      1000.00,
+      cybersecurity: 900.00,
+      legal:         800.00,
+      finance:       700.00,
+      government:    600.00,
+      economy:       600.00,
+      healthcare:    500.00,
+      ai:            400.00,
+      realestate:    400.00,
+      supplychain:   300.00,
+      energy:        300.00,
+      science:       250.00,
+      tech:          200.00,
+      climate:       200.00,
+      emerging:      200.00,
+      social:        200.00
     };
 
     this._loadPricingFromDB();

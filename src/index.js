@@ -11,8 +11,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 const M7Treasury         = require('./m7-treasury');
 const { RevenueEngine, DOMAIN_PRICING } = require('./revenue-engine');
 const RealEventIngestion = require('./real-event-ingestion');
-const AWSExchange        = require('./aws-exchange');
-const AutonomousRevenue  = require('./autonomous-revenue');
 const M7AIBrain          = require('./m7-ai-brain');
 const SovereignCapitalEngine = require('./sovereign-capital-engine');
 const SelfHealingEngine           = require('./self-healing');
@@ -165,8 +163,6 @@ console.log('');
 
 const treasury         = new M7Treasury();
 const revenueEngine    = new RevenueEngine(treasury);
-const awsExchange      = new AWSExchange(treasury);
-const autonomousRevenue= new AutonomousRevenue(treasury, revenueEngine);
 const brain            = new M7AIBrain();
 const sovereign        = new SovereignCapitalEngine(treasury);
 const pathfinder       = new Pathfinder(sovereign);
@@ -188,16 +184,7 @@ const m7Autonomy       = new M7AutonomyEngine({
 const m7               = new M7MasterController();
 
 // AWS subscribers across all domains
-awsExchange.addSubscriber({ name:'HEDGE_FUND_ALPHA',     domains:['finance','economy','government'],          tier:'enterprise' });
-awsExchange.addSubscriber({ name:'GOV_INTEL_CLIENT',     domains:['government','defense','legal'],            tier:'enterprise' });
-awsExchange.addSubscriber({ name:'CYBER_SECURITY_FIRM',  domains:['cybersecurity','defense'],                 tier:'enterprise' });
-awsExchange.addSubscriber({ name:'HEALTH_ANALYTICS_CO',  domains:['healthcare','science'],                    tier:'standard'   });
-awsExchange.addSubscriber({ name:'SUPPLY_CHAIN_INTEL',   domains:['supplychain','economy','emerging'],        tier:'standard'   });
-awsExchange.addSubscriber({ name:'CLIMATE_FUND',         domains:['climate','energy','science'],              tier:'standard'   });
-awsExchange.addSubscriber({ name:'RE_INVESTMENT_GROUP',  domains:['realestate','economy','finance'],          tier:'standard'   });
-awsExchange.addSubscriber({ name:'EMERGING_MARKETS_FUND',domains:['emerging','finance','government'],         tier:'enterprise' });
 
-autonomousRevenue.startGrowthLoop();
 brain.wire(revenueEngine, ingestion);
 sovereign.start();
 pathfinder.start();
@@ -390,23 +377,11 @@ app.post('/api/treasury/transfer', (req, res) => {
 });
 
 // AWS Exchange
-app.get('/api/exchange', (req, res) => res.json(awsExchange.getStatus()));
-
-// Autonomous
-app.get('/api/autonomous', (req, res) => res.json(autonomousRevenue.getStatus()));
-
-// Issue API key
-app.post('/api/subscribers', (req, res) => {
-  const { name, plan, domain } = req.body;
-  if (!name || !plan) return res.status(400).json({ error: 'name and plan required' });
   const key = autonomousRevenue.issueApiKey(name, plan, domain || 'all');
   res.json({ success: true, apiKey: key, subscriber: name, plan });
 });
 
 // Meter real call
-app.post('/api/call', (req, res) => {
-  const { apiKey, domain } = req.body;
-  if (!apiKey) return res.status(400).json({ error: 'apiKey required' });
   const result = autonomousRevenue.meterRealCall(apiKey, domain || 'tech');
   if (!result.authorized) return res.status(401).json(result);
   const events = (global.m7recentEvents || [])
@@ -701,6 +676,41 @@ app.get('/api/intel/threats', async (req, res) => {
 app.get('/api/intel/domain/:domain', async (req, res) => {
   const d = await intelProducts.generateDomainAnalysis(req.params.domain);
   res.json(d || { error: 'Generation failed' });
+});
+
+
+// SECKA account management — changeable anytime
+app.get('/api/secka/accounts', (req, res) => {
+  res.json({
+    name:    'Bun Omar Secka',
+    wave:    process.env.SECKA_WAVE      || '+2206536587',
+    ecobank: process.env.SECKA_BANK      || '6200059991',
+    swift:   process.env.SECKA_SWIFT     || 'ECOCGMGM',
+    bank:    process.env.SECKA_BANK_NAME || 'Ecobank Gambia',
+    email:   process.env.M7_EMAIL        || 'seckageneralh@gmail.com'
+  });
+});
+app.post('/api/secka/accounts', (req, res) => {
+  const result = sovereign.updateAccounts(req.body);
+  // Update pathfinder destination too
+  if (pathfinder && req.body.wave)    pathfinder.destination.wave    = req.body.wave;
+  if (pathfinder && req.body.ecobank) pathfinder.destination.ecobank = req.body.ecobank;
+  if (pathfinder && req.body.swift)   pathfinder.destination.swift   = req.body.swift;
+  res.json(result);
+});
+
+// Store API key for a service
+app.post('/api/sovereign/apikey', (req, res) => {
+  const { service, key } = req.body;
+  if (!service || !key) return res.status(400).json({ error: 'service and key required' });
+  sovereign.storeApiKey(service, key);
+  res.json({ success: true, service, message: 'Key stored — route activated' });
+});
+
+// Bootstrap sovereign registrations
+app.post('/api/sovereign/bootstrap', async (req, res) => {
+  const result = await sovereign.bootstrap();
+  res.json(result);
 });
 
 // Health
