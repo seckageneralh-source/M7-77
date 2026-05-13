@@ -22,6 +22,8 @@ const M7TreasuryHold              = require('./m7-treasury-hold');
 const GrowthEngine                = require('./growth-engine');
 const SoftwareDefinedLogic        = require('./sdl');
 const SelfExpandingCode           = require('./self-expanding-code');
+const M7Identity                  = require('./m7-identity');
+const M7AutonomyEngine            = require('./m7-autonomy');
 const Pathfinder             = require('./pathfinder');
 const RailManager            = require('./rail-manager');
 const rapidApiRouter     = require('./rapidapi-gateway');
@@ -177,6 +179,12 @@ const treasuryHold     = new M7TreasuryHold(sovereign);
 const sdl              = new SoftwareDefinedLogic();
 const growthEngine     = new GrowthEngine(ingestion, revenueEngine, brain, acceleration);
 const selfExpand       = new SelfExpandingCode();
+const m7Identity       = new M7Identity();
+const m7Autonomy       = new M7AutonomyEngine({
+  ingestion, revenueEngine, brain, selfHealing,
+  acceleration, treasuryHold, sovereign, pathfinder,
+  railManager, intelProducts, growthEngine, sdl, selfExpand
+});
 const m7               = new M7MasterController();
 
 // AWS subscribers across all domains
@@ -198,6 +206,7 @@ intelProducts.start();
 acceleration.start();
 growthEngine.start();
 selfExpand.start();
+m7Autonomy.start();
 
 // Wire sovereign to treasury hold
 sovereign.on('funds_received', (data) => {
@@ -573,6 +582,51 @@ app.get('/api/intel/domain/:domain', async (req, res) => {
 });
 
 
+
+
+// M7 Identity
+app.get('/api/identity', (req, res) => res.json(m7Identity.getStatus()));
+app.post('/api/identity/sign', (req, res) => {
+  const sig = m7Identity.sign(req.body);
+  res.json(sig || { error: 'Signing failed' });
+});
+app.post('/api/identity/verify', (req, res) => {
+  const { data, signature, signer } = req.body;
+  res.json(m7Identity.verify(data, signature, signer || m7Identity.address));
+});
+
+// M7 Autonomy
+app.get('/api/autonomy', (req, res) => res.json(m7Autonomy.getStatus()));
+app.post('/api/autonomy/assess', async (req, res) => {
+  await m7Autonomy._selfAssess();
+  res.json(m7Autonomy.getStatus());
+});
+
+// Full system status — all 15 layers
+app.get('/api/m7/full', (req, res) => {
+  res.json({
+    version:    '4.0',
+    owner:      'SECKA — Bun Omar Secka',
+    sovereign:  true,
+    layers: {
+      L1_ingestion:    { sources: ingestion.getStats().sources, events: ingestion.eventCount },
+      L2_intelligence: { calls: brain.getStatus().claudeMetrics?.totalCalls, insights: brain.getStatus().aiInsights?.length },
+      L3_revenue:      { total: revenueEngine.getReport().total, transactions: revenueEngine.transactions.length },
+      L4_actualization:{ totalActualized: sovereign.totalActualized, rate: '99%' },
+      L5_sovereign:    sovereign.getStatus(),
+      L6_pathfinder:   pathfinder.getStatus(),
+      L7_rails:        railManager.getStatus(),
+      L8_healing:      selfHealing.getStatus(),
+      L9_intel:        intelProducts.getStatus(),
+      L10_growth:      growthEngine.getStatus(),
+      L11_expand:      selfExpand.getStatus(),
+      L12_sdl:         { rules: sdl.getStatus().totalRules },
+      L13_database:    getDB().getStats(),
+      L14_identity:    m7Identity.getStatus(),
+      L15_autonomy:    m7Autonomy.getStatus()
+    }
+  });
+});
 
 // Growth Engine
 app.get('/api/growth', (req, res) => res.json(growthEngine.getStatus()));
