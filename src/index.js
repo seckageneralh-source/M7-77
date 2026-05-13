@@ -19,6 +19,9 @@ const SelfHealingEngine           = require('./self-healing');
 const IntelligenceProductsEngine  = require('./intelligence-products');
 const RevenueAccelerationEngine   = require('./revenue-acceleration');
 const M7TreasuryHold              = require('./m7-treasury-hold');
+const GrowthEngine                = require('./growth-engine');
+const SoftwareDefinedLogic        = require('./sdl');
+const SelfExpandingCode           = require('./self-expanding-code');
 const Pathfinder             = require('./pathfinder');
 const RailManager            = require('./rail-manager');
 const rapidApiRouter     = require('./rapidapi-gateway');
@@ -171,6 +174,9 @@ const selfHealing      = new SelfHealingEngine(ingestion, brain, revenueEngine, 
 const intelProducts    = new IntelligenceProductsEngine(brain, revenueEngine, ingestion);
 const acceleration     = new RevenueAccelerationEngine(ingestion, revenueEngine, brain);
 const treasuryHold     = new M7TreasuryHold(sovereign);
+const sdl              = new SoftwareDefinedLogic();
+const growthEngine     = new GrowthEngine(ingestion, revenueEngine, brain, acceleration);
+const selfExpand       = new SelfExpandingCode();
 const m7               = new M7MasterController();
 
 // AWS subscribers across all domains
@@ -190,6 +196,8 @@ pathfinder.start();
 selfHealing.start();
 intelProducts.start();
 acceleration.start();
+growthEngine.start();
+selfExpand.start();
 
 // Wire sovereign to treasury hold
 sovereign.on('funds_received', (data) => {
@@ -564,6 +572,39 @@ app.get('/api/intel/domain/:domain', async (req, res) => {
   res.json(d || { error: 'Generation failed' });
 });
 
+
+
+// Growth Engine
+app.get('/api/growth', (req, res) => res.json(growthEngine.getStatus()));
+app.post('/api/growth/cycle', async (req, res) => {
+  const result = await growthEngine.runGrowthCycle();
+  res.json(result || { error: 'Cycle failed' });
+});
+
+// SDL
+app.get('/api/sdl', (req, res) => res.json(sdl.getStatus()));
+app.post('/api/sdl', (req, res) => {
+  const { key, value } = req.body;
+  if (!key || value === undefined) return res.status(400).json({ error: 'key and value required' });
+  sdl.set(key, value, 'SECKA');
+  res.json({ success: true, key, value });
+});
+app.post('/api/sdl/rewrite', async (req, res) => {
+  const result = await sdl.rewrite(req.body.context || 'optimize performance', process.env.ANTHROPIC_API_KEY);
+  res.json(result || { error: 'Rewrite failed' });
+});
+
+// Self-Expanding Code
+app.get('/api/expand', (req, res) => res.json(selfExpand.getStatus()));
+app.post('/api/expand/generate', async (req, res) => {
+  const { name, description, context } = req.body;
+  if (!name || !description) return res.status(400).json({ error: 'name and description required' });
+  const result = await selfExpand.generateModule(name, description, context || '');
+  res.json(result || { error: 'Generation failed' });
+});
+app.post('/api/expand/push', async (req, res) => {
+  res.json(await selfExpand.pushToGitHub(req.body.message || 'M7 auto-generated'));
+});
 
 // Revenue Acceleration
 app.get('/api/acceleration', (req, res) => res.json(acceleration.getStatus()));
