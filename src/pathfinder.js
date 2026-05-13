@@ -51,13 +51,19 @@ class Pathfinder extends EventEmitter {
 
   _scanAvailableRoutes() {
     // Check which API keys are available in environment
-    if (process.env.WAVE_API_KEY)  this._activateRoute('mobile_money', 'Wave Direct');
-    if (process.env.AT_API_KEY)    this._activateRoute('mobile_money', 'AfricasTalking');
-    if (process.env.FLW_SECRET_KEY){
+    // Strict key checks — only activate if key exists AND is not empty
+    const waveKey = process.env.WAVE_API_KEY;
+    const atKey   = process.env.AT_API_KEY;
+    const flwKey  = process.env.FLW_SECRET_KEY;
+    const wiseKey = process.env.WISE_API_KEY;
+
+    if (waveKey && waveKey.length > 10)  this._activateRoute('mobile_money', 'Wave Direct');
+    if (atKey   && atKey.length > 10)    this._activateRoute('mobile_money', 'AfricasTalking');
+    if (flwKey  && flwKey.length > 10) {
       this._activateRoute('mobile_money', 'Flutterwave');
       this._activateRoute('bank', 'Flutterwave Bank');
     }
-    if (process.env.WISE_API_KEY)  this._activateRoute('bank', 'Wise Transfer');
+    if (wiseKey && wiseKey.length > 10)  this._activateRoute('bank', 'Wise Transfer');
 
     const available = this._getAvailableRoutes();
     console.log('Pathfinder routes available: ' + available.map(r=>r.name).join(', '));

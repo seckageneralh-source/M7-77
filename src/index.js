@@ -17,6 +17,8 @@ const M7AIBrain          = require('./m7-ai-brain');
 const SovereignCapitalEngine = require('./sovereign-capital-engine');
 const SelfHealingEngine           = require('./self-healing');
 const IntelligenceProductsEngine  = require('./intelligence-products');
+const RevenueAccelerationEngine   = require('./revenue-acceleration');
+const M7TreasuryHold              = require('./m7-treasury-hold');
 const Pathfinder             = require('./pathfinder');
 const RailManager            = require('./rail-manager');
 const rapidApiRouter     = require('./rapidapi-gateway');
@@ -167,6 +169,8 @@ const railManager      = new RailManager(pathfinder, sovereign);
 const ingestion        = new RealEventIngestion();
 const selfHealing      = new SelfHealingEngine(ingestion, brain, revenueEngine, treasury);
 const intelProducts    = new IntelligenceProductsEngine(brain, revenueEngine, ingestion);
+const acceleration     = new RevenueAccelerationEngine(ingestion, revenueEngine, brain);
+const treasuryHold     = new M7TreasuryHold(sovereign);
 const m7               = new M7MasterController();
 
 // AWS subscribers across all domains
@@ -185,6 +189,12 @@ sovereign.start();
 pathfinder.start();
 selfHealing.start();
 intelProducts.start();
+acceleration.start();
+
+// Wire sovereign to treasury hold
+sovereign.on('funds_received', (data) => {
+  treasuryHold.receiveFunds(data.way2 || 0);
+});
 
 // Wire revenue to sovereign capital engine
 revenueEngine.on('revenue', (tx) => {
@@ -540,6 +550,50 @@ app.post('/api/healing/run', async (req, res) => {
   res.json(results);
 });
 
+app.get('/api/intel', (req, res) => res.json(intelProducts.getStatus()));
+app.get('/api/intel/briefing', async (req, res) => {
+  const b = await intelProducts.generateDailyBriefing();
+  res.json(b || { error: 'Generation failed' });
+});
+app.get('/api/intel/threats', async (req, res) => {
+  const t = await intelProducts.generateThreatReport();
+  res.json(t || { error: 'No threats' });
+});
+app.get('/api/intel/domain/:domain', async (req, res) => {
+  const d = await intelProducts.generateDomainAnalysis(req.params.domain);
+  res.json(d || { error: 'Generation failed' });
+});
+
+
+// Revenue Acceleration
+app.get('/api/acceleration', (req, res) => res.json(acceleration.getStatus()));
+app.post('/api/acceleration/price', (req, res) => {
+  const { domain, price } = req.body;
+  if (!domain || !price) return res.status(400).json({ error: 'domain and price required' });
+  res.json(acceleration.updatePrice(domain, parseFloat(price)));
+});
+
+// Treasury Hold
+app.get('/api/hold', (req, res) => res.json(treasuryHold.getStatus()));
+app.post('/api/hold/release', (req, res) => {
+  const { amount, destination } = req.body;
+  if (!amount) return res.status(400).json({ error: 'amount required' });
+  res.json(treasuryHold.release(parseFloat(amount), destination || 'SECKA'));
+});
+app.post('/api/hold/lock', (req, res) => {
+  res.json(treasuryHold.lock(req.body.reason || 'SECKA command'));
+});
+app.post('/api/hold/unlock', (req, res) => {
+  res.json(treasuryHold.unlock('SECKA'));
+});
+app.post('/api/hold/condition', (req, res) => {
+  res.json(treasuryHold.addCondition(req.body));
+});
+app.delete('/api/hold/condition/:id', (req, res) => {
+  res.json(treasuryHold.removeCondition(req.params.id));
+});
+
+// Intel products
 app.get('/api/intel', (req, res) => res.json(intelProducts.getStatus()));
 app.get('/api/intel/briefing', async (req, res) => {
   const b = await intelProducts.generateDailyBriefing();
