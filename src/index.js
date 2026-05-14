@@ -373,20 +373,6 @@ app.post('/api/treasury/route', (req, res) => {
 app.post('/api/treasury/transfer', (req, res) => {
   const { amount, destination, reference } = req.body;
   if (!amount || !destination) return res.status(400).json({ error: 'amount and destination required' });
-  res.json(treasury.debit(parseFloat(amount), destination, reference || 'SECKA'));
-});
-
-// AWS Exchange
-  const key = autonomousRevenue.issueApiKey(name, plan, domain || 'all');
-  res.json({ success: true, apiKey: key, subscriber: name, plan });
-});
-
-// Meter real call
-  const result = autonomousRevenue.meterRealCall(apiKey, domain || 'tech');
-  if (!result.authorized) return res.status(401).json(result);
-  const events = (global.m7recentEvents || [])
-    .filter(e => domain === 'all' || e.domain === domain).slice(-10);
-  res.json({ ...result, events });
 });
 
 // Transactions
