@@ -1,5 +1,6 @@
 const express  = require('express');
 const { getDB } = require('./m7-database');
+const ActualizationEngine = require('./actualization-engine');
 const db = getDB();
 const path     = require('path');
 const app      = express();
@@ -164,7 +165,8 @@ console.log('');
 const treasury         = new M7Treasury();
 const revenueEngine    = new RevenueEngine(treasury);
 const brain            = new M7AIBrain();
-const sovereign        = new SovereignCapitalEngine(treasury);
+const sovereign        = new SovereignCapitalEngine();
+const actualization    = new ActualizationEngine(revenueEngine);
 const pathfinder       = new Pathfinder(sovereign);
 const railManager      = new RailManager(pathfinder, sovereign);
 const ingestion        = new RealEventIngestion();
@@ -188,6 +190,7 @@ const m7               = new M7MasterController();
 brain.wire(revenueEngine, ingestion);
 sovereign.start();
 pathfinder.start();
+actualization.start();
 selfHealing.start();
 intelProducts.start();
 acceleration.start();
@@ -198,6 +201,25 @@ m7Autonomy.start();
 // Wire sovereign to treasury hold
 sovereign.on('funds_received', (data) => {
   treasuryHold.receiveFunds(data.way2 || 0);
+});
+
+// Wire revenue to actualization engine
+revenueEngine.on('revenue', (tx) => {
+  actualization.actualize(tx.amount);
+});
+
+// Wire actualization to sovereign capital engine
+actualization.on('transfer_ready', async (data) => {
+  const result = await sovereign.sendToMetaMask(data.amount);
+  console.log('[ACTUALIZE->SCE] Transfer result:', result.status || result.error);
+});
+
+// Wire SCE to notify when gas needed
+sovereign.on('need_gas', (data) => {
+  console.log('');
+  console.log('ACTION REQUIRED:');
+  console.log(data.message);
+  console.log('');
 });
 
 // Wire revenue to sovereign capital engine
@@ -697,6 +719,36 @@ app.post('/api/sovereign/apikey', (req, res) => {
 app.post('/api/sovereign/bootstrap', async (req, res) => {
   const result = await sovereign.bootstrap();
   res.json(result);
+});
+
+
+// Actualization Engine
+app.get('/api/actualization', (req, res) => res.json(actualization.getStatus()));
+app.post('/api/actualization/destination', (req, res) => {
+  const { address } = req.body;
+  if (!address) return res.status(400).json({ error: 'address required' });
+  actualization.setDestination(address);
+  sovereign.setDestination(address);
+  res.json({ success: true, destination: address });
+});
+app.post('/api/actualization/threshold', (req, res) => {
+  const { threshold } = req.body;
+  if (!threshold) return res.status(400).json({ error: 'threshold required' });
+  actualization.threshold = parseFloat(threshold);
+  res.json({ success: true, threshold: actualization.threshold });
+});
+
+// Sovereign Capital Engine
+app.get('/api/sovereign', (req, res) => res.json(sovereign.getStatus()));
+app.post('/api/sovereign/send', async (req, res) => {
+  const { amount } = req.body;
+  if (!amount) return res.status(400).json({ error: 'amount required' });
+  const result = await sovereign.sendToMetaMask(parseFloat(amount));
+  res.json(result);
+});
+app.get('/api/sovereign/balances', async (req, res) => {
+  const balances = await sovereign.checkBalances();
+  res.json(balances);
 });
 
 // Health
