@@ -57,3 +57,4 @@ class DashboardAPI {
 }
 
 module.exports = DashboardAPI;
+// TEMP DEBUG - check globals

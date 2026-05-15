@@ -110,6 +110,9 @@ class M7MasterController {
       decisions.push({ type: 'TREASURY_ACTIVE', detail: `Treasury balance: $${treas.balance.toFixed(2)}`, severity: 'INFO' });
     }
 
+global.m7ingestion = ingestion;
+global.m7RecentEvents = [];
+ingestion.on("event", (e) => { global.m7RecentEvents.push(e); if(global.m7RecentEvents.length > 500) global.m7RecentEvents = global.m7RecentEvents.slice(-500); });
     decisions.forEach(d => this._log(d.type, d.detail, d.severity));
   }
 
@@ -824,3 +827,15 @@ app.post('/api/pricing', (req, res) => {
   });
   res.json({ success: true, pricing: DOMAIN_PRICING });
 });
+
+// Wire ingestion to globals
+if (typeof ingestion !== 'undefined') {
+  global.m7ingestion = ingestion;
+  global.m7RecentEvents = [];
+  ingestion.on('event', (event) => {
+    global.m7RecentEvents.push(event);
+    if (global.m7RecentEvents.length > 500) {
+      global.m7RecentEvents = global.m7RecentEvents.slice(-500);
+    }
+  });
+}
