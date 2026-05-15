@@ -1,721 +1,718 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>M7-77 SOVEREIGN COMMAND v4.0</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>M7-77 SOVEREIGN</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
-:root{--bg:#040810;--bg2:#070d1a;--bg3:#0a1220;--border:#0f2040;--border2:#1a3060;--ac:#00cfff;--gold:#ffd700;--red:#ff3344;--green:#00ff88;--purple:#aa44ff;--blue:#00aaff;--text:#c8d8e8;--muted:#4a6080;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;min-height:100vh;}
-header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.logo{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;color:var(--ac);letter-spacing:3px;text-shadow:0 0 20px rgba(0,207,255,0.5);}
-.pulse{width:8px;height:8px;background:var(--ac);border-radius:50%;animation:pulse 1.5s infinite;display:inline-block;margin-right:6px;box-shadow:0 0 8px var(--ac);}
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700;900&display=swap');
+:root{
+  --bg:#040810;--bg2:#070d1a;--bg3:#0a1220;
+  --border:#0f2040;--border2:#1a3060;
+  --ac:#00cfff;--gold:#ffd700;--red:#ff3344;
+  --green:#00ff88;--purple:#aa44ff;--blue:#00aaff;
+  --text:#c8d8e8;--muted:#4a6080;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;min-height:100vh;max-width:100vw;overflow-x:hidden;}
+
+/* HEADER */
+.header{background:var(--bg2);border-bottom:2px solid var(--ac);padding:12px 16px;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:'Orbitron',sans-serif;font-size:0.85rem;font-weight:900;color:var(--ac);letter-spacing:2px;}
+.live{display:flex;align-items:center;gap:6px;font-size:0.65rem;color:var(--green);}
+.dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 1.5s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-.nav{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;padding:0 24px;overflow-x:auto;}
-.tab{padding:12px 16px;font-size:0.68rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;letter-spacing:1px;transition:all 0.2s;white-space:nowrap;}
-.tab:hover{color:var(--text);}.tab.active{color:var(--ac);border-bottom-color:var(--ac);}
-.panel{display:none;padding:20px;}.panel.active{display:block;}
-.grid{display:grid;gap:16px;}.g4{grid-template-columns:repeat(4,1fr);}.g3{grid-template-columns:repeat(3,1fr);}.g2{grid-template-columns:repeat(2,1fr);}
-.s2{grid-column:span 2;}.s3{grid-column:span 3;}.s4{grid-column:span 4;}
-@media(max-width:900px){.g4,.g3,.g2{grid-template-columns:1fr;}.s2,.s3,.s4{grid-column:span 1;}}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:20px;position:relative;}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:0.5;}
-.ct{font-size:0.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
-.bv{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;color:var(--ac);text-shadow:0 0 20px rgba(0,207,255,0.3);}
-.bv.gold{color:var(--gold);}.bv.green{color:var(--green);}.bv.red{color:var(--red);}
-.bl{font-size:0.7rem;color:var(--muted);margin-bottom:4px;}.bs{font-size:0.7rem;color:var(--muted);margin-top:4px;}
-.mr{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.78rem;}
-.mr:last-child{border-bottom:none;}.mk{color:var(--muted);}.mv{font-weight:600;}
-.mv.ac{color:var(--ac);}.mv.gold{color:var(--gold);}.mv.green{color:var(--green);}.mv.red{color:var(--red);}
-.feed{height:260px;overflow-y:auto;font-size:0.7rem;}
-.feed::-webkit-scrollbar{width:3px;}.feed::-webkit-scrollbar-thumb{background:var(--border2);}
-.fi{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);animation:fadeIn 0.3s ease;}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-.dp{padding:2px 6px;border-radius:2px;font-size:0.58rem;font-weight:700;letter-spacing:1px;margin-right:5px;}
-.finance{background:rgba(0,207,255,0.1);color:var(--ac);border:1px solid rgba(0,207,255,0.3);}
-.tech{background:rgba(0,170,255,0.1);color:var(--blue);border:1px solid rgba(0,170,255,0.3);}
-.ai{background:rgba(170,68,255,0.1);color:var(--purple);border:1px solid rgba(170,68,255,0.3);}
-.social{background:rgba(255,215,0,0.1);color:var(--gold);border:1px solid rgba(255,215,0,0.3);}
-.government{background:rgba(255,51,68,0.1);color:var(--red);border:1px solid rgba(255,51,68,0.3);}
-.energy{background:rgba(0,255,200,0.1);color:#00ffc8;border:1px solid rgba(0,255,200,0.3);}
-.healthcare,.health{background:rgba(255,150,0,0.1);color:#ff9600;border:1px solid rgba(255,150,0,0.3);}
-.defense{background:rgba(255,51,68,0.15);color:#ff6677;border:1px solid rgba(255,51,68,0.4);}
-.cybersecurity{background:rgba(170,68,255,0.15);color:#cc77ff;border:1px solid rgba(170,68,255,0.4);}
-.legal{background:rgba(255,215,0,0.15);color:#ffdd44;border:1px solid rgba(255,215,0,0.4);}
-.realestate{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.3);}
-.supplychain{background:rgba(0,207,255,0.08);color:#88ddff;border:1px solid rgba(0,207,255,0.2);}
-.science{background:rgba(170,68,255,0.08);color:#bb99ff;border:1px solid rgba(170,68,255,0.2);}
-.climate{background:rgba(0,255,200,0.08);color:#66ffcc;border:1px solid rgba(0,255,200,0.2);}
-.economy{background:rgba(255,215,0,0.08);color:#ffcc44;border:1px solid rgba(255,215,0,0.2);}
-.emerging{background:rgba(0,255,136,0.08);color:#44ffaa;border:1px solid rgba(0,255,136,0.2);}
-.lt{width:100%;border-collapse:collapse;font-size:0.67rem;}
-.lt th{padding:8px;text-align:left;color:var(--muted);border-bottom:1px solid var(--border2);font-weight:400;letter-spacing:1px;}
-.lt td{padding:8px;border-bottom:1px solid var(--border);}
-.badge{padding:2px 8px;border-radius:2px;font-size:0.6rem;font-weight:700;background:rgba(0,207,255,0.15);color:var(--ac);}
+
+/* NAV */
+.nav{display:flex;overflow-x:auto;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 8px;gap:4px;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{padding:10px 12px;font-size:0.62rem;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;letter-spacing:1px;white-space:nowrap;font-family:'Share Tech Mono',monospace;}
+.tab.active{color:var(--ac);border-bottom-color:var(--ac);}
+
+/* PANELS */
+.panel{display:none;padding:12px;padding-bottom:80px;}
+.panel.active{display:block;}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:12px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:0.4;}
+.ct{font-size:0.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.bv{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:700;color:var(--ac);}
+.bv.gold{color:var(--gold);}
+.bv.green{color:var(--green);}
+.bv.red{color:var(--red);}
+.bsub{font-size:0.65rem;color:var(--muted);margin-top:4px;}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+/* ROW */
+.row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.72rem;}
+.row:last-child{border-bottom:none;}
+.rk{color:var(--muted);}
+.rv{font-weight:600;color:var(--ac);}
+.rv.gold{color:var(--gold);}
+.rv.green{color:var(--green);}
+.rv.red{color:var(--red);}
+
+/* BADGE */
+.badge{padding:2px 8px;border-radius:3px;font-size:0.58rem;font-weight:700;}
 .badge.ok{background:rgba(0,255,136,0.15);color:var(--green);}
 .badge.warn{background:rgba(255,215,0,0.15);color:var(--gold);}
 .badge.err{background:rgba(255,51,68,0.2);color:var(--red);}
-.btn{padding:10px 18px;border:none;border-radius:3px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:1px;transition:all 0.2s;}
-.btn:hover{filter:brightness(1.2);transform:translateY(-1px);}
-.bp{background:var(--ac);color:var(--bg);}.bd{background:var(--red);color:#fff;}
-.bg2b{background:var(--green);color:var(--bg);}.bgo{background:var(--gold);color:var(--bg);}
-.bs2{background:var(--border2);color:var(--text);}
+.badge.info{background:rgba(0,207,255,0.15);color:var(--ac);}
+
+/* FEED */
+.feed{height:220px;overflow-y:auto;font-size:0.68rem;}
+.feed::-webkit-scrollbar{width:2px;}
+.feed::-webkit-scrollbar-thumb{background:var(--border2);}
+.fi{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);animation:fi 0.3s ease;}
+@keyframes fi{from{opacity:0;}to{opacity:1;}}
+
+/* DOMAIN BADGES */
+.dp{padding:2px 5px;border-radius:2px;font-size:0.55rem;font-weight:700;margin-right:4px;}
+.finance{background:rgba(0,207,255,0.1);color:var(--ac);border:1px solid rgba(0,207,255,0.3);}
+.tech{background:rgba(0,170,255,0.1);color:var(--blue);border:1px solid rgba(0,170,255,0.3);}
+.ai{background:rgba(170,68,255,0.1);color:var(--purple);border:1px solid rgba(170,68,255,0.3);}
+.defense{background:rgba(255,51,68,0.15);color:#ff6677;border:1px solid rgba(255,51,68,0.4);}
+.cybersecurity{background:rgba(170,68,255,0.15);color:#cc77ff;border:1px solid rgba(170,68,255,0.4);}
+.government{background:rgba(255,51,68,0.1);color:var(--red);border:1px solid rgba(255,51,68,0.3);}
+.economy{background:rgba(255,215,0,0.08);color:#ffcc44;border:1px solid rgba(255,215,0,0.2);}
+.healthcare{background:rgba(255,150,0,0.1);color:#ff9600;border:1px solid rgba(255,150,0,0.3);}
+.legal{background:rgba(255,215,0,0.15);color:#ffdd44;border:1px solid rgba(255,215,0,0.4);}
+.social{background:rgba(255,215,0,0.1);color:var(--gold);border:1px solid rgba(255,215,0,0.3);}
+.energy{background:rgba(0,255,200,0.1);color:#00ffc8;border:1px solid rgba(0,255,200,0.3);}
+.science{background:rgba(170,68,255,0.08);color:#bb99ff;border:1px solid rgba(170,68,255,0.2);}
+.climate{background:rgba(0,255,200,0.08);color:#66ffcc;border:1px solid rgba(0,255,200,0.2);}
+.realestate{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.3);}
+.supplychain{background:rgba(0,207,255,0.08);color:#88ddff;border:1px solid rgba(0,207,255,0.2);}
+.emerging{background:rgba(0,255,136,0.08);color:#44ffaa;border:1px solid rgba(0,255,136,0.2);}
+
+/* INSIGHT */
+.insight{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--ac);border-radius:4px;padding:10px;margin-bottom:8px;font-size:0.7rem;animation:fi 0.3s ease;}
+.insight.high{border-left-color:var(--red);}
+.insight.medium{border-left-color:var(--gold);}
+.insight-domain{font-size:0.58rem;color:var(--muted);margin-bottom:4px;}
+.insight-text{line-height:1.5;}
+.insight-action{font-size:0.62rem;color:var(--ac);margin-top:5px;}
+
 /* CHAT */
-.chat-wrap{display:flex;flex-direction:column;height:560px;}
-.chat-msgs{flex:1;overflow-y:auto;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;margin-bottom:12px;}
-.chat-msgs::-webkit-scrollbar{width:3px;}.chat-msgs::-webkit-scrollbar-thumb{background:var(--border2);}
-.msg{margin-bottom:14px;animation:fadeIn 0.3s ease;}
-.msg-user .mb{background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.3);color:var(--ac);margin-left:15%;}
-.msg-ai .mb{background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.2);color:var(--text);margin-right:15%;}
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 200px);}
+.chat-msgs{flex:1;overflow-y:auto;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;margin-bottom:10px;}
+.msg{margin-bottom:12px;}
+.msg-user .mb{background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.3);color:var(--ac);margin-left:10%;}
+.msg-ai .mb{background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.2);color:var(--text);margin-right:10%;}
 .msg-sys .mb{background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.2);color:var(--gold);text-align:center;}
-.mb{padding:10px 14px;border-radius:4px;font-size:0.75rem;line-height:1.6;white-space:pre-wrap;}
-.ml{font-size:0.58rem;color:var(--muted);margin-top:3px;padding:0 4px;}
-.chat-input-row{display:flex;gap:10px;}
-.chat-input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.8rem;outline:none;resize:none;height:44px;}
-.chat-input:focus{border-color:var(--ac);}
-/* INSIGHTS */
-.insight-item{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--ac);border-radius:4px;padding:12px;margin-bottom:8px;animation:fadeIn 0.3s ease;}
-.insight-item.high{border-left-color:var(--red);}.insight-item.medium{border-left-color:var(--gold);}
-.insight-domain{font-size:0.6rem;color:var(--muted);margin-bottom:4px;}
-.insight-text{font-size:0.75rem;color:var(--text);line-height:1.5;}
-.insight-action{font-size:0.65rem;color:var(--ac);margin-top:6px;}
-.insight-sev{font-size:0.62rem;padding:2px 6px;border-radius:2px;margin-left:6px;}
-.sev-high{background:rgba(255,51,68,0.2);color:var(--red);}
-.sev-med{background:rgba(255,215,0,0.15);color:var(--gold);}
-.sev-low{background:rgba(0,255,136,0.1);color:var(--green);}
+.mb{padding:8px 12px;border-radius:6px;font-size:0.72rem;line-height:1.6;white-space:pre-wrap;}
+.ml{font-size:0.55rem;color:var(--muted);margin-top:2px;padding:0 4px;}
+.chat-row{display:flex;gap:8px;}
+.chat-in{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:10px 12px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.75rem;outline:none;resize:none;height:42px;}
+.chat-in:focus{border-color:var(--ac);}
+
+/* BUTTONS */
+.btn{padding:10px 16px;border:none;border-radius:4px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.7rem;font-weight:700;letter-spacing:1px;transition:all 0.2s;width:100%;margin-bottom:8px;}
+.btn:active{transform:scale(0.98);}
+.bp{background:var(--ac);color:var(--bg);}
+.bd{background:var(--red);color:#fff;}
+.bg2b{background:var(--green);color:var(--bg);}
+.bgo{background:var(--gold);color:var(--bg);}
+.bs{background:var(--border2);color:var(--text);}
+
+/* INPUT */
+.inp{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 12px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.75rem;outline:none;margin-bottom:8px;}
+.inp:focus{border-color:var(--ac);}
+.lbl{font-size:0.6rem;color:var(--muted);letter-spacing:1px;margin-bottom:4px;display:block;}
+
+/* PROGRESS */
+.prog{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:6px;}
+.progf{height:100%;background:var(--ac);border-radius:2px;transition:width 1s;}
+
 /* WALLET */
-.wallet-addr{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;font-size:0.68rem;color:var(--ac);word-break:break-all;letter-spacing:1px;margin-bottom:12px;}
-.wallet-bal{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.wbal{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px;text-align:center;}
-.wbal-v{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;color:var(--green);}
-.wbal-l{font-size:0.58rem;color:var(--muted);margin-top:4px;}
-/* PRICING */
-.price-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
-.price-row:last-child{border-bottom:none;}
-.price-in{width:80px;background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:5px 8px;color:var(--ac);font-family:'Share Tech Mono',monospace;font-size:0.78rem;text-align:right;outline:none;}
-.price-in:focus{border-color:var(--ac);}
-.pr2{margin-bottom:8px;}.pl2{display:flex;justify-content:space-between;font-size:0.68rem;color:var(--muted);margin-bottom:3px;}
-.pb{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
-.pf{height:100%;background:var(--ac);border-radius:2px;transition:width 0.8s;}
-</style></head><body>
-<header>
-<div style="display:flex;align-items:center;gap:16px">
-<span class="pulse"></span>
-<span class="logo">M7-77 // SOVEREIGN COMMAND v4.0</span>
+.wallet-addr{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:8px 12px;font-size:0.62rem;color:var(--ac);word-break:break-all;margin-bottom:10px;}
+
+/* STATUS PILL */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:0.62rem;font-weight:700;}
+.pill.active{background:rgba(0,255,136,0.15);color:var(--green);border:1px solid rgba(0,255,136,0.3);}
+.pill.pending{background:rgba(255,215,0,0.15);color:var(--gold);border:1px solid rgba(255,215,0,0.3);}
+.pill.inactive{background:rgba(255,51,68,0.15);color:var(--red);border:1px solid rgba(255,51,68,0.3);}
+.pill::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;padding:8px 0;}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px;border:none;background:none;color:var(--muted);font-size:0.5rem;cursor:pointer;font-family:'Share Tech Mono',monospace;letter-spacing:0.5px;}
+.bnav-btn.active{color:var(--ac);}
+.bnav-icon{font-size:1.1rem;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">M7-77 SOVEREIGN</div>
+  <div class="live"><div class="dot"></div><span id="hdr-time">LIVE</span></div>
 </div>
-<div style="display:flex;align-items:center;gap:20px;font-size:0.68rem">
-<span id="hdr-time" style="color:var(--muted)"></span>
-<span id="hdr-rev" style="color:var(--ac)">$0.00</span>
-<span id="hdr-events" style="color:var(--muted)">0 events</span>
-<span id="routing-badge" class="badge ok">ROUTING ACTIVE</span>
-</div>
-</header>
+
 <div class="nav">
-<button class="tab active" onclick="sw('overview')">OVERVIEW</button>
-<button class="tab" onclick="sw('command')">🤖 M7 COMMAND</button>
-<button class="tab" onclick="sw('insights')">🧠 AI INSIGHTS</button>
-<button class="tab" onclick="sw('wallet')">💎 WALLET & FUNDS</button>
-<button class="tab" onclick="sw('revenue')">💰 REVENUE</button>
-<button class="tab" onclick="sw('sources')">📡 SOURCES</button>
-<button class="tab" onclick="sw('threats')">🚨 THREATS</button>
-<button class="tab" onclick="sw('rails')">🛤️ RAIL MANAGER</button>
-<button class="tab" onclick="sw('control')">⚙️ CONTROL</button>
+  <button class="tab active" onclick="sw('overview')">OVERVIEW</button>
+  <button class="tab" onclick="sw('money')">💰 MONEY</button>
+  <button class="tab" onclick="sw('command')">🤖 M7 AI</button>
+  <button class="tab" onclick="sw('insights')">🧠 INTEL</button>
+  <button class="tab" onclick="sw('sources')">📡 SOURCES</button>
+  <button class="tab" onclick="sw('threats')">🚨 THREATS</button>
+  <button class="tab" onclick="sw('system')">⚙️ SYSTEM</button>
 </div>
 
 <!-- OVERVIEW -->
 <div id="panel-overview" class="panel active">
-<div class="grid g4" style="margin-bottom:16px">
-<div class="card"><div class="ct">💰 Total Revenue</div><div class="bl">ALL DOMAINS</div><div class="bv" id="ov1">$0.00</div><div class="bs" id="ov1s">$0/sec</div></div>
-<div class="card"><div class="ct">📡 Events Processed</div><div class="bl">LIVE SOURCES</div><div class="bv gold" id="ov2">0</div><div class="bs" id="ov2s">0 sources</div></div>
-<div class="card"><div class="ct">📈 Est. Daily</div><div class="bl">AT CURRENT RATE</div><div class="bv green" id="ov3">$0.00</div><div class="bs" id="ov3s">$0/hr</div></div>
-<div class="card"><div class="ct">💎 Wallet</div><div class="bl">POLYGON USDC</div><div class="bv" style="color:var(--green)" id="ov-usdc">$0.00</div><div class="bs" id="ov-usdc-s">Pending: $0.00</div></div>
-</div>
-<div class="grid g2" style="margin-bottom:16px">
-<div class="card"><div class="ct">📡 Live Event Feed</div><div class="feed" id="feed1"></div></div>
-<div class="card"><div class="ct">🧠 Latest AI Insights</div><div style="height:260px;overflow-y:auto" id="ov-insights"><div style="color:var(--muted);font-size:0.75rem">Claude analyzing...</div></div></div>
-</div>
-<div class="grid g2">
-<div class="card"><div class="ct">⚡ Top Domains by Revenue</div><div id="top-domains"></div></div>
-<div class="card"><div class="ct">🚨 Recent Threats</div><div style="height:200px;overflow-y:auto" id="ov-threats"><div style="color:var(--muted);font-size:0.75rem">Monitoring...</div></div></div>
-</div>
+  <div class="g2">
+    <div class="card"><div class="ct">Revenue</div><div class="bv" id="ov-rev">$0</div><div class="bsub" id="ov-rps">$0/sec</div></div>
+    <div class="card"><div class="ct">Events</div><div class="bv gold" id="ov-ev">0</div><div class="bsub" id="ov-src">0 sources</div></div>
+    <div class="card"><div class="ct">Daily Est.</div><div class="bv green" id="ov-daily">$0</div><div class="bsub" id="ov-hr">$0/hr</div></div>
+    <div class="card"><div class="ct">Way2 Capital</div><div class="bv" id="ov-way2">$0</div><div class="bsub">99% actualized</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">📡 Live Events</div>
+    <div class="feed" id="feed-overview"></div>
+  </div>
+  <div class="card">
+    <div class="ct">🧠 AI Insights</div>
+    <div id="ov-insights"><div style="color:var(--muted);font-size:0.72rem">Claude analyzing...</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">⚡ Top Domains</div>
+    <div id="ov-domains"></div>
+  </div>
 </div>
 
-<!-- M7 COMMAND -->
+<!-- MONEY -->
+<div id="panel-money" class="panel">
+  <div class="card">
+    <div class="ct">💰 Actualization Engine</div>
+    <div class="row"><span class="rk">Status</span><span class="pill active" id="act-status">RUNNING</span></div>
+    <div class="row"><span class="rk">Total Actualized</span><span class="rv gold" id="act-total">$0</span></div>
+    <div class="row"><span class="rk">Pending USDC</span><span class="rv" id="act-pending">$0</span></div>
+    <div class="row"><span class="rk">Total Sent</span><span class="rv green" id="act-sent">$0</span></div>
+    <div class="row"><span class="rk">Threshold</span><span class="rv" id="act-thresh">$100</span></div>
+    <div class="row"><span class="rk">Destination</span><span class="rv" style="font-size:0.6rem" id="act-dest">—</span></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">🏛️ Sovereign Capital Engine</div>
+    <div class="row"><span class="rk">Status</span><span class="pill" id="sce-status">DISCOVERING</span></div>
+    <div class="row"><span class="rk">Way2 Balance</span><span class="rv gold" id="sce-way2">$0</span></div>
+    <div class="row"><span class="rk">Active Route</span><span class="rv" id="sce-route">Searching...</span></div>
+    <div class="row"><span class="rk">M7 Wallet POL</span><span class="rv" id="sce-pol">0</span></div>
+    <div class="row"><span class="rk">M7 Wallet USDC</span><span class="rv green" id="sce-usdc">$0</span></div>
+    <div class="row"><span class="rk">Total Sent</span><span class="rv green" id="sce-sent">$0</span></div>
+    <button class="btn bp" onclick="discoverRoutes()" style="margin-top:10px">🔍 DISCOVER FIAT ROUTES</button>
+    <button class="btn bgo" onclick="sendTest()">💸 SEND TEST TRANSFER</button>
+  </div>
+
+  <div class="card">
+    <div class="ct">🔍 Pathfinder Engine</div>
+    <div class="row"><span class="rk">Status</span><span class="pill active" id="pf-status">RUNNING</span></div>
+    <div class="row"><span class="rk">Success Rate</span><span class="rv green" id="pf-rate">100%</span></div>
+    <div class="row"><span class="rk">Total Delivered</span><span class="rv" id="pf-delivered">$0</span></div>
+    <div class="row"><span class="rk">Available Routes</span><span class="rv" id="pf-routes">—</span></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">📋 Discovered Fiat Routes</div>
+    <div id="fiat-routes"><div style="color:var(--muted);font-size:0.72rem">Discovering routes for Gambia...</div></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">💳 Your Accounts</div>
+    <div class="row"><span class="rk">Wave</span><span class="rv">+220 6536587</span></div>
+    <div class="row"><span class="rk">Ecobank</span><span class="rv">6200059991</span></div>
+    <div class="row"><span class="rk">SWIFT</span><span class="rv">ECOCGMGM</span></div>
+    <div class="row"><span class="rk">MetaMask</span><span class="rv" style="font-size:0.6rem">0x2352...f0E</span></div>
+    <div class="row"><span class="rk">M7 Wallet</span><span class="rv" style="font-size:0.6rem">0x374f...33E</span></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">📜 Transfer History</div>
+    <div id="transfer-history"><div style="color:var(--muted);font-size:0.72rem">No transfers yet</div></div>
+  </div>
+</div>
+
+<!-- M7 AI COMMAND -->
 <div id="panel-command" class="panel">
-<div class="grid g2">
-<div class="card s2"><div class="ct">🤖 M7 COMMAND CENTER — Talk directly to M7 AI</div>
-<div style="font-size:0.65rem;color:var(--muted);margin-bottom:12px">M7 has full system context. Ask it anything or give it commands.</div>
-<div class="chat-wrap">
-<div class="chat-msgs" id="chat-msgs">
-<div class="msg msg-sys"><div class="mb">M7 SOVEREIGN COMMAND v4.0 — ONLINE<br>Claude Sonnet intelligence active. I have full system context.<br>Ask me anything or give me a command.</div></div>
-</div>
-<div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
-<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('What is the current system status?')">STATUS</button>
-<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('Show me the top threats right now')">THREATS</button>
-<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('What domains are generating the most revenue?')">REVENUE</button>
-<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('Analyze the latest AI insights')">INSIGHTS</button>
-<button class="btn bs2" style="font-size:0.62rem;padding:6px 10px" onclick="quickCmd('What is the wallet and treasury status?')">WALLET</button>
-<button class="btn bd" style="font-size:0.62rem;padding:6px 10px" onclick="stopRouting()">STOP ROUTING</button>
-<button class="btn bg2b" style="font-size:0.62rem;padding:6px 10px" onclick="startRouting()">START ROUTING</button>
-</div>
-<div class="chat-input-row">
-<textarea class="chat-input" id="chat-input" placeholder="Command M7..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
-<button class="btn bp" onclick="sendChat()">SEND</button>
-</div>
-</div>
-</div>
-<div class="card"><div class="ct">📊 Live System Context</div><div id="chat-context" style="font-size:0.72rem;line-height:2"></div></div>
-</div>
+  <div class="card" style="padding:10px">
+    <div class="ct">🤖 M7 SOVEREIGN AI — DIRECT COMMAND</div>
+    <div style="font-size:0.62rem;color:var(--muted);margin-bottom:10px">Full system context. Ask anything or give commands.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+      <button class="btn bs" style="width:auto;padding:5px 10px;font-size:0.6rem;margin:0" onclick="qc('System status report')">STATUS</button>
+      <button class="btn bs" style="width:auto;padding:5px 10px;font-size:0.6rem;margin:0" onclick="qc('Show revenue analysis')">REVENUE</button>
+      <button class="btn bs" style="width:auto;padding:5px 10px;font-size:0.6rem;margin:0" onclick="qc('Show top threats')">THREATS</button>
+      <button class="btn bs" style="width:auto;padding:5px 10px;font-size:0.6rem;margin:0" onclick="qc('How do I receive money?')">MONEY</button>
+      <button class="btn bs" style="width:auto;padding:5px 10px;font-size:0.6rem;margin:0" onclick="qc('Show AI insights')">INTEL</button>
+      <button class="btn bd" style="width:auto;padding:5px 10px;font-size:0.6rem;margin:0" onclick="stopRouting()">STOP ROUTING</button>
+    </div>
+    <div class="chat-wrap">
+      <div class="chat-msgs" id="chat-msgs">
+        <div class="msg msg-sys"><div class="mb">M7 SOVEREIGN v4.0 — ONLINE<br>All 15 layers active. Full autonomy engaged.<br>SECKA commands. M7 executes.</div></div>
+      </div>
+      <div class="chat-row">
+        <textarea class="chat-in" id="chat-in" placeholder="Command M7..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
+        <button class="btn bp" style="width:60px;margin:0" onclick="sendChat()">▶</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- AI INSIGHTS -->
+<!-- INTEL -->
 <div id="panel-insights" class="panel">
-<div class="grid g4" style="margin-bottom:16px">
-<div class="card"><div class="ct">Claude Calls</div><div class="bv" id="ins-calls">0</div></div>
-<div class="card"><div class="ct">Events Analyzed</div><div class="bv gold" id="ins-analyzed">0</div></div>
-<div class="card"><div class="ct">High Severity</div><div class="bv red" id="ins-high">0</div></div>
-<div class="card"><div class="ct">Last Analysis</div><div style="font-size:0.75rem;color:var(--ac);margin-top:8px" id="ins-last">—</div></div>
-</div>
-<div class="grid g2">
-<div class="card s2"><div class="ct">🧠 Executive Briefing — AI Generated</div><div id="exec-brief" style="color:var(--muted);font-size:0.72rem">Generating first briefing in 30 seconds...</div></div>
-</div>
-<div class="card"><div class="ct">🔴 Live Intelligence Feed — Real Claude Analysis</div>
-<div style="height:500px;overflow-y:auto" id="insights-feed"><div style="color:var(--muted);font-size:0.75rem;padding:12px">Waiting for Claude analysis...</div></div>
-</div>
-</div>
-
-<!-- WALLET & FUNDS -->
-<div id="panel-wallet" class="panel">
-<div class="grid g3" style="margin-bottom:16px">
-<div class="card"><div class="ct">💎 M7 Sovereign Wallet</div>
-<div class="bl">POLYGON + ETHEREUM</div>
-<div class="wallet-addr" id="wallet-addr">Loading...</div>
-<div class="wallet-bal">
-<div class="wbal"><div class="wbal-v" id="w-poly-usdc">$0.00</div><div class="wbal-l">POLYGON USDC</div></div>
-<div class="wbal"><div class="wbal-v" id="w-poly-matic">0.0000</div><div class="wbal-l">POLYGON MATIC</div></div>
-<div class="wbal"><div class="wbal-v" id="w-eth-usdc">$0.00</div><div class="wbal-l">ETHEREUM USDC</div></div>
-<div class="wbal"><div class="wbal-v" id="w-eth-eth">0.0000</div><div class="wbal-l">ETHEREUM ETH</div></div>
-</div>
-<div class="mr"><span class="mk">Pending USD</span><span class="mv gold" id="w-pending">$0.00</span></div>
-<div class="mr"><span class="mk">Total Sent</span><span class="mv green" id="w-sent">$0.00</span></div>
-<div class="mr"><span class="mk">Recipient</span><span class="mv ac">Bun Omar Secka</span></div>
-<div class="mr"><span class="mk">Bank</span><span class="mv">Ecobank, Gambia</span></div>
-<div class="mr"><span class="mk">Rail</span><span class="mv">USDC → SWIFT → ECOBANK</span></div>
-</div>
-<div class="card"><div class="ct">🏦 Actualization Engine</div>
-<div class="mr"><span class="mk">Status</span><span class="mv" id="act-status">WAITING FOR DEPOSIT</span></div>
-<div class="mr"><span class="mk">Rate</span><span class="mv ac">99% ($100 RAM = $99 to Wave)</span></div>
-<div class="mr"><span class="mk">Actualized USDC</span><span class="mv green" id="act-usdc">$0.00</span></div>
-<div class="mr"><span class="mk">Auto-sweep</span><span class="mv" id="act-sweep">ACTIVE</span></div>
-<div class="mr"><span class="mk">Sweep threshold</span><span class="mv">$10 USDC</span></div>
-<div style="margin-top:16px;padding:12px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;font-size:0.68rem;color:var(--gold)">
-Activates when Wave Business API is connected
-</div>
-<div style="margin-top:12px">
-<button class="btn bp" style="width:100%;margin-bottom:8px" onclick="manualSweep()">MANUAL SWEEP → ECOBANK</button>
-<button class="btn bd" style="width:100%" onclick="stopRouting()">STOP FUND ROUTING</button>
-</div>
-</div>
-<div class="card"><div class="ct">📋 Transfer History</div>
-<div style="overflow-x:auto"><table class="lt"><thead><tr><th>TIME</th><th>AMOUNT</th><th>NETWORK</th><th>RAIL</th><th>STATUS</th><th>TX</th></tr></thead><tbody id="transfer-table"></tbody></table></div>
-</div>
-</div>
-</div>
-
-<!-- REVENUE -->
-<div id="panel-revenue" class="panel">
-<div class="grid g4" style="margin-bottom:16px">
-<div class="card"><div class="ct">Total Revenue</div><div class="bv" id="r-total">$0.00</div></div>
-<div class="card"><div class="ct">Per Second</div><div class="bv gold" id="r-ps">$0.00</div></div>
-<div class="card"><div class="ct">Per Hour</div><div class="bv green" id="r-ph">$0.00</div></div>
-<div class="card"><div class="ct">Est. Daily</div><div class="bv" style="color:var(--purple)" id="r-pd">$0.00</div></div>
-</div>
-<div class="grid g2">
-<div class="card"><div class="ct">Domain Revenue Breakdown</div><div id="domain-bars"></div></div>
-<div class="card"><div class="ct">⚙️ Adjust Domain Pricing (Live)</div>
-<div id="pricing-inputs"></div>
-<div style="margin-top:12px;display:flex;gap:8px;align-items:center">
-<button class="btn bp" onclick="savePricing()">SAVE PRICING</button>
-<span id="price-msg" style="display:none;color:var(--green);font-size:0.7rem">✓ Saved</span>
-</div>
-</div>
-</div>
+  <div class="g3" style="margin-bottom:12px">
+    <div class="card" style="padding:10px"><div class="ct">AI Calls</div><div class="bv" style="font-size:1.1rem" id="ins-calls">0</div></div>
+    <div class="card" style="padding:10px"><div class="ct">Analyzed</div><div class="bv gold" style="font-size:1.1rem" id="ins-analyzed">0</div></div>
+    <div class="card" style="padding:10px"><div class="ct">High Sev</div><div class="bv red" style="font-size:1.1rem" id="ins-high">0</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">📄 Executive Briefing</div>
+    <div id="exec-brief" style="font-size:0.72rem;color:var(--muted)">Generating...</div>
+  </div>
+  <div class="card">
+    <div class="ct">🔴 Live Intelligence Feed</div>
+    <div id="insights-feed" style="max-height:500px;overflow-y:auto">
+      <div style="color:var(--muted);font-size:0.72rem">Waiting for Claude analysis...</div>
+    </div>
+  </div>
 </div>
 
 <!-- SOURCES -->
 <div id="panel-sources" class="panel">
-<div class="grid g4" style="margin-bottom:16px">
-<div class="card"><div class="ct">Total Sources</div><div class="bv" id="src-total">0</div></div>
-<div class="card"><div class="ct">Domains</div><div class="bv gold" id="src-domains">0</div></div>
-<div class="card"><div class="ct">Events Today</div><div class="bv green" id="src-events">0</div></div>
-<div class="card"><div class="ct">Errors</div><div class="bv red" id="src-errors">0</div></div>
-</div>
-<div class="grid g2">
-<div class="card"><div class="ct">📡 Live Event Feed</div><div class="feed" id="feed2"></div></div>
-<div class="card"><div class="ct">Domain Activity</div><div id="src-domain-bars"></div></div>
-</div>
+  <div class="g2" style="margin-bottom:12px">
+    <div class="card"><div class="ct">Sources</div><div class="bv" id="src-count">0</div></div>
+    <div class="card"><div class="ct">Domains</div><div class="bv gold" id="src-domains">0</div></div>
+    <div class="card"><div class="ct">Total Events</div><div class="bv green" id="src-events">0</div></div>
+    <div class="card"><div class="ct">Errors</div><div class="bv red" id="src-errors">0</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">📡 Live Feed</div>
+    <div class="feed" id="feed-sources"></div>
+  </div>
+  <div class="card">
+    <div class="ct">Domain Activity</div>
+    <div id="domain-bars"></div>
+  </div>
 </div>
 
 <!-- THREATS -->
 <div id="panel-threats" class="panel">
-<div class="grid g3" style="margin-bottom:16px">
-<div class="card"><div class="ct">Threats Detected</div><div class="bv red" id="threat-count">0</div></div>
-<div class="card"><div class="ct">Cybersecurity</div><div class="bv" style="color:var(--purple)" id="threat-cyber">0</div></div>
-<div class="card"><div class="ct">Defense</div><div class="bv red" id="threat-defense">0</div></div>
-</div>
-<div class="card"><div class="ct">🚨 Live Threat Feed</div><div style="height:500px;overflow-y:auto" id="threat-feed"></div></div>
-</div>
-
-
-<!-- RAIL MANAGER -->
-<div id="panel-rails" class="panel">
-<div class="grid g3" style="margin-bottom:16px">
-<div class="card"><div class="ct">💎 Sovereign Entity</div>
-<div class="mr"><span class="mk">Entity</span><span class="mv ac" id="sce-name">Loading...</span></div>
-<div class="mr"><span class="mk">Jurisdiction</span><span class="mv" id="sce-jur">—</span></div>
-<div class="mr"><span class="mk">Reg Number</span><span class="mv" id="sce-reg">—</span></div>
-<div class="mr"><span class="mk">Status</span><span class="mv green" id="sce-status">—</span></div>
-<div class="mr"><span class="mk">Way2 Balance</span><span class="mv ac" id="sce-way2">$0.00</span></div>
-<div class="mr"><span class="mk">Way3 Balance</span><span class="mv gold" id="sce-way3">$0.00</span></div>
-<div class="mr"><span class="mk">Total Actualized</span><span class="mv green" id="sce-total">$0.00</span></div>
-<div class="mr"><span class="mk">Expense Reserve</span><span class="mv" id="sce-expense">$0.00</span></div>
-</div>
-<div class="card"><div class="ct">🔍 Pathfinder</div>
-<div class="mr"><span class="mk">Status</span><span class="mv green">RUNNING</span></div>
-<div class="mr"><span class="mk">Success Rate</span><span class="mv green" id="pf-rate">100%</span></div>
-<div class="mr"><span class="mk">Total Delivered</span><span class="mv ac" id="pf-delivered">$0.00</span></div>
-<div class="mr"><span class="mk">Queue</span><span class="mv" id="pf-queue">0</span></div>
-<div class="mr"><span class="mk">Available Routes</span><span class="mv" id="pf-routes">—</span></div>
-<div style="margin-top:12px">
-<button class="btn bp" style="width:100%;margin-bottom:8px" onclick="discoverRoutes()">🔍 DISCOVER NEW ROUTES</button>
-<button class="btn bgo" style="width:100%" onclick="generateVoucher()">🎫 GENERATE VOUCHER</button>
-</div>
-</div>
-<div class="card"><div class="ct">💸 Quick Transfer</div>
-<div class="fg"><span class="fl">AMOUNT (USD)</span>
-<input class="fi2" type="number" id="transfer-amount" placeholder="100.00" step="0.01" min="1"></div>
-<div class="fg"><span class="fl">RAIL TYPE</span>
-<select class="fi2" id="transfer-rail" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-family:'Share Tech Mono',monospace">
-<option value="auto">AUTO (M7 decides)</option>
-<option value="mobile_money">Mobile Money (Wave)</option>
-<option value="bank">Bank (Ecobank SWIFT)</option>
-<option value="stablecoin">Stablecoin (Polygon)</option>
-</select></div>
-<button class="btn bp" style="width:100%" onclick="executeTransfer()">▶ EXECUTE TRANSFER</button>
-<div id="transfer-result" style="margin-top:10px;font-size:0.72rem;display:none"></div>
-</div>
+  <div class="g3" style="margin-bottom:12px">
+    <div class="card" style="padding:10px"><div class="ct">Total</div><div class="bv red" style="font-size:1.1rem" id="thr-total">0</div></div>
+    <div class="card" style="padding:10px"><div class="ct">Cyber</div><div class="bv" style="font-size:1.1rem;color:var(--purple)" id="thr-cyber">0</div></div>
+    <div class="card" style="padding:10px"><div class="ct">Defense</div><div class="bv red" style="font-size:1.1rem" id="thr-def">0</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">🚨 Threat Feed</div>
+    <div id="threat-feed" style="max-height:500px;overflow-y:auto">
+      <div style="color:var(--muted);font-size:0.72rem;padding:10px">Monitoring...</div>
+    </div>
+  </div>
 </div>
 
-<div class="grid g2">
-<div class="card"><div class="ct">🛤️ Configured Rails</div>
-<div id="rails-list" style="margin-bottom:12px"><div style="color:var(--muted);font-size:0.75rem">No rails configured</div></div>
-</div>
-
-<div class="card"><div class="ct">➕ Add New Rail</div>
-<div class="fg"><span class="fl">RAIL TYPE</span>
-<select class="fi2" id="new-rail-type" onchange="updateRailForm()" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-family:'Share Tech Mono',monospace">
-<option value="bank">🏦 Bank Account</option>
-<option value="mobile_money">📱 Mobile Money</option>
-<option value="stablecoin">💎 Stablecoin Wallet</option>
-</select></div>
-<div class="fg"><span class="fl">RAIL NAME</span>
-<input class="fi2" id="new-rail-name" placeholder="e.g. Ecobank Primary"></div>
-<div id="rail-form-bank">
-<div class="fg"><span class="fl">ACCOUNT NAME</span><input class="fi2" id="rf-account-name" placeholder="Full name"></div>
-<div class="fg"><span class="fl">ACCOUNT NUMBER</span><input class="fi2" id="rf-account-number" placeholder="Account number"></div>
-<div class="fg"><span class="fl">BANK NAME</span><input class="fi2" id="rf-bank-name" placeholder="Bank name"></div>
-<div class="fg"><span class="fl">SWIFT CODE</span><input class="fi2" id="rf-swift" placeholder="SWIFT/BIC code"></div>
-<div class="fg"><span class="fl">COUNTRY</span><input class="fi2" id="rf-country" placeholder="Country"></div>
-</div>
-<div id="rail-form-mobile" style="display:none">
-<div class="fg"><span class="fl">PHONE NUMBER</span><input class="fi2" id="rf-phone" placeholder="+220XXXXXXX"></div>
-<div class="fg"><span class="fl">NETWORK</span><input class="fi2" id="rf-network" placeholder="e.g. Wave, Africell"></div>
-<div class="fg"><span class="fl">COUNTRY</span><input class="fi2" id="rf-mobile-country" placeholder="Country"></div>
-</div>
-<div id="rail-form-stablecoin" style="display:none">
-<div class="fg"><span class="fl">WALLET ADDRESS</span><input class="fi2" id="rf-wallet" placeholder="0x..."></div>
-<div class="fg"><span class="fl">NETWORK</span><select class="fi2" id="rf-chain" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-family:'Share Tech Mono',monospace"><option value="polygon">Polygon</option><option value="ethereum">Ethereum</option></select></div>
-</div>
-<button class="btn bp" style="width:100%" onclick="addRail()">➕ ADD RAIL</button>
-<div id="rail-msg" style="display:none;margin-top:8px;font-size:0.7rem;color:var(--green)">✓ Rail added</div>
-</div>
-</div>
-
-<div class="card s2"><div class="ct">📋 Transfer History</div>
-<div style="overflow-x:auto"><table class="lt"><thead><tr>
-<th>ID</th><th>TIME</th><th>AMOUNT</th><th>RAIL</th><th>ROUTE</th><th>STATUS</th><th>NOTE</th>
-</tr></thead><tbody id="pathfinder-transfers"></tbody></table></div>
-</div>
-</div>
-
-<!-- CONTROL -->
-<div id="panel-control" class="panel">
-<div class="grid g2">
-<div class="card"><div class="ct">⚙️ System Control</div>
-<div class="mr"><span class="mk">Fund Routing</span><span class="mv" id="ctrl-routing">ACTIVE</span></div>
-<div class="mr"><span class="mk">Brain Status</span><span class="mv green">RUNNING</span></div>
-<div class="mr"><span class="mk">Ingestion</span><span class="mv green">RUNNING</span></div>
-<div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
-<button class="btn bd" onclick="stopRouting()">🛑 STOP FUND ROUTING</button>
-<button class="btn bg2b" onclick="startRouting()">▶ START FUND ROUTING</button>
-<button class="btn bgo" onclick="manualSweep()">💸 MANUAL SWEEP → ECOBANK</button>
-</div>
-</div>
-<div class="card"><div class="ct">🏦 Treasury Ledger</div>
-<div style="overflow-x:auto;max-height:400px;overflow-y:auto"><table class="lt"><thead><tr><th>#</th><th>TIME</th><th>TYPE</th><th>AMOUNT</th><th>BALANCE</th><th>SOURCE</th><th>HASH</th></tr></thead><tbody id="treasury-ledger"></tbody></table></div>
-</div>
-</div>
+<!-- SYSTEM -->
+<div id="panel-system" class="panel">
+  <div class="card">
+    <div class="ct">⚙️ System Health</div>
+    <div class="row"><span class="rk">Uptime</span><span class="rv green" id="sys-uptime">0s</span></div>
+    <div class="row"><span class="rk">Brain</span><span class="rv green">RUNNING</span></div>
+    <div class="row"><span class="rk">Ingestion</span><span class="rv green">RUNNING</span></div>
+    <div class="row"><span class="rk">Autonomy</span><span class="rv green" id="sys-auto">100%</span></div>
+    <div class="row"><span class="rk">DB Events</span><span class="rv" id="sys-db-ev">0</span></div>
+    <div class="row"><span class="rk">DB Revenue</span><span class="rv" id="sys-db-rev">0</span></div>
+    <div class="row"><span class="rk">DB Balance</span><span class="rv gold" id="sys-db-bal">$0</span></div>
+  </div>
+  <div class="card">
+    <div class="ct">🏛️ M7 Identity</div>
+    <div class="row"><span class="rk">Address</span><span class="rv" style="font-size:0.6rem" id="id-addr">—</span></div>
+    <div class="row"><span class="rk">Owner</span><span class="rv">Bun Omar Secka</span></div>
+    <div class="row"><span class="rk">Signatures</span><span class="rv" id="id-sigs">0</span></div>
+    <div class="row"><span class="rk">Sovereign</span><span class="rv green">YES</span></div>
+  </div>
+  <div class="card">
+    <div class="ct">💰 Revenue Pricing</div>
+    <div id="pricing-list"></div>
+  </div>
+  <div class="card">
+    <div class="ct">🔧 Controls</div>
+    <button class="btn bd" onclick="stopRouting()">🛑 STOP FUND ROUTING</button>
+    <button class="btn bg2b" onclick="startRouting()">▶ START FUND ROUTING</button>
+    <button class="btn bgo" onclick="runGrowth()">📈 RUN GROWTH CYCLE</button>
+    <button class="btn bs" onclick="runHeal()">🔧 RUN HEALTH CHECK</button>
+  </div>
 </div>
 
 <script>
-const PANELS=['overview','command','insights','wallet','revenue','sources','threats','rails','control'];
-function sw(p){PANELS.forEach(x=>{document.getElementById('panel-'+x).classList.remove('active');document.querySelectorAll('.tab').forEach((t,i)=>{if(PANELS[i]===x)t.classList.remove('active');});});document.getElementById('panel-'+p).classList.add('active');document.querySelectorAll('.tab').forEach(t=>{if(t.textContent.toLowerCase().includes(p.split('-')[0].toLowerCase().replace('🤖 ','').replace('🧠 ','').replace('💎 ','').replace('💰 ','').replace('📡 ','').replace('🚨 ','').replace('⚙️ ','')))t.classList.add('active');});}
+// ── State ──────────────────────────────────────────────────────────────────
+const PANELS = ['overview','money','command','insights','sources','threats','system'];
+let prevRev = 0, prevTime = Date.now(), chatHistory = [], pricing = {};
 
-let prevRev=0,prevTime=Date.now(),recentEvents=[],localP={},chatHistory=[],routingStopped=false;
-const fmt=v=>{if(v>=1e9)return'$'+(v/1e9).toFixed(2)+'B';if(v>=1e6)return'$'+(v/1e6).toFixed(2)+'M';if(v>=1e3)return'$'+(v/1e3).toFixed(2)+'K';return'$'+parseFloat(v).toFixed(2);};
-const fn=v=>{if(v>=1e9)return(v/1e9).toFixed(2)+'B';if(v>=1e6)return(v/1e6).toFixed(2)+'M';if(v>=1e3)return(v/1e3).toFixed(1)+'K';return v.toString();};
-const ts=t=>{const d=new Date(t);return d.toTimeString().split(' ')[0];};
-const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+// ── Helpers ────────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const set = (id, v) => { const e = $(id); if(e) e.textContent = v; };
+const fmt = v => {
+  if(!v) return '$0';
+  if(v >= 1e9) return '$'+(v/1e9).toFixed(2)+'B';
+  if(v >= 1e6) return '$'+(v/1e6).toFixed(2)+'M';
+  if(v >= 1e3) return '$'+(v/1e3).toFixed(1)+'K';
+  return '$'+parseFloat(v).toFixed(2);
+};
+const fn = v => {
+  if(!v) return '0';
+  if(v >= 1e9) return (v/1e9).toFixed(2)+'B';
+  if(v >= 1e6) return (v/1e6).toFixed(2)+'M';
+  if(v >= 1e3) return (v/1e3).toFixed(1)+'K';
+  return v.toString();
+};
+const ts = t => new Date(t).toTimeString().split(' ')[0];
 
-// Update header clock
-setInterval(()=>{set('hdr-time',new Date().toUTCString().replace('GMT','UTC'));},1000);
-
-// Load pricing
-async function loadPricing(){
-  try{const r=await fetch('/api/pricing');localP=await r.json();renderPricing();}catch(e){}
-}
-function renderPricing(){
-  const el=document.getElementById('pricing-inputs');if(!el)return;
-  el.innerHTML=Object.entries(localP).filter(([d])=>d!=='health').map(([d,p])=>`<div class="price-row"><span class="dp ${d}">${d.toUpperCase()}</span><div style="display:flex;align-items:center;gap:6px"><span style="font-size:0.65rem;color:var(--muted)">$/event</span><input class="price-in" type="number" step="0.01" min="0.01" id="price-${d}" value="${parseFloat(p).toFixed(2)}"></div></div>`).join('');
-}
-async function savePricing(){
-  const u={};Object.keys(localP).filter(d=>d!=='health').forEach(d=>{const e=document.getElementById('price-'+d);if(e)u[d]=parseFloat(e.value)||localP[d];});
-  try{await fetch('/api/pricing',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(u)});}catch(e){}
-  Object.assign(localP,u);
-  const m=document.getElementById('price-msg');if(m){m.style.display='block';setTimeout(()=>m.style.display='none',2000);}
-}
-
-// Routing controls
-async function stopRouting(){
-  await fetch('/api/routing/stop',{method:'POST'});
-  routingStopped=true;
-  document.getElementById('routing-badge').textContent='ROUTING STOPPED';
-  document.getElementById('routing-badge').className='badge err';
-  set('ctrl-routing','STOPPED');
-  addMsg('sys','Fund routing STOPPED by SECKA. No transfers will occur.');
-}
-async function startRouting(){
-  await fetch('/api/routing/start',{method:'POST'});
-  routingStopped=false;
-  document.getElementById('routing-badge').textContent='ROUTING ACTIVE';
-  document.getElementById('routing-badge').className='badge ok';
-  set('ctrl-routing','ACTIVE');
-  addMsg('sys','Fund routing ACTIVE. M7 will sweep to Ecobank automatically.');
-}
-async function manualSweep(){
-  const amt=prompt('Amount to sweep to Ecobank (USDC):');
-  if(!amt||isNaN(amt))return;
-  try{
-    const r=await fetch('/api/treasury/sweep',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:parseFloat(amt),network:'polygon'})});
-    const d=await r.json();
-    addMsg('sys','Sweep initiated: $'+amt+' → Ecobank\nStatus: '+(d.status||d.error||JSON.stringify(d)));
-  }catch(e){addMsg('sys','Sweep error: '+e.message);}
+// ── Navigation ─────────────────────────────────────────────────────────────
+function sw(p) {
+  PANELS.forEach(x => {
+    const panel = $('panel-'+x);
+    const tabs  = document.querySelectorAll('.tab');
+    if(panel) panel.classList.remove('active');
+  });
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const target = $('panel-'+p);
+  if(target) target.classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => {
+    if(t.getAttribute('onclick') === `sw('${p}')`) t.classList.add('active');
+  });
 }
 
-// CHAT
-function addMsg(role,text){
-  const div=document.createElement('div');div.className='msg msg-'+role;
-  const mb=document.createElement('div');mb.className='mb';mb.textContent=text;
-  const ml=document.createElement('div');ml.className='ml';
-  ml.textContent=role==='user'?'SECKA':role==='ai'?'M7 AI':'SYSTEM';
-  div.appendChild(mb);div.appendChild(ml);
-  const msgs=document.getElementById('chat-msgs');msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
-}
-function quickCmd(cmd){document.getElementById('chat-input').value=cmd;sendChat();}
+// ── Clock ──────────────────────────────────────────────────────────────────
+setInterval(() => set('hdr-time', new Date().toUTCString().replace(' GMT','')), 1000);
 
-async function sendChat(){
-  const inp=document.getElementById('chat-input');
-  const msg=inp.value.trim();if(!msg)return;
-  inp.value='';
-  addMsg('user',msg);
-  chatHistory.push({role:'user',content:msg});
-
-  // Build system context
-  let ctx='You are M7, sovereign autonomous intelligence system v4.0.\n';
-  ctx+='You have full control and awareness of the system.\n';
-  ctx+='Current system state:\n';
-  try{
-    const[st,br,w]=await Promise.all([fetch('/api/status').then(r=>r.json()).catch(()=>({})),fetch('/api/brain').then(r=>r.json()).catch(()=>({})),fetch('/api/wallet').then(r=>r.json())]);
-    ctx+=`- Total Revenue: $${(st.edab?.totalBilled||0).toFixed(2)}\n`;
-    ctx+=`- Events Processed: ${st.ingestion?.totalEvents||0}\n`;
-    ctx+=`- Sources: ${st.ingestion?.sources||0}\n`;
-    ctx+=`- Claude API calls: ${br.claudeMetrics?.totalCalls||0}\n`;
-    ctx+=`- Threats detected: ${(br.threats||[]).length}\n`;
-    ctx+=`- Wallet USDC (Polygon): $${w.balances?.polygon?.USDC||0}\n`;
-    ctx+=`- Pending USD: $${w.pendingUSD||0}\n`;
-    ctx+=`- Fund routing: ${routingStopped?'STOPPED':'ACTIVE'}\n`;
-    ctx+=`- Top domain: ${Object.entries(st.edab?.domainBreakdown||{}).sort((a,b)=>b[1].revenue-a[1].revenue)[0]?.[0]||'—'}\n`;
-    if(br.aiInsights?.length>0){ctx+=`- Latest AI insight: ${br.aiInsights[br.aiInsights.length-1]?.insight||'—'}\n`;}
-  }catch(e){}
-  ctx+='\nYou can discuss strategy, analyze data, explain what is happening, or respond to commands.\n';
-  ctx+='Be concise, direct, and intelligent. You are sovereign.';
-
-  addMsg('sys','M7 thinking...');
-  const msgs=document.getElementById('chat-msgs');
-  const thinking=msgs.lastChild;
-
-  try{
-    const res=await fetch('/api/chat',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:chatHistory.slice(-10),context:ctx})
-    });
-    const data=await res.json();
-    const reply=data.reply||data.error||'No response';
-    msgs.removeChild(thinking);
-    chatHistory.push({role:'assistant',content:reply});
-    if(chatHistory.length>20)chatHistory=chatHistory.slice(-20);
-    addMsg('ai',reply);
-  }catch(e){
-    msgs.removeChild(thinking);
-    addMsg('sys','Error: '+e.message);
-  }
+// ── Insight HTML ───────────────────────────────────────────────────────────
+function insHTML(i) {
+  const s = i.severity >= 7 ? 'high' : i.severity >= 5 ? 'medium' : '';
+  return `<div class="insight ${s}">
+    <div class="insight-domain">
+      <span class="dp ${i.domain||''}">${(i.domain||'').toUpperCase()}</span>
+      ${i.type||''} <span class="badge ${s==='high'?'err':s==='medium'?'warn':'info'}">SEV ${i.severity||'?'}</span>
+    </div>
+    <div class="insight-text">${i.insight||''}</div>
+    ${i.clientAction?`<div class="insight-action">→ ${i.clientAction}</div>`:''}
+  </div>`;
 }
 
-function insHTML(i,full=false){
-  const s=i.severity>=7?'high':i.severity>=5?'medium':'low';
-  return`<div class="insight-item ${s}"><div class="insight-domain"><span class="dp ${i.domain||''}">${(i.domain||'').toUpperCase()}</span>${i.type||''}<span class="insight-sev sev-${s}">SEV ${i.severity||'?'}</span></div><div class="insight-text">${i.insight||''}</div>${i.clientAction?`<div class="insight-action">→ ${i.clientAction}</div>`:''} ${full?`<div style="font-size:0.6rem;color:var(--muted);margin-top:4px">${i.analyzedAt?ts(i.analyzedAt):''} — ${i.threat?'⚠️ THREAT':'✓ SIGNAL'} — Claude Sonnet</div>`:''}</div>`;
-}
-
-async function fd(){
-  try{
-    const[st,br,threats,treas,wallet,routing]=await Promise.all([
+// ── Main data fetch ────────────────────────────────────────────────────────
+async function fd() {
+  try {
+    const [st, br, threats, act, sce, pf, db, identity, autonomy] = await Promise.all([
       fetch('/api/status').then(r=>r.json()).catch(()=>({})),
       fetch('/api/brain').then(r=>r.json()).catch(()=>({})),
       fetch('/api/threats').then(r=>r.json()).catch(()=>[]),
-      fetch('/api/ledger?limit=30').then(r=>r.json()),
-      fetch('/api/wallet').then(r=>r.json()).catch(()=>({})),
-      fetch('/api/routing/status').then(r=>r.json()).catch(()=>({active:true}))
+      fetch('/api/actualization').then(r=>r.json()).catch(()=>({})),
+      fetch('/api/sovereign').then(r=>r.json()).catch(()=>({})),
+      fetch('/api/pathfinder').then(r=>r.json()).catch(()=>({})),
+      fetch('/api/db').then(r=>r.json()).catch(()=>({})),
+      fetch('/api/identity').then(r=>r.json()).catch(()=>({})),
+      fetch('/api/autonomy').then(r=>r.json()).catch(()=>({}))
     ]);
 
-    const rev=parseFloat(st.edab?.totalBilled)||0;
-    const now=Date.now(),el=Math.max((now-prevTime)/1000,1),rps=Math.max((rev-prevRev)/el,0);
-    prevRev=rev;prevTime=now;
-    const daily=rps*86400,hourly=rps*3600;
-
-    // Header
-    set('hdr-rev',fmt(rev));
-    set('hdr-events',fn(st.ingestion?.totalEvents||0)+' events');
+    // Revenue
+    const rev = parseFloat(st.edab?.totalBilled||0);
+    const now = Date.now();
+    const el  = Math.max((now-prevTime)/1000, 1);
+    const rps = Math.max((rev-prevRev)/el, 0);
+    prevRev = rev; prevTime = now;
 
     // Overview
-    set('ov1',fmt(rev));set('ov1s',fmt(rps)+'/sec');
-    set('ov2',fn(st.ingestion?.totalEvents||0));set('ov2s',(st.ingestion?.sources||0)+' sources live');
-    set('ov3',fmt(daily));set('ov3s',fmt(hourly)+'/hr');
-    set('ov-usdc','$'+(wallet.balances?.polygon?.USDC||0).toFixed(2));
-    set('ov-usdc-s','Pending: $'+(wallet.pendingUSD||0).toFixed(2));
+    set('ov-rev',   fmt(rev));
+    set('ov-rps',   fmt(rps)+'/sec');
+    set('ov-ev',    fn(st.ingestion?.totalEvents||0));
+    set('ov-src',   (st.ingestion?.sources||0)+' sources');
+    set('ov-daily', fmt(rps*86400));
+    set('ov-hr',    fmt(rps*3600)+'/hr');
+    set('ov-way2',  fmt(sce.way2?.balance||0));
 
-    // Wallet
-    set('wallet-addr',wallet.addresses?.polygon||'—');
-    set('w-poly-usdc','$'+(wallet.balances?.polygon?.USDC||0).toFixed(2));
-    set('w-poly-matic',(wallet.balances?.polygon?.MATIC||0).toFixed(4));
-    set('w-eth-usdc','$'+(wallet.balances?.ethereum?.USDC||0).toFixed(2));
-    set('w-eth-eth',(wallet.balances?.ethereum?.ETH||0).toFixed(4));
-    set('w-pending','$'+(wallet.pendingUSD||0).toFixed(2));
-    set('w-sent','$'+(wallet.totalSent||0).toFixed(2));
-    set('act-status',routing.active?'ACTIVE':'STOPPED');
-    set('act-usdc','$'+(routing.actualizedUSDC||0).toFixed(2));
-    set('act-sweep',routing.active?'ACTIVE':'STOPPED');
+    // Top domains
+    const db2 = st.edab?.domainBreakdown||{};
+    const domEl = $('ov-domains');
+    if(domEl) {
+      const top = Object.entries(db2).sort((a,b)=>(b[1].revenue||0)-(a[1].revenue||0)).slice(0,6);
+      domEl.innerHTML = top.map(([d,v])=>`
+        <div class="row">
+          <span><span class="dp ${d}">${d.toUpperCase()}</span></span>
+          <span class="rv">${fmt(v.revenue||0)}</span>
+        </div>`).join('');
+    }
 
-    const tt=document.getElementById('transfer-table');
-    if(tt)tt.innerHTML=wallet.transfers?.length>0?wallet.transfers.map(t=>`<tr><td style="color:var(--muted)">${ts(t.timestamp)}</td><td style="color:var(--gold);font-weight:700">$${(t.amountUSD||0).toFixed(2)}</td><td><span class="badge">${(t.network||'').toUpperCase()}</span></td><td style="font-size:0.62rem;color:var(--muted)">${t.rail||'USDC→ECOBANK'}</td><td><span class="badge ${t.status==='CONFIRMED'?'ok':t.status==='PENDING_FUNDING'?'warn':'err'}">${t.status}</span></td><td style="font-size:0.6rem;color:var(--muted)">${t.txHash?t.txHash.substr(0,14)+'…':t.note?'Needs USDC':'—'}</td></tr>`).join(''):'<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:12px">No transfers yet — send USDC to wallet to activate</td></tr>';
+    // Actualization
+    set('act-total',  fmt(act.totalActualized||0));
+    set('act-pending',fmt(act.pendingUSDC||0));
+    set('act-sent',   fmt(act.totalSent||0));
+    set('act-thresh', '$'+(act.threshold||100));
+    set('act-dest',   (act.destination||'—').substr(0,16)+'...');
 
-    // Revenue
-    const db=st.edab?.domainBreakdown||{};
-    set('r-total',fmt(rev));set('r-ps',fmt(rps));set('r-ph',fmt(hourly));set('r-pd',fmt(daily));
-    const td2=document.getElementById('top-domains');
-    if(td2){const s2=Object.entries(db).sort((a,b)=>(b[1].revenue||0)-(a[1].revenue||0)).slice(0,6);td2.innerHTML=s2.map(([d,i])=>`<div class="mr"><span class="mk"><span class="dp ${d}">${d.toUpperCase()}</span></span><span class="mv ac">${fmt(i.revenue||0)}</span></div>`).join('');}
-    const dbars=document.getElementById('domain-bars');
-    if(dbars){const mx=Math.max(...Object.values(db).map(d=>d.events||0),1);dbars.innerHTML=Object.keys(localP).filter(d=>d!=='health').map(d=>{const ev=db[d]?.events||0;const pct=Math.min((ev/mx)*100,100);return`<div class="pr2"><div class="pl2"><span>${d.toUpperCase()}</span><span>${fn(ev)} events — ${fmt(db[d]?.revenue||0)}</span></div><div class="pb"><div class="pf" style="width:${pct}%"></div></div></div>`;}).join('');}
+    // Sovereign Capital
+    set('sce-way2',  fmt(sce.way2?.balance||0));
+    set('sce-route', sce.activeRoute||'Discovering...');
+    set('sce-pol',   (sce.balances?.pol||0).toFixed(4)+' POL');
+    set('sce-usdc',  '$'+(sce.balances?.usdc||0).toFixed(2));
+    set('sce-sent',  fmt(sce.totalSent||0));
 
-    // Sources
-    set('src-total',st.ingestion?.sources||0);
-    set('src-domains',Object.keys(st.ingestion?.domainCounts||{}).length);
-    set('src-events',fn(st.ingestion?.totalEvents||0));
-    set('src-errors',fn(st.ingestion?.errors||0));
-    const dc=st.ingestion?.domainCounts||{};
-    const sdb=document.getElementById('src-domain-bars');
-    if(sdb){const mx2=Math.max(...Object.values(dc).map(v=>v||0),1);sdb.innerHTML=Object.keys(localP).filter(d=>d!=='health').map(d=>{const ev=dc[d]||0;const pct=Math.min((ev/mx2)*100,100);return`<div class="pr2"><div class="pl2"><span><span class="dp ${d}">${d.toUpperCase()}</span></span><span>${fn(ev)} events</span></div><div class="pb"><div class="pf" style="width:${pct}%"></div></div></div>`;}).join('');}
+    const sceEl = $('sce-status');
+    if(sceEl) {
+      sceEl.className = 'pill ' + (sce.activeRoute ? 'active' : 'pending');
+      sceEl.textContent = sce.activeRoute ? 'ACTIVE' : 'DISCOVERING';
+    }
+
+    // Discovered fiat routes
+    const frEl = $('fiat-routes');
+    if(frEl && sce.discoveries?.length > 0) {
+      frEl.innerHTML = sce.discoveries.map(r=>`
+        <div class="row">
+          <span class="rk">${r.name}</span>
+          <div style="display:flex;gap:6px;align-items:center">
+            <span class="badge ${r.supportsGambia?'ok':'err'}">${r.supportsGambia?'GAMBIA ✓':'NO GAMBIA'}</span>
+            <span class="badge info">${r.kycRequired||'?'}</span>
+          </div>
+        </div>`).join('');
+    }
+
+    // Pathfinder
+    set('pf-rate',      pf.successRate||'100%');
+    set('pf-delivered', fmt(pf.totalDelivered||0));
+    set('pf-routes',    (pf.availableRoutes||[]).map(r=>r.name||r).join(', ')||'—');
+
+    // Transfer history
+    const thEl = $('transfer-history');
+    if(thEl) {
+      const transfers = sce.recentTransfers||[];
+      thEl.innerHTML = transfers.length > 0
+        ? transfers.map(t=>`
+            <div class="row">
+              <span class="rk">${ts(t.timestamp)}</span>
+              <span class="rv gold">${fmt(t.amount||0)}</span>
+              <span class="badge ${t.status==='CONFIRMED'?'ok':'warn'}">${t.status}</span>
+            </div>`).join('')
+        : '<div style="color:var(--muted);font-size:0.72rem">No transfers yet</div>';
+    }
 
     // Insights
-    const ins=br.aiInsights||[];
-    set('ins-calls',fn(br.claudeMetrics?.totalCalls||0));
-    set('ins-analyzed',fn(br.claudeMetrics?.totalEventsAnalyzed||0));
-    set('ins-high',fn(ins.filter(i=>i.severity>=7).length));
-    set('ins-last',br.claudeMetrics?.lastCallAt?ts(br.claudeMetrics.lastCallAt):'—');
-    const oi=document.getElementById('ov-insights');
-    if(oi)oi.innerHTML=ins.length>0?ins.slice(-4).map(i=>insHTML(i)).join(''):'<div style="color:var(--muted);font-size:0.75rem">Claude analyzing...</div>';
-    const inf=document.getElementById('insights-feed');
-    if(inf)inf.innerHTML=ins.length>0?ins.slice().reverse().map(i=>insHTML(i,true)).join(''):'<div style="color:var(--muted);font-size:0.75rem;padding:12px">Waiting for Claude analysis...</div>';
-    const eb=document.getElementById('exec-brief');
-    if(eb&&br.executiveBriefing?.bullets)eb.innerHTML=br.executiveBriefing.bullets.map(b=>`<div class="mr"><span style="color:var(--ac)">▸</span><span style="font-size:0.72rem;margin-left:8px">${b}</span></div>`).join('');
+    const ins = br.aiInsights||[];
+    set('ins-calls',    fn(br.claudeMetrics?.totalCalls||0));
+    set('ins-analyzed', fn(br.claudeMetrics?.totalEventsAnalyzed||0));
+    set('ins-high',     fn(ins.filter(i=>i.severity>=7).length));
 
-    // Chat context
-    const cc=document.getElementById('chat-context');
-    if(cc)cc.innerHTML=`<div>Revenue: <span style="color:var(--ac)">${fmt(rev)}</span></div><div>Events: <span style="color:var(--blue)">${fn(st.ingestion?.totalEvents||0)}</span></div><div>Sources: <span style="color:var(--blue)">${st.ingestion?.sources||0}</span></div><div>USDC: <span style="color:var(--green)">$${(wallet.balances?.polygon?.USDC||0).toFixed(2)}</span></div><div>Pending: <span style="color:var(--gold)">$${(wallet.pendingUSD||0).toFixed(2)}</span></div><div>Claude Calls: <span style="color:var(--green)">${fn(br.claudeMetrics?.totalCalls||0)}</span></div><div>Threats: <span style="color:var(--red)">${fn((threats||[]).length)}</span></div><div>Routing: <span style="${routingStopped?'color:var(--red)':'color:var(--green)'}">${routingStopped?'STOPPED':'ACTIVE'}</span></div>`;
+    const oiEl = $('ov-insights');
+    if(oiEl) oiEl.innerHTML = ins.length > 0
+      ? ins.slice(-3).map(i=>insHTML(i)).join('')
+      : '<div style="color:var(--muted);font-size:0.72rem">Claude analyzing...</div>';
+
+    const infEl = $('insights-feed');
+    if(infEl) infEl.innerHTML = ins.length > 0
+      ? ins.slice().reverse().map(i=>insHTML(i)).join('')
+      : '<div style="color:var(--muted);font-size:0.72rem;padding:10px">Waiting...</div>';
+
+    const ebEl = $('exec-brief');
+    if(ebEl && br.executiveBriefing?.bullets) {
+      ebEl.innerHTML = br.executiveBriefing.bullets
+        .map(b=>`<div class="row"><span style="color:var(--ac)">▸</span><span style="margin-left:8px;font-size:0.7rem">${b}</span></div>`)
+        .join('');
+    }
+
+    // Sources
+    set('src-count',   st.ingestion?.sources||0);
+    set('src-domains', Object.keys(st.ingestion?.domainCounts||{}).length);
+    set('src-events',  fn(st.ingestion?.totalEvents||0));
+    set('src-errors',  fn(st.ingestion?.errors||0));
+
+    const dc = st.ingestion?.domainCounts||{};
+    const dbarsEl = $('domain-bars');
+    if(dbarsEl) {
+      const mx = Math.max(...Object.values(dc).map(v=>v||0), 1);
+      dbarsEl.innerHTML = Object.entries(dc)
+        .sort((a,b)=>b[1]-a[1]).slice(0,10)
+        .map(([d,v])=>`
+          <div style="margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;font-size:0.65rem;margin-bottom:3px">
+              <span><span class="dp ${d}">${d.toUpperCase()}</span></span>
+              <span style="color:var(--muted)">${fn(v)}</span>
+            </div>
+            <div class="prog"><div class="progf" style="width:${Math.min((v/mx)*100,100)}%"></div></div>
+          </div>`).join('');
+    }
 
     // Threats
-    set('threat-count',fn((threats||[]).length));
-    set('threat-cyber',fn((threats||[]).filter(t=>t.threats?.some(x=>x.domain==='cybersecurity')).length));
-    set('threat-defense',fn((threats||[]).filter(t=>t.threats?.some(x=>x.domain==='defense')).length));
-    const tf=document.getElementById('threat-feed');
-    if(tf)tf.innerHTML=(threats||[]).length>0?threats.slice(0,15).map(t=>`<div class="insight-item high"><span class="badge err">THREAT</span> <strong>${t.detail||''}</strong><div style="font-size:0.62rem;color:var(--muted);margin-top:4px">${ts(t.timestamp)} — ${(t.threats||[]).map(x=>`<span class="dp ${x.domain}">${x.domain}::${x.type}</span>`).join(' ')}</div></div>`).join(''):'<div style="color:var(--muted);font-size:0.75rem;padding:12px">No threats — monitoring active</div>';
-    const ot=document.getElementById('ov-threats');
-    if(ot)ot.innerHTML=(threats||[]).length>0?threats.slice(0,3).map(t=>`<div class="insight-item high" style="padding:8px"><div style="font-size:0.7rem">${t.detail||''}</div></div>`).join(''):'<div style="color:var(--muted);font-size:0.75rem">Monitoring...</div>';
+    set('thr-total', fn((threats||[]).length));
+    set('thr-cyber', fn((threats||[]).filter(t=>t.threats?.some(x=>x.domain==='cybersecurity')).length));
+    set('thr-def',   fn((threats||[]).filter(t=>t.threats?.some(x=>x.domain==='defense')).length));
+    const tfEl = $('threat-feed');
+    if(tfEl) tfEl.innerHTML = (threats||[]).length > 0
+      ? threats.slice(0,15).map(t=>`
+          <div class="insight high">
+            <div class="insight-domain"><span class="badge err">THREAT</span> ${t.detail||''}</div>
+            <div style="font-size:0.62rem;color:var(--muted);margin-top:4px">
+              ${ts(t.timestamp)} — ${(t.threats||[]).map(x=>`<span class="dp ${x.domain}">${x.domain}</span>`).join(' ')}
+            </div>
+          </div>`).join('')
+      : '<div style="color:var(--muted);font-size:0.72rem;padding:10px">No threats detected</div>';
+
+    // System
+    set('sys-uptime', Math.floor(st.uptime||0)+'s');
+    set('sys-auto',   autonomy.autonomyPct||'100%');
+    set('sys-db-ev',  fn(db.events||0));
+    set('sys-db-rev', fn(db.revenue||0));
+    set('sys-db-bal', fmt(db.balance||0));
+    set('id-addr',    (identity.address||'—').substr(0,16)+'...');
+    set('id-sigs',    identity.sigCount||0);
+
+    // Pricing
+    const prEl = $('pricing-list');
+    if(prEl && st.edab?.pricing) {
+      pricing = st.edab.pricing;
+      prEl.innerHTML = Object.entries(pricing)
+        .sort((a,b)=>b[1]-a[1])
+        .map(([d,p])=>`
+          <div class="row">
+            <span><span class="dp ${d}">${d.toUpperCase()}</span></span>
+            <span class="rv gold">$${p}/event</span>
+          </div>`).join('');
+    }
 
     // Event feeds
-    if(st.recentEvents?.length>0){
-      recentEvents=st.recentEvents;
-      ['feed1','feed2'].forEach(id=>{
-        const f=document.getElementById(id);if(!f)return;f.innerHTML='';
-        recentEvents.slice().reverse().forEach(e=>{
-          const d2=document.createElement('div');d2.className='fi';
-          const p=localP[e.domain]||0.10;
-          d2.innerHTML=`<span><span class="dp ${e.domain||''}">${(e.domain||'').toUpperCase()}</span><span style="color:var(--muted);font-size:0.65rem">${e.type||''}</span></span><span style="color:var(--ac);font-size:0.72rem">$${p.toFixed(2)}</span>`;
-          f.appendChild(d2);
+    if(st.recentEvents?.length > 0) {
+      ['feed-overview','feed-sources'].forEach(id => {
+        const f = $(id); if(!f) return;
+        f.innerHTML = '';
+        st.recentEvents.slice().reverse().forEach(e => {
+          const d = document.createElement('div');
+          d.className = 'fi';
+          const p = pricing[e.domain]||200;
+          d.innerHTML = `<span><span class="dp ${e.domain||''}">${(e.domain||'').toUpperCase()}</span><span style="color:var(--muted);font-size:0.62rem">${e.type||''}</span></span><span style="color:var(--ac)">${fmt(p)}</span>`;
+          f.appendChild(d);
         });
       });
     }
 
-    // Ledger
-    const tl=document.getElementById('treasury-ledger');
-    if(tl&&treas.transactions?.length>0)tl.innerHTML=treas.transactions.map(t=>`<tr><td style="color:var(--muted)">${t.seq||''}</td><td style="color:var(--muted)">${ts(t.timestamp)}</td><td><span class="badge ${t.type==='CREDIT'?'ok':'err'}">${t.type}</span></td><td style="color:${t.type==='CREDIT'?'var(--green)':'var(--red)'};font-weight:700">$${parseFloat(t.amount||0).toFixed(4)}</td><td style="color:var(--ac)">$${parseFloat(t.balance||0).toFixed(2)}</td><td style="color:var(--muted)">${t.source||t.destination||'—'}</td><td style="font-size:0.6rem;color:var(--muted)">${(t.hash||'').substr(0,12)}</td></tr>`).join('');
+    // Chat context
+    window._ctx = {
+      revenue: fmt(rev), rps: fmt(rps)+'/sec',
+      events:  fn(st.ingestion?.totalEvents||0),
+      sources: st.ingestion?.sources||0,
+      way2:    fmt(sce.way2?.balance||0),
+      pending: fmt(act.pendingUSDC||0),
+      route:   sce.activeRoute||'none',
+      threats: (threats||[]).length,
+      claude:  br.claudeMetrics?.totalCalls||0,
+      autonomy:autonomy.autonomyPct||'100%'
+    };
 
-  }catch(e){console.error(e);}
+  } catch(e) { console.error(e); }
 }
 
-
-// Rail Manager
-function updateRailForm() {
-  const type = document.getElementById('new-rail-type').value;
-  document.getElementById('rail-form-bank').style.display      = type==='bank'?'block':'none';
-  document.getElementById('rail-form-mobile').style.display    = type==='mobile_money'?'block':'none';
-  document.getElementById('rail-form-stablecoin').style.display= type==='stablecoin'?'block':'none';
-}
-
-async function addRail() {
-  const type = document.getElementById('new-rail-type').value;
-  const body = {
-    type, name: document.getElementById('new-rail-name').value || type+' rail',
-    accountName:   document.getElementById('rf-account-name')?.value,
-    accountNumber: document.getElementById('rf-account-number')?.value,
-    bankName:      document.getElementById('rf-bank-name')?.value,
-    swiftCode:     document.getElementById('rf-swift')?.value,
-    country:       document.getElementById('rf-country')?.value,
-    phoneNumber:   document.getElementById('rf-phone')?.value,
-    network:       document.getElementById('rf-network')?.value,
-    walletAddress: document.getElementById('rf-wallet')?.value,
-    chainNetwork:  document.getElementById('rf-chain')?.value
-  };
-  try {
-    await fetch('/api/rails',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    const m=document.getElementById('rail-msg');m.style.display='block';setTimeout(()=>m.style.display='none',2000);
-    loadRails();
-  } catch(e) { alert('Error: '+e.message); }
-}
-
-async function loadRails() {
-  try {
-    const[r,s,p]=await Promise.all([
-      fetch('/api/rails').then(x=>x.json()),
-      fetch('/api/sovereign').then(x=>x.json()),
-      fetch('/api/pathfinder').then(x=>x.json())
-    ]);
-    // Sovereign
-    set('sce-name',   s.entity?.name||'—');
-    set('sce-jur',    s.entity?.jurisdiction||'—');
-    set('sce-reg',    s.entity?.regNumber||'—');
-    set('sce-status', s.entity?.status||'—');
-    set('sce-way2',   '$'+(s.way2?.balance||0).toFixed(2));
-    set('sce-way3',   '$'+(s.way3?.balance||0).toFixed(2));
-    set('sce-total',  '$'+(s.totalActualized||0).toFixed(2));
-    set('sce-expense','$'+(s.expenseReserve||0).toFixed(2));
-    // Pathfinder
-    set('pf-rate',      p.successRate||'100%');
-    set('pf-delivered', '$'+(p.totalDelivered||0).toFixed(2));
-    set('pf-queue',     p.queueSize||0);
-    set('pf-routes',    (p.availableRoutes||[]).join(', ')||'—');
-    // Rails list
-    const rl=document.getElementById('rails-list');
-    if(rl)rl.innerHTML=r.rails?.length>0?r.rails.map(rail=>`
-      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:12px;margin-bottom:8px">
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-          <span style="color:var(--ac);font-weight:700">${rail.name}</span>
-          <div style="display:flex;gap:6px">
-            <span class="badge ${rail.active?'ok':'err'}">${rail.active?'ACTIVE':'INACTIVE'}</span>
-            <button class="btn bd" style="padding:2px 8px;font-size:0.6rem" onclick="removeRail('${rail.id}')">✕</button>
-          </div>
-        </div>
-        <div style="font-size:0.65rem;color:var(--muted)">
-          Type: ${rail.type} | Sent: $${(rail.totalSent||0).toFixed(2)} | Success: ${rail.successCount||0}
-          ${rail.phoneNumber?'| Phone: '+rail.phoneNumber:''}
-          ${rail.accountNumber?'| Account: '+rail.accountNumber.substr(0,4)+'****':''}
-          ${rail.walletAddress?'| Wallet: '+rail.walletAddress.substr(0,8)+'...':''}
-        </div>
-      </div>`).join(''):'<div style="color:var(--muted);font-size:0.75rem">No rails configured — add one below</div>';
-    // Transfer history
-    const pt=document.getElementById('pathfinder-transfers');
-    if(pt)pt.innerHTML=p.recentTransfers?.length>0?p.recentTransfers.map(t=>`
-      <tr>
-        <td style="font-size:0.6rem;color:var(--muted)">${(t.id||'').substr(0,12)}</td>
-        <td style="color:var(--muted)">${ts(t.timestamp)}</td>
-        <td style="color:var(--gold);font-weight:700">$${(t.amount||0).toFixed(2)}</td>
-        <td><span class="badge">${t.railType||'auto'}</span></td>
-        <td style="font-size:0.65rem">${t.route||'—'}</td>
-        <td><span class="badge ${t.status==='DELIVERED'?'ok':t.status==='VOUCHER_ISSUED'?'warn':'err'}">${t.status||'—'}</span></td>
-        <td style="font-size:0.6rem;color:var(--muted)">${t.voucher?.code||t.error||'—'}</td>
-      </tr>`).join(''):'<tr><td colspan="7" style="color:var(--muted);text-align:center;padding:12px">No transfers yet</td></tr>';
-  } catch(e) {}
-}
-
-async function removeRail(id) {
-  await fetch('/api/rails/'+id,{method:'DELETE'});
-  loadRails();
-}
-
-async function executeTransfer() {
-  const amount = parseFloat(document.getElementById('transfer-amount').value);
-  const rail   = document.getElementById('transfer-rail').value;
-  if (!amount || amount <= 0) return alert('Enter a valid amount');
-  const el = document.getElementById('transfer-result');
-  el.style.display='block';el.style.color='var(--gold)';el.textContent='Executing transfer...';
-  try {
-    const r=await fetch('/api/pathfinder/transfer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount,railType:rail})});
-    const d=await r.json();
-    el.style.color=d.status==='DELIVERED'?'var(--green)':d.status==='VOUCHER_ISSUED'?'var(--gold)':'var(--red)';
-    el.textContent='Status: '+d.status+(d.route?' via '+d.route:'')+(d.voucher?' | Voucher: '+d.voucher.code:'');
-    loadRails();
-  } catch(e) { el.style.color='var(--red)';el.textContent='Error: '+e.message; }
-}
-
-async function generateVoucher() {
-  const amount = prompt('Voucher amount (USD from Way3 balance):');
-  if (!amount) return;
-  const r=await fetch('/api/sovereign/voucher',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:parseFloat(amount)})});
-  const d=await r.json();
-  if(d.code) alert('Voucher generated!\nCode: '+d.code+'\nAmount: $'+d.amount+'\nExpires: 24 hours\n\nShow this code to a Wave agent to redeem.');
-  else alert('Error: '+JSON.stringify(d));
-}
-
+// ── Actions ────────────────────────────────────────────────────────────────
 async function discoverRoutes() {
-  await fetch('/api/pathfinder/discover',{method:'POST'});
-  addMsg('sys','Pathfinder scanning for new routes via Claude AI...');
-  setTimeout(loadRails, 5000);
+  addMsg('sys', 'M7 searching for Gambia fiat routes...');
+  await fetch('/api/sovereign/bootstrap', { method: 'POST' });
+  setTimeout(fd, 3000);
 }
 
-// Load rails when tab opened
-document.querySelector('[onclick="sw('rails')"]')?.addEventListener('click', loadRails);
+async function sendTest() {
+  const a = prompt('Amount to send (USDC):');
+  if(!a) return;
+  addMsg('sys', `Initiating $${a} transfer...`);
+  const r = await fetch('/api/sovereign/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ amount: parseFloat(a) })
+  });
+  const d = await r.json();
+  if(d.error) {
+    addMsg('sys', `Error: ${d.error}\n${d.solution||''}`);
+  } else if(d.polygonscan) {
+    addMsg('sys', `✅ CONFIRMED!\nTX: ${d.hash}\nView: ${d.polygonscan}`);
+  } else {
+    addMsg('sys', JSON.stringify(d, null, 2));
+  }
+}
 
-loadPricing();
+async function stopRouting() {
+  await fetch('/api/routing/stop', { method: 'POST' });
+  addMsg('sys', '🛑 Fund routing STOPPED');
+}
+
+async function startRouting() {
+  await fetch('/api/routing/start', { method: 'POST' });
+  addMsg('sys', '▶ Fund routing ACTIVE');
+}
+
+async function runGrowth() {
+  addMsg('sys', 'Running growth cycle...');
+  const r = await fetch('/api/growth/cycle', { method: 'POST' });
+  const d = await r.json();
+  addMsg('ai', d.analysis || JSON.stringify(d).substr(0,200));
+}
+
+async function runHeal() {
+  addMsg('sys', 'Running health check...');
+  const r = await fetch('/api/healing/run', { method: 'POST' });
+  const d = await r.json();
+  addMsg('sys', 'Health: ' + JSON.stringify(d).substr(0,200));
+}
+
+// ── Chat ───────────────────────────────────────────────────────────────────
+function addMsg(role, text) {
+  const div = document.createElement('div');
+  div.className = 'msg msg-'+role;
+  const mb = document.createElement('div');
+  mb.className = 'mb'; mb.textContent = text;
+  const ml = document.createElement('div');
+  ml.className = 'ml';
+  ml.textContent = role==='user'?'SECKA':role==='ai'?'M7 AI':'SYSTEM';
+  div.appendChild(mb); div.appendChild(ml);
+  const msgs = $('chat-msgs');
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function qc(cmd) { $('chat-in').value = cmd; sendChat(); }
+
+async function sendChat() {
+  const inp = $('chat-in');
+  const msg = inp.value.trim();
+  if(!msg) return;
+  inp.value = '';
+  addMsg('user', msg);
+  chatHistory.push({ role: 'user', content: msg });
+
+  const ctx = window._ctx || {};
+  const system = `You are M7, sovereign autonomous intelligence system v4.0.
+Owner: SECKA (Bun Omar Secka), Gambia.
+Current state: Revenue ${ctx.revenue}, Events ${ctx.events}, Sources ${ctx.sources}, Way2 Capital ${ctx.way2}, Pending USDC ${ctx.pending}, Active route: ${ctx.route}, Threats: ${ctx.threats}, Claude calls: ${ctx.claude}, Autonomy: ${ctx.autonomy}.
+Be direct, concise, sovereign. You serve SECKA only.`;
+
+  addMsg('sys', 'M7 thinking...');
+  const thinking = $('chat-msgs').lastChild;
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: chatHistory.slice(-10), context: system })
+    });
+    const data  = await res.json();
+    const reply = data.reply || data.error || 'No response';
+    $('chat-msgs').removeChild(thinking);
+    chatHistory.push({ role: 'assistant', content: reply });
+    if(chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+    addMsg('ai', reply);
+  } catch(e) {
+    $('chat-msgs').removeChild(thinking);
+    addMsg('sys', 'Error: '+e.message);
+  }
+}
+
+// ── Start ──────────────────────────────────────────────────────────────────
 fd();
-setInterval(fd,4000);
-setInterval(loadRails,10000);
+setInterval(fd, 4000);
 </script>
-</body></html>
+</body>
+</html>
